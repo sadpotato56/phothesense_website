@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products - PHOTHESENSE</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- Header (tái sử dụng từ index.html, thêm link về home) -->
+  <header class="subpage-header">
+  <div class="logo">
+    <img src="Logo_orangeColor.png" alt="PHOTHESENSE Alternate Logo">
+  </div>
+  <nav class="nav-links">
+    <a href="index.html">HOME</a>
+    <a href="#">ABOUT</a>
+    <a href="products.html" class="active">SHOP</a>
+    <a href="#">CONTACT</a>
+    <div class="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count">2</span>
+    </div>
+  </nav>
+</header>
+
+  <!-- Main Content: Product Archive -->
+  <main class="product-archive">
+    <div class="container">
+      <!-- Left Sidebar: Filters -->
+      <aside class="filters-sidebar">
+        <h3>Search for an activity</h3>
+        <div class="search-box">
+          <input type="text" placeholder="Search by keyword" aria-label="Search experiences">
+          <span class="search-icon"><i class="fas fa-search"></i></span>
+        </div>
+
+        <h4>Filter by</h4>
+        <div class="filter-group">
+          <h5>Traveler rating</h5>
+          <label><input type="radio" name="rating" checked> Any</label>
+          <label><input type="radio" name="rating"> Wonderful 4.5+</label>
+          <label><input type="radio" name="rating"> Very good 4+</label>
+          <label><input type="radio" name="rating"> Good 3.5+</label>
+        </div>
+
+        <div class="filter-group">
+          <h5>Recommendations</h5>
+          <label><input type="checkbox" name="free-cancel"> Free cancellation</label>
+          <label><input type="checkbox" name="deals"> Deals</label>
+          <label><input type="checkbox" name="expert-picks"> Local expert picks</label>
+          <label><input type="checkbox" name="family"> Family friendly</label>
+          <label><input type="checkbox" name="new"> New on PHOTHESENSE</label>
+          <label><input type="checkbox" name="pickup"> Selective hotel pickup</label>
+        </div>
+      </aside>
+
+      <!-- Right Content: Categories, Sort, Products -->
+      <section class="main-content">
+        <div class="location-header">
+          <h1>Hanoi</h1>
+        </div>
+
+        <!-- Category Tags -->
+        <div class="category-tags">
+          <a href="#" class="tag">Tours & day trips <span>175 things to do</span></a>
+          <a href="#" class="tag">Water activities <span>55 things to do</span></a>
+          <a href="#" class="tag">Cruises & boat tours <span>50 things to do</span></a>
+          <a href="#" class="tag">History & culture <span>90 things to do</span></a>
+          <a href="#" class="tag">Food, drink & nightlife <span>21 things to do</span></a>
+        </div>
+
+        <!-- Sort & Info -->
+        <div class="sort-info">
+          <div class="sort-dropdown">
+            <select>
+              <option>Recommended</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Top Rated</option>
+            </select>
+          </div>
+          <div class="info-text">
+            <span>How our sort order works <i class="fas fa-info-circle"></i></span>
+          </div>
+        </div>
+
+        <!-- Top Products Grid -->
+        <div class="top-products">
+          <h2>Top 10 things to do</h2>
+          <div class="product-grid">
+            <!-- Product Card 1 -->
+            <a href="product-detail.html?id=1" class="product-card">
+              <div class="product-image" style="background-image: url('halong-bay-tour.jpg');"></div>
+              <div class="product-info">
+                <div class="rating">9.0 <i class="fas fa-star"></i></div>
+                <h3>1. DELUXE Halong Bay Day Tour</h3>
+                <p>From Hanoi, Daily operated 2024-2025</p>
+                <div class="duration">⏱ 13h</div>
+                <div class="reviews">73 reviews</div>
+                <span class="free-cancel">Free cancellation available</span>
+                <div class="price">$48 <span>incl. taxes & fees</span></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+              </div>
+            </a>
+
+            <!-- Product Card 2 -->
+            <a href="product-detail.html?id=2" class="product-card">
+              <div class="product-image" style="background-image: url('ha-long-cruise.jpg');"></div>
+              <div class="product-info">
+                <div class="rating">8.6 <i class="fas fa-star"></i></div>
+                <h3>2. Full-Day Ha Long Bay Cruise Excursion from Hanoi</h3>
+                <p></p>
+                <div class="duration">⏱ 6h 15m+</div>
+                <div class="reviews">126 reviews</div>
+                <span class="free-cancel">Free cancellation available</span>
+                <div class="price">$38 <span>incl. taxes & fees</span></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+              </div>
+            </a>
+
+            <!-- Product Card 3 -->
+            <a href="product-detail.html?id=3" class="product-card">
+              <div class="product-image" style="background-image: url('hanoi-heart-tour.jpg');"></div>
+              <div class="product-info">
+                <div class="rating">8.6 <i class="fas fa-star"></i></div>
+                <h3>3. Full-Day Heart of Hanoi Highlights Tour</h3>
+                <p>Hanoi</p>
+                <div class="duration">⏱ 8h 30m</div>
+                <div class="reviews">28 reviews</div>
+                <span class="free-cancel">Free cancellation available</span>
+                <div class="price">$36 <span>incl. taxes & fees</span></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+              </div>
+            </a>
+          </div>
+          <a href="#" class="see-all">See all</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer (tái sử dụng từ index.html) -->
+  <footer>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#">About</a>
+      <a href="products.html">Shop</a>
+      <a href="#">Contact</a>
+    </div>
+    <p>Copyright © 2025 PHOTHESENSE</p>
+  </footer>
+</body>
+</html>
