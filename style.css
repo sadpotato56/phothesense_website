@@ -20,7 +20,9 @@ body, html {
   background: url('picture/background.jpg') center/cover no-repeat fixed; 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;     /* căn giữa theo chiều ngang */
+  text-align: center;  
 }
 
 /*--------------------- subpage header ---------------------*/
@@ -77,7 +79,7 @@ body, html {
   height: 30px; /* Tăng chiều cao ô vuông */
   background-color: #1C4278; /* Nền xanh */
   z-index: -1;
-  border-radius: 4px; /*  bo góc */
+  border-radius: 10px; /*  bo góc */
 }
 
 .nav-links a.active {
@@ -137,12 +139,21 @@ body, html {
 
 /* Hero Text */
 .hero-content {
-  position: absolute;
+   max-width: 90%;       /* Giới hạn chiều rộng nội dung */
+  margin: 0 auto;       /* Căn giữa ngang */
+  text-align: center;   /* Chữ căn giữa */
+  padding: 0 10px;      /* Tránh tràn ra ngoài màn hình */
+  box-sizing: border-box;
+  word-wrap: break-word; /* Chữ dài tự xuống dòng */
+  overflow-wrap: break-word; /* Backup cho trình duyệt khác */
+  
+  /* position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
+  text-align: center; */
 }
+
 
 .hero-content h1 {
   font-size: 90px;
@@ -155,7 +166,7 @@ body, html {
 .hero-content p {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
-  white-space: nowrap;
+  
   letter-spacing: 10px;
   color: #FBDC47;
   margin: 20px 0 40px;
@@ -210,28 +221,13 @@ body, html {
   margin-bottom: 25px;
 }
 
-.image-placeholder {
-  width: 100%;
-  height: 400px;
-  background-color: #ddd;
-  border-radius: 10px;
-}
+
 
 .image-placeholder {
   width: 100%;
   height: 400px;
   background-color: #ddd;
   border-radius: 10px;
-}
-
-.image-placeholder {
-  width: 100%;
-  height: 400px;
-  background-color: #ddd;
-  border-radius: 10px;
-}
-
-.image-placeholder {
   background-size: cover; /* Giữ tỷ lệ ảnh, không bị méo */
   background-position: center; /* Căn giữa ảnh */
   background-repeat: no-repeat; /* Ngăn lặp ảnh */
@@ -239,6 +235,8 @@ body, html {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
   transition: transform 0.3s ease; /* Hiệu ứng hover zoom */
 }
+
+
 
 .image-placeholder:hover {
   transform: scale(1.05); /* Zoom nhẹ khi hover */
@@ -318,6 +316,7 @@ body, html {
   *{
     overflow-x: hidden;
   }
+  
 
   .hero-header {
     height: 100vh; /* Giảm chiều cao để phù hợp tablet/mobile, giữ không gian trải nghiệm */
@@ -329,12 +328,14 @@ body, html {
     padding: 0 30px; /* Giảm padding để tiết kiệm không gian */
   }
   .hero-content h1 {
-    font-size: 60px; /* Thu nhỏ chữ để dễ đọc trên tablet */
-    letter-spacing: 6px;
+    font-size: 40px; /* giảm chữ */
+    font-weight: 500;
+
+    letter-spacing: 2px; /* giảm khoảng cách */
   }
   .hero-content p {
-    font-size: 20px;
-    letter-spacing: 6px;
+    font-size: 16px;
+    letter-spacing: 1px; /* giảm khoảng cách */
   }
   .explore-btn {
     padding: 12px 30px; /* Thu nhỏ nút cho phù hợp */
@@ -425,7 +426,7 @@ body, html {
   .nav-links.open { /* Class để toggle khi click hamburger */
     display: flex;
     flex-direction: column; /* Chuyển sang dọc khi mở */
-    position: absolute;
+    position: absolute; 
     top: 70%; /* Đặt ngay dưới nav-bar */
     left: 50%;
     width: 40%;
@@ -444,7 +445,9 @@ body, html {
     padding: 0 20px;
   }
   .hero-content h1 {
-    font-size: 40px;
+    font-size: 35px;
+    font-weight: 500;
+
     letter-spacing: 4px;
   }
   .hero-content p {
