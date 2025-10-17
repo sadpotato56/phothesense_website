@@ -320,7 +320,9 @@ body, html {
   }
 
   .hero-header {
-    height: 70vh; /* Giảm chiều cao để phù hợp tablet/mobile, giữ không gian trải nghiệm */
+    height: 100vh; /* Giảm chiều cao để phù hợp tablet/mobile, giữ không gian trải nghiệm */
+    background: url('picture/background.jpg') center/cover no-repeat fixed;
+    background-color: #000;
   }
   .subpage-header {
     height: 60px; /* Giảm chiều cao header phụ cho màn hình nhỏ, tăng tính di động */
@@ -433,7 +435,9 @@ body, html {
 
   }
   .hero-header {
-    height: 50vh; /* Giảm thêm cho mobile nhỏ, tập trung vào nội dung nhanh */
+    height: 100vh; /* Giảm thêm cho mobile nhỏ, tập trung vào nội dung nhanh */
+    background: url('picture/background.jpg') center/cover no-repeat fixed;
+    background-color: #000;
   }
   .subpage-header {
     height: 50px;
