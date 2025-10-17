@@ -3,6 +3,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: clip;
+   /*rất quan trọng để tránh bị tràn viền dính khoảng trắng */
 }
 
 body, html {
@@ -15,7 +17,7 @@ body, html {
 .hero-header {
   position: relative;
   height: 100vh;
-  background: url('background.jpg') center/cover no-repeat fixed; 
+  background: url('picture/background.jpg') center/cover no-repeat fixed; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,68 +25,7 @@ body, html {
 
 /*--------------------- subpage header ---------------------*/
 
-.subpage-header {
-  position: relative;
-  height: 80px; /* Chiều cao cố định cho header phụ */
-  background-color: #FFFCEE; /* Nền trắng */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 60px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
-}
 
-.subpage-header .logo img {
-  height: 120px; /* Kích thước logo nhỏ hơn */
-  transition: transform 0.3s ease; /* Hiệu ứng hover cho logo */
-}
-
-.subpage-header .logo img:hover {
-  transform: scale(1.1); /* Zoom nhẹ khi hover logo */
-}
-
-.subpage-header .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-.subpage-header .nav-links a {
-  color: #1C4278; /* Chữ xanh đậm */
-  text-decoration: none;
-  letter-spacing: 2px;
-  font-size: 14px;
-  position: relative;
-  transition: color 0.3s ease; /* Hiệu ứng hover cho chữ */
-  transition: transform 0.3s ease; /* Hiệu ứng zoom nhẹ */
-}
-
-.subpage-header .nav-links a:hover {
-  color: #FBDC47; /* Chữ vàng khi hover */
-  transform: scale(1.1); /* Zoom nhẹ khi hover */
-}
-
-.subpage-header .nav-links a.active {
-  font-weight: 600; /* Đậm cho active link */
-  color: #FBDC47;
-
-}
-
-.subpage-header .cart-icon {
-  position: relative;
-  color: #1C4278;
-}
-
-.subpage-header .cart-icon .cart-count {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background: #1C4278;
-  color: #FFFCEE;
-  border-radius: 50%;
-  font-size: 10px;
-  padding: 2px 6px;
-}
 
 /* ------------------------------ Top Navigation ------------------------------ */
 .nav-bar {
@@ -105,6 +46,7 @@ body, html {
 }
 
 /* Navigation Links */
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -145,11 +87,39 @@ body, html {
   color: #FBDC47;
 }
 
+/* ------------------------------------------ Hamburger Menu ------------------------------------------ */
+.hamburger {
+  display: none; /* Ẩn trên desktop */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1000;
+}
 
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
 
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
 
-/* Cart Icon */
-.cart-icon {
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ------------------------- Cart Icon ------------------------- */
+/* .cart-icon {
   position: relative;
   color: #fff;
 }
@@ -163,7 +133,7 @@ body, html {
   border-radius: 50%;
   font-size: 10px;
   padding: 2px 6px;
-}
+} */
 
 /* Hero Text */
 .hero-content {
@@ -223,7 +193,7 @@ body, html {
 
 
 .column {
-  width: 300px;
+  width: 100%;
 }
 
 .column h2 {
@@ -286,6 +256,7 @@ body, html {
   color: #fff;
   position: relative;
   z-index: 2;
+  overflow-x: hidden;
 }
 
 .experience-card {
@@ -339,286 +310,174 @@ body, html {
   transform: scale(1.05);
 }
 
-/*-------------------------Product_page------------------------------*/
-/* Product Archive Styles */
-.product-archive {
-  background-color: #f8f9fa;
-  padding: 40px 0;
-  font-family: 'Roboto', sans-serif;
-}
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 40px;
-  padding: 0 20px;
-}
 
-.filters-sidebar {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
 
-.filters-sidebar h3, .filters-sidebar h4, .filters-sidebar h5 {
-  margin-bottom: 15px;
-  color: #1C4278;
-  font-family: 'Roboto Slab', serif;
-}
-
-.search-box {
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 12px 40px 12px 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.search-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #1C4278;
-}
-
-.filter-group {
-  margin-bottom: 20px;
-}
-
-.filter-group label {
-  display: block;
-  margin-bottom: 8px;
-  cursor: pointer;
-  color: #333;
-}
-
-.filter-group input[type="radio"], .filter-group input[type="checkbox"] {
-  margin-right: 8px;
-}
-
-.location-header h1 {
-  font-size: 36px;
-  color: #1C4278;
-  margin-bottom: 20px;
-  font-family: 'Roboto Slab', serif;
-}
-
-.category-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.tag {
-  display: inline-block;
-  background: white;
-  padding: 8px 12px;
-  border-radius: 20px;
-  text-decoration: none;
-  color: #1C4278;
-  font-size: 14px;
-  border: 1px solid #1C4278;
-  transition: background 0.3s;
-}
-
-.tag:hover {
-  background: #1C4278;
-  color: white;
-}
-
-.tag span {
-  display: block;
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-.sort-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.sort-dropdown select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: white;
-}
-
-.info-text {
-  color: #666;
-  font-size: 14px;
-}
-
-.info-text i {
-  margin-left: 5px;
-  color: #1C4278;
-}
-
-.top-products h2 {
-  font-size: 24px;
-  color: #1C4278;
-  margin-bottom: 20px;
-  font-family: 'Roboto Slab', serif;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.product-card {
-  display: block;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-decoration: none;
-  color: inherit;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-.product-image {
-  width: 100%;
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-}
-
-.product-info {
-  padding: 15px;
-  position: relative;
-}
-
-.rating {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #1C4278;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 15px;
-  font-size: 12px;
-}
-
-.product-info h3 {
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #1C4278;
-  font-family: 'Roboto Slab', serif;
-}
-
-.product-info p {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.duration, .reviews {
-  font-size: 12px;
-  color: #1C4278;
-  margin-bottom: 5px;
-}
-
-.free-cancel {
-  display: block;
-  font-size: 12px;
-  color: #28a745;
-  margin-bottom: 10px;
-}
-
-.price {
-  font-size: 18px;
-  font-weight: bold;
-  color: #1C4278;
-  margin-bottom: 10px;
-}
-
-.price span {
-  font-size: 12px;
-  font-weight: normal;
-}
-
-.heart {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  color: #ff6b6b;
-  font-size: 18px;
-}
-
-.see-all {
-  display: inline-block;
-  color: #1C4278;
-  text-decoration: none;
-  font-size: 16px;
-  margin-top: 20px;
-  transition: color 0.3s;
-}
-
-.see-all:hover {
-  color: #FBDC47;
-}
-
-/* Responsive */
+/* -------------------------------- Responsive adjustments for headers --------------------------------  */
 @media (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  *{
+    overflow-x: hidden;
   }
-  .product-grid {
-    grid-template-columns: 1fr;
+
+  .hero-header {
+    height: 70vh; /* Giảm chiều cao để phù hợp tablet/mobile, giữ không gian trải nghiệm */
   }
-}
-
-
-
-/*-------------------------FOOTER------------------------------*/
-footer {
-  background-color: #1A2A44;
-  color: #fff;
+  .subpage-header {
+    height: 60px; /* Giảm chiều cao header phụ cho màn hình nhỏ, tăng tính di động */
+    padding: 0 30px; /* Giảm padding để tiết kiệm không gian */
+  }
+  .hero-content h1 {
+    font-size: 60px; /* Thu nhỏ chữ để dễ đọc trên tablet */
+    letter-spacing: 6px;
+  }
+  .hero-content p {
+    font-size: 20px;
+    letter-spacing: 6px;
+  }
+  .explore-btn {
+    padding: 12px 30px; /* Thu nhỏ nút cho phù hợp */
+  }
+  .nav-bar {
+    padding: 15px 30px; /* Điều chỉnh padding cho mobile */
+  }
+  .hamburger {
+    display: block; /* Hiển thị hamburger trên mobile */
+  }
+  .nav-links {
+    padding: 60px 100px 20px;
+    display: none; /* Ẩn menu mặc định */
+     /* Hiệu ứng mượt mà */
+  }
+  .nav-links.open {
+  flex-direction: column;
+  position: fixed;
+  top: 80px; /* Dịch xuống dưới header */
+  right: 88px; /* Hiển thị ở bên phải */
+  width: 200px; /* Ô vuông nhỏ dọc, chiều rộng cố định */
+  height: auto; /* Chiều cao tự động dựa trên nội dung */
+  background: rgba(28, 66, 120, 0.95); /* Nền xanh đậm với độ trong suốt */
+  padding: 15px 10px; /* Padding nhỏ gọn */
+  z-index: 1000; /* Đảm bảo hiển thị trên các phần khác */
   text-align: center;
-  padding: 20px 0;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+  border-radius: 10px; /* Bo góc nhẹ cho sang trọng */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
+  display: flex; /* Hiển thị khi toggle */
+  transition: all 0.3s ease;
 }
-footer .nav-links {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 10px;
-}
-footer .nav-links a {
+
+.nav-links.open a, .nav-links.open .cart-icon {
+  text-align: center;
+  margin: 10px 0; /* Khoảng cách hợp lý giữa các item */
+  font-size: 16px; /* Kích thước chữ dễ đọc */
   color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 2px;
+  width: 100%; /* Đảm bảo item chiếm toàn width của menu */
 }
-footer .nav-links a:hover {
+
+.nav-links.open a:hover {
   color: #FFD700;
 }
-footer p {
-  font-size: 12px;
-  color: #ccc;
+.three-columns {
+    flex-direction: column; /* Chuyển sang dọc */
+    gap: 40px; /* Tăng khoảng cách giữa các cột */
+    padding: 20px 20px; /* Padding nhẹ cho mobile */
+  }
+
+  .column {
+    width: 100%; /* Chiếm full width */
+    text-align: center; /* Căn giữa nội dung */
+  }
+
+  .image-placeholder {
+    height: 500px;
+    width: 100%; /* Giảm chiều cao để phù hợp màn hình nhỏ */
+    margin-top: 15px; /* Khoảng cách từ text đến ảnh */
+  }
+
+  .three-experiences {
+    flex-direction: column; /* Chuyển sang dọc */
+    gap: 40px; /* Khoảng cách giữa các thẻ experience */
+    padding: 20px 20px;
+  }
+
+  .experience-card {
+    width: 100%; /* Chiếm full width */
+    text-align: center;
+  }
+
+  .experience-link .image-placeholder {
+    height: 500px; /* Giảm chiều cao cho mobile */
+    margin-top: 15px;
+  }
+  
 }
+
+@media (max-width: 480px) {
+  *{
+    overflow-x: clip;
+  }
+
+  .nav-links {
+    display: none; /* Ẩn menu mặc định trên mobile */
+    
+  }
+  .nav-links.open { /* Class để toggle khi click hamburger */
+    display: flex;
+    flex-direction: column; /* Chuyển sang dọc khi mở */
+    position: absolute;
+    top: 70%; /* Đặt ngay dưới nav-bar */
+    left: 50%;
+    width: 40%;
+    background: #1C4278; /* Nền xanh để nổi bật */
+    padding: 20px 0;
+    z-index: 9;
+
+  }
+  .hero-header {
+    height: 50vh; /* Giảm thêm cho mobile nhỏ, tập trung vào nội dung nhanh */
+  }
+  .subpage-header {
+    height: 50px;
+    padding: 0 20px;
+  }
+  .hero-content h1 {
+    font-size: 40px;
+    letter-spacing: 4px;
+  }
+  .hero-content p {
+    font-size: 16px;
+    letter-spacing: 4px;
+  }
+  .explore-btn {
+    padding: 10px 25px;
+  }
+
+  .three-columns {
+    padding: 20px 10px; /* Giảm thêm padding cho màn hình nhỏ hơn */
+  }
+  .image-placeholder {
+    height: 250px; /* Tối ưu chiều cao cho mobile nhỏ, tránh lướt dài */
+  }
+  .three-columns {
+    padding: 10px; /* Giảm padding cho mobile nhỏ */
+    gap: 30px;
+  }
+
+  .image-placeholder {
+    height: 350px; /* Tối ưu thêm cho mobile nhỏ */
+  }
+
+  .three-experiences {
+    padding: 10px;
+    gap: 30px;
+  }
+
+  .experience-link .image-placeholder {
+    height: 200px; /* Tối ưu thêm cho mobile nhỏ */
+  }
+}
+
+/*-------------------------FOOTER------------------------------*/
+
+
 
 

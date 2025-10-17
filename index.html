@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PHOTHESENSE</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="header.css" />
+<link rel="stylesheet" href="footer.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -12,15 +14,22 @@
 </head>
 
 <body>
+  <script defer src="script.js"></script>
+  
   <header class="hero-header">
     <div class="nav-bar">
       <div class="logo">
-        <img src="logo.png" alt="PHOTHESENSE Logo">
+        <img src="picture/logo.png" alt="PHOTHESENSE Logo">
       </div>
+      <button class="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
       <nav class="nav-links">
         <a href="#" class="active">HOME</a>
         <a href="#">ABOUT</a>
-        <a href="#">SHOP</a>
+        <a href="Product.html" target="_blank">SHOP</a>
         <a href="#">CONTACT</a>
         <div class="cart-icon">
           <i class="fas fa-shopping-cart"></i>
@@ -32,27 +41,28 @@
     <div class="hero-content">
       <h1>PHOTHESENSE</h1>
       <p>WHERE EVERY MOMENT FEED YOUR SENSE</p>
-      <a href="Product.html" class="explore-btn">EXPLORE NOW</a>
+      <a href="Product.html" target="_blank" class="explore-btn">EXPLORE NOW</a>
     </div>
   </header>
+
 
   <section class="three-columns">
   <div class="column">
     <h2>Hà Nội</h2>
     <p>Hanoi is a city that surprises you. Old streets packed with life. Lakes that invite you to pause. Temples that whisper stories from centuries ago. It’s where history and hustle run side by side. Street food that grabs you by the senses. Friendly faces that make you feel at home. Hanoi doesn’t just show you Vietnam—it pulls you right into its heart.</p>
-    <div class="image-placeholder" style="background-image: url('hanoi.jpg');"></div>
+    <div class="image-placeholder" style="background-image: url('picture/hanoi.jpg');"></div>
   </div>
 
   <div class="column">
     <h2>Ninh Bình</h2>
     <p>Ninh Bình is nature’s secret waiting to be discovered. Limestone mountains rising like ancient guardians. Calm rivers winding past golden rice fields. Boat rides through caves that feel like stepping into a dream. Temples and pagodas whisper stories from Vietnam’s past. It’s peaceful, raw, and alive. Ninh Bình doesn’t just show beauty—it invites you to live it.</p>
-    <div class="image-placeholder" style="background-image: url('ninhbinh.jpg');"></div>
+    <div class="image-placeholder" style="background-image: url('picture/ninhbinh.jpg');"></div>
   </div>
 
   <div class="column">
     <h2>Sapa</h2>
     <p>Sapa is a mountain town that takes your breath away. Terraced rice fields that ripple like waves. Misty mornings hiding colorful hill tribe villages. Trails that lead to stories older than time. It’s a place where nature and culture dance together. Sapa isn’t just a destination—it’s an experience that stays with you long after you leave.</p>
-    <div class="image-placeholder" style="background-image: url('sapa.jpg');"></div>
+    <div class="image-placeholder" style="background-image: url('picture/sapa.jpg');"></div>
   </div>
 </section>
 
@@ -62,7 +72,7 @@
     <h2>WORKSHOP</h2>
     <p>Join our hands-on workshops — from coffee brewing to knife forging — and explore Vietnam through creativity and connection. Learn from local masters, meet new friends, and bring home a memory you made yourself.</p>
     <a href="workshop-page.html" class="experience-link">
-      <div class="image-placeholder" style="background-image: url('workshop.jpg');"></div>
+      <div class="image-placeholder" style="background-image: url('picture/workshop.jpg');"></div>
     </a>
   </div>
   <div class="experience-card">
@@ -82,7 +92,7 @@
 </section>
 
 </body>
-<footer>
+<!-- <footer>
   <div class="nav-links">
     <a href="#">Home</a>
     <a href="#">About</a>
@@ -90,6 +100,50 @@
     <a href="#">Contact</a>
   </div>
   <p>Copyright © 2025 phothesense</p>
+</footer> -->
+
+<footer>
+  <div class="container">
+    <div class="footer-elements">
+      <div class="side-left">
+        <div class="sl-brand line-center">
+          <a class="footer-logo" href="#">
+            <img src="logo.png" alt="PHOTHESENSE">
+          </a>
+          <div class="socials line-center">
+            <a class="social-item" target="_blank" href="https://www.facebook.com/phothesense" title="Facebook">
+              <div class="inc-icon icon-14">
+                <img src="images/social/facebook-icon.svg" alt="Facebook">
+              </div>
+            </a>
+            <a class="social-item" target="_blank" href="https://www.instagram.com/phothesense" title="Instagram">
+              <div class="inc-icon icon-14">
+                <img src="images/social/instagram-icon.svg" alt="Instagram">
+              </div>
+            </a>
+            <a class="social-item" target="_blank" href="https://www.youtube.com/phothesense" title="Youtube">
+              <div class="inc-icon icon-14">
+                <img src="images/social/youtube-icon.svg" alt="Youtube">
+              </div>
+            </a>
+            <!-- Thêm social khác nếu cần, giữ ngắn gọn -->
+          </div>
+        </div>
+        <div class="sl-menu mb-3">
+          <a title="Home" href="#">Home</a>
+          <a title="About" href="#">About</a>
+          <a title="Shop" href="#">Shop</a>
+          <a title="Contact" href="#">Contact</a>
+        </div>
+        <div class="sl-notice mb-2">
+          PHOTHESENSE – Nơi mỗi khoảnh khắc nuôi dưỡng giác quan. Khám phá hành trình du lịch trải nghiệm tại Việt Nam: rèn dao thủ công tại Hà Nội, lớp học cà phê Việt, tour làng hương... Với hình ảnh sống động và câu chuyện cảm xúc.
+        </div>
+        <div class="sl-copyright">
+          © 2025 PHOTHESENSE
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
 
 </html>
