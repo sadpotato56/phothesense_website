@@ -320,7 +320,8 @@ body, html {
 
   .hero-header {
     height: 100vh; /* Giảm chiều cao để phù hợp tablet/mobile, giữ không gian trải nghiệm */
-    background: url('picture/background.jpg') center/cover no-repeat fixed;
+    background: url('picture/background.jpg') center/cover no-repeat;
+    background-attachment: scroll;
     background-color: #000;
   }
   .subpage-header {
@@ -437,7 +438,8 @@ body, html {
   }
   .hero-header {
     height: 100vh; /* Giảm thêm cho mobile nhỏ, tập trung vào nội dung nhanh */
-    background: url('picture/background.jpg') center/cover no-repeat fixed;
+    background: url('picture/background.jpg') center/cover no-repeat;
+    background-attachment: scroll;
     background-color: #000;
   }
   .subpage-header {
@@ -484,6 +486,7 @@ body, html {
 }
 
 /*-------------------------FOOTER------------------------------*/
+
 
 
 
