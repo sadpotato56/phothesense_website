@@ -1,0 +1,193 @@
+/* ==================== RESET ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* ==================== HEADER CƠ BẢN ==================== */
+.navbar {
+  padding: 0.8rem 2rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar-brand img {
+  height: 80px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand img:hover {
+  transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 8px 12px !important;
+  margin: 0 6px;
+  position: relative;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hiệu ứng hover chung */
+.navbar-nav .nav-link:hover {
+  transform: scale(1.05);
+}
+
+/* Active link */
+.navbar-nav .nav-link.active {
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Hamburger */
+.navbar-toggler {
+  border: none;
+  background: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* ==================== 1️⃣ HEADER TRANG CHÍNH ==================== */
+.hero-header {
+  position: relative;
+  height: 100vh;
+  background: url('picture/background.jpg') center/cover no-repeat fixed;
+  color: white;
+  text-align: center;
+}
+
+.hero-header .navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: transparent !important;
+  z-index: 100;
+}
+
+/* Link style cho trang chính */
+.hero-header .navbar-nav .nav-link {
+  color: #fff !important;
+}
+
+.hero-header .navbar-nav .nav-link:hover {
+  color: #FFD700 !important;
+}
+
+.hero-header .navbar-nav .nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -6px;
+  right: -6px;
+  height: 38px;
+  background-color: #1C4278;
+  border-radius: 4px;
+  z-index: -1;
+  transition: all 0.3s ease;
+  /* để khi hover thì hiện 1 ô xanh trên chữ */
+}
+
+.hero-header .navbar-nav .nav-link.active {
+  background-color: #1C4278;
+  color: #FBDC47 !important;
+}
+
+/* Hero content */
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero-content h1 {
+  font-size: clamp(40px, 8vw, 90px);
+  color: #FBDC47;
+  letter-spacing: 8px;
+}
+
+.hero-content p {
+  font-size: clamp(16px, 3vw, 28px);
+  color: #fff;
+  margin-top: 15px;
+}
+
+/* ==================== 2️⃣ HEADER TRANG PHỤ ==================== */
+.subpage-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #FFFCEE !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Link style cho trang phụ */
+.subpage-header .navbar-nav .nav-link {
+  color: #1C4278 !important;
+}
+
+.subpage-header .navbar-nav .nav-link:hover {
+  color: #FBDC47 !important;
+}
+
+.subpage-header .navbar-nav .nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  right: 3px;
+  height: 40px;
+  background-color: #1C4278;
+  border-radius: 4px;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.subpage-header .navbar-nav .nav-link.active {
+  background-color: #1C4278;
+  color: #FBDC47 !important;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 992px) {
+  .navbar-nav {
+    text-align: center;
+    background-color: #1C4278;
+    border-radius: 8px;
+    padding: 10px 0;
+  }
+
+  .navbar-nav .nav-link {
+    color: #fff !important;
+    display: block;
+    margin: 5px 0;
+  }
+
+  .navbar-nav .nav-link.active {
+    background-color: transparent;
+    color: #FBDC47 !important;
+  }
+
+  .subpage-header .navbar-nav .nav-link {
+  color: #FFFCEE !important;
+  background-color: #1C4278;
+}
+
+.subpage-header .navbar-nav .nav-link:hover {
+  color: #FBDC47 !important;
+  background-color: #FFFCEE;
+}
+}

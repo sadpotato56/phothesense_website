@@ -4,156 +4,185 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Products - PHOTHESENSE</title>
-  <link rel="stylesheet" href="product.css" />
+
+  <!-- ✅ Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ✅ Google Fonts + Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- ✅ Custom CSS -->
+  <link rel="stylesheet" href="product.css" />
+  <link rel="stylesheet" href="header.css" />
 </head>
 
 <body>
-  <!-- Header (tái sử dụng từ index.html, thêm link về home) -->
+  <!-- ✅ Header (Bootstrap Navbar) -->
   <header class="subpage-header">
-  <div class="logo">
-    <img src="Logo_orangeColor.png" alt="PHOTHESENSE Alternate Logo">
-  </div>
-  <nav class="nav-links">
-    <a href="index.html">HOME</a>
-    <a href="#">ABOUT</a>
-    <a href="products.html" class="active">SHOP</a>
-    <a href="#">CONTACT</a>
-    <div class="cart-icon">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="cart-count">2</span>
-    </div>
-  </nav>
-</header>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="picture/Logo_orangeColor.png" alt="PHOTHESENSE Logo">
+        </a>
 
-  <!-- Main Content: Product Archive -->
+        <!-- Hamburger -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#subNav" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="subNav">
+          <ul class="navbar-nav ms-auto align-items-center gap-3">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
+          <li class="nav-item"><a class="nav-link active" href="products.html">SHOP</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li>
+            <li class="nav-item cart-icon">
+              <!-- <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count">2</span> -->
+
+              <a class="nav-link position-relative" href="#">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ✅ Main Content -->
   <main class="product-archive">
     <div class="container">
-      <!-- Left Sidebar: Filters -->
-      <aside class="filters-sidebar">
-        <h3>Search for an activity</h3>
-        <div class="search-box">
-          <input type="text" placeholder="Search by keyword" aria-label="Search experiences">
-          <span class="search-icon"><i class="fas fa-search"></i></span>
-        </div>
-
-        <h4>Filter by</h4>
-        <div class="filter-group">
-          <h5>Traveler rating</h5>
-          <label><input type="radio" name="rating" checked> Any</label>
-          <label><input type="radio" name="rating"> Wonderful 4.5+</label>
-          <label><input type="radio" name="rating"> Very good 4+</label>
-          <label><input type="radio" name="rating"> Good 3.5+</label>
-        </div>
-
-        <div class="filter-group">
-          <h5>Recommendations</h5>
-          <label><input type="checkbox" name="free-cancel"> Free cancellation</label>
-          <label><input type="checkbox" name="deals"> Deals</label>
-          <label><input type="checkbox" name="expert-picks"> Local expert picks</label>
-          <label><input type="checkbox" name="family"> Family friendly</label>
-          <label><input type="checkbox" name="new"> New on PHOTHESENSE</label>
-          <label><input type="checkbox" name="pickup"> Selective hotel pickup</label>
-        </div>
-      </aside>
-
-      <!-- Right Content: Categories, Sort, Products -->
-      <section class="main-content">
-        <div class="location-header">
-          <h1>Hanoi</h1>
-        </div>
-
-        <!-- Category Tags -->
-        <div class="category-tags">
-          <a href="#" class="tag">Tours & day trips <span>175 things to do</span></a>
-          <a href="#" class="tag">Water activities <span>55 things to do</span></a>
-          <a href="#" class="tag">Cruises & boat tours <span>50 things to do</span></a>
-          <a href="#" class="tag">History & culture <span>90 things to do</span></a>
-          <a href="#" class="tag">Food, drink & nightlife <span>21 things to do</span></a>
-        </div>
-
-        <!-- Sort & Info -->
-        <div class="sort-info">
-          <div class="sort-dropdown">
-            <select>
-              <option>Recommended</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Top Rated</option>
-            </select>
+      <div class="row">
+        <!-- Sidebar -->
+        <aside class="col-lg-3 mb-4 filters-sidebar">
+          <h3>Search for an activity</h3>
+          <div class="search-box">
+            <input type="text" placeholder="Search by keyword" aria-label="Search experiences">
+            <span class="search-icon"><i class="fas fa-search"></i></span>
           </div>
-          <div class="info-text">
-            <span>How our sort order works <i class="fas fa-info-circle"></i></span>
+
+          <h4>Filter by</h4>
+          <div class="filter-group">
+            <h5>Traveler rating</h5>
+            <label><input type="radio" name="rating" checked> Any</label>
+            <label><input type="radio" name="rating"> Wonderful 4.5+</label>
+            <label><input type="radio" name="rating"> Very good 4+</label>
+            <label><input type="radio" name="rating"> Good 3.5+</label>
           </div>
-        </div>
 
-        <!-- Top Products Grid -->
-        <div class="top-products">
-          <h2>Top 10 things to do</h2>
-          <div class="product-grid">
-            <!-- Product Card 1 -->
-            <a href="product-detail.html?id=1" class="product-card">
-              <div class="product-image" style="background-image: url('halong-bay-tour.jpg');"></div>
-              <div class="product-info">
-                <div class="rating">9.0 <i class="fas fa-star"></i></div>
-                <h3>1. DELUXE Halong Bay Day Tour</h3>
-                <p>From Hanoi, Daily operated 2024-2025</p>
-                <div class="duration">⏱ 13h</div>
-                <div class="reviews">73 reviews</div>
-                <span class="free-cancel">Free cancellation available</span>
-                <div class="price">$48 <span>incl. taxes & fees</span></div>
-                <div class="heart"><i class="fas fa-heart"></i></div>
-              </div>
-            </a>
-
-            <!-- Product Card 2 -->
-            <a href="product-detail.html?id=2" class="product-card">
-              <div class="product-image" style="background-image: url('ha-long-cruise.jpg');"></div>
-              <div class="product-info">
-                <div class="rating">8.6 <i class="fas fa-star"></i></div>
-                <h3>2. Full-Day Ha Long Bay Cruise Excursion from Hanoi</h3>
-                <p></p>
-                <div class="duration">⏱ 6h 15m+</div>
-                <div class="reviews">126 reviews</div>
-                <span class="free-cancel">Free cancellation available</span>
-                <div class="price">$38 <span>incl. taxes & fees</span></div>
-                <div class="heart"><i class="fas fa-heart"></i></div>
-              </div>
-            </a>
-
-            <!-- Product Card 3 -->
-            <a href="product-detail.html?id=3" class="product-card">
-              <div class="product-image" style="background-image: url('hanoi-heart-tour.jpg');"></div>
-              <div class="product-info">
-                <div class="rating">8.6 <i class="fas fa-star"></i></div>
-                <h3>3. Full-Day Heart of Hanoi Highlights Tour</h3>
-                <p>Hanoi</p>
-                <div class="duration">⏱ 8h 30m</div>
-                <div class="reviews">28 reviews</div>
-                <span class="free-cancel">Free cancellation available</span>
-                <div class="price">$36 <span>incl. taxes & fees</span></div>
-                <div class="heart"><i class="fas fa-heart"></i></div>
-              </div>
-            </a>
+          <div class="filter-group">
+            <h5>Recommendations</h5>
+            <label><input type="checkbox" name="free-cancel"> Free cancellation</label>
+            <label><input type="checkbox" name="deals"> Deals</label>
+            <label><input type="checkbox" name="expert-picks"> Local expert picks</label>
+            <label><input type="checkbox" name="family"> Family friendly</label>
+            <label><input type="checkbox" name="new"> New on PHOTHESENSE</label>
+            <label><input type="checkbox" name="pickup"> Selective hotel pickup</label>
           </div>
-          <a href="#" class="see-all">See all</a>
-        </div>
-      </section>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="col-lg-9 main-content">
+          <div class="location-header">
+            <h1>Hanoi</h1>
+          </div>
+
+          <div class="category-tags">
+            <a href="#" class="tag">Tours & day trips <span>175 things to do</span></a>
+            <a href="#" class="tag">Water activities <span>55 things to do</span></a>
+            <a href="#" class="tag">Cruises & boat tours <span>50 things to do</span></a>
+            <a href="#" class="tag">History & culture <span>90 things to do</span></a>
+            <a href="#" class="tag">Food, drink & nightlife <span>21 things to do</span></a>
+          </div>
+
+          <div class="sort-info">
+            <div class="sort-dropdown">
+              <select>
+                <option>Recommended</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Top Rated</option>
+              </select>
+            </div>
+            <div class="info-text">
+              <span>How our sort order works <i class="fas fa-info-circle"></i></span>
+            </div>
+          </div>
+
+          <div class="top-products">
+            <h2>Top 10 things to do</h2>
+            <div class="product-grid">
+              <a href="product-detail.html?id=1" class="product-card">
+                <div class="product-image" style="background-image: url('halong-bay-tour.jpg');"></div>
+                <div class="product-info">
+                  <div class="rating">9.0 <i class="fas fa-star"></i></div>
+                  <h3>1. DELUXE Halong Bay Day Tour</h3>
+                  <p>From Hanoi, Daily operated 2024-2025</p>
+                  <div class="duration">⏱ 13h</div>
+                  <div class="reviews">73 reviews</div>
+                  <span class="free-cancel">Free cancellation available</span>
+                  <div class="price">$48 <span>incl. taxes & fees</span></div>
+                  <div class="heart"><i class="fas fa-heart"></i></div>
+                </div>
+              </a>
+
+              <a href="product-detail.html?id=2" class="product-card">
+                <div class="product-image" style="background-image: url('ha-long-cruise.jpg');"></div>
+                <div class="product-info">
+                  <div class="rating">8.6 <i class="fas fa-star"></i></div>
+                  <h3>2. Full-Day Ha Long Bay Cruise Excursion from Hanoi</h3>
+                  <div class="duration">⏱ 6h 15m+</div>
+                  <div class="reviews">126 reviews</div>
+                  <span class="free-cancel">Free cancellation available</span>
+                  <div class="price">$38 <span>incl. taxes & fees</span></div>
+                  <div class="heart"><i class="fas fa-heart"></i></div>
+                </div>
+              </a>
+
+              <a href="product-detail.html?id=3" class="product-card">
+                <div class="product-image" style="background-image: url('hanoi-heart-tour.jpg');"></div>
+                <div class="product-info">
+                  <div class="rating">8.6 <i class="fas fa-star"></i></div>
+                  <h3>3. Full-Day Heart of Hanoi Highlights Tour</h3>
+                  <p>Hanoi</p>
+                  <div class="duration">⏱ 8h 30m</div>
+                  <div class="reviews">28 reviews</div>
+                  <span class="free-cancel">Free cancellation available</span>
+                  <div class="price">$36 <span>incl. taxes & fees</span></div>
+                  <div class="heart"><i class="fas fa-heart"></i></div>
+                </div>
+              </a>
+            </div>
+            <a href="#" class="see-all">See all</a>
+          </div>
+        </section>
+      </div>
     </div>
   </main>
 
-  <!-- Footer (tái sử dụng từ index.html) -->
-  <footer>
-    <div class="nav-links">
+  <!-- ✅ Footer -->
+  <footer class="text-center py-4">
+    <div class="nav-links mb-2">
       <a href="index.html">Home</a>
       <a href="#">About</a>
-      <a href="products.html">Shop</a>
+      <a href="Product.html">Shop</a>
       <a href="#">Contact</a>
     </div>
+    <div class="social-icons d-flex justify-content-center gap-3 mb-3">
+          <a href="https://www.facebook.com/phothesense" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/phothesense" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/phothesense" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
     <p>Copyright © 2025 PHOTHESENSE</p>
   </footer>
+
+  <!-- ✅ Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
