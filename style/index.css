@@ -176,6 +176,11 @@ footer .socials a:hover {
 /* ---------- IPAD / TABLET ---------- */
 @media  (max-width: 992px) {
 
+  .hero-header-main{
+    background-attachment: scroll;
+    transform: translateZ(0);
+  }
+
   .navbar-collapse {
   position: fixed;
   top: 0;
