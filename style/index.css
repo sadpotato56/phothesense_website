@@ -180,51 +180,7 @@ footer .socials a:hover {
     background-attachment: scroll;
     transform: translateZ(0);
   }
-
-  .navbar-collapse {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 30%;
-  height: 580px; /* full màn hình */
-  z-index: 3000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 80px;
-  transition: all 0.3s ease;
-   background: rgba(28, 66, 120, 0.97);
-}
-
-.navbar-collapse.show {
-  right: 0; /* slide vào màn hình */
-
-}
-.navbar-nav {
-  margin-top: 50px;
-  width: 100%;
-  text-align: center;
-  background-color: transparent;
-}
-
-.navbar-nav .nav-link {
-  color: #fff !important;
-  display: block;
-  margin: 10px 0;
-  /* overflow: visible; */
-}
  
-.navbar .nav-link {
-  color: inherit !important;
-  padding: 15px 12px !important;
-}
-
-
-  .nav-bar {
-    padding: 20px 40px;       /* giảm padding cho tablet */
-  }
-
   .hero-content h1 {
     font-size: clamp(30px, 8vw, 60px);
     letter-spacing: 4px;
@@ -234,11 +190,6 @@ footer .socials a:hover {
     font-size: clamp(14px, 3vw, 22px);
     letter-spacing: 2px;
   }
-
-  /* .explore-btn {
-    padding: 12px 30px;
-    font-size: 14px;
-  } */
 
   .image-placeholder {
     height: 500px;             /* tối ưu cho tablet */
