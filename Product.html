@@ -16,6 +16,7 @@
 
   <!-- ✅ Custom CSS -->
   <link rel="stylesheet" href="style/header.css">     <!-- Header dùng chung -->
+  <link rel="stylesheet" href="style/footer.css">
   <link rel="stylesheet" href="style/product.css"> 
 
   <!-- ✅ Bootstrap JS -->
@@ -38,7 +39,7 @@
         <button class="navbar-toggler" type="button" 
           data-bs-toggle="collapse" 
           data-bs-target="#subNav" 
-          aria-label="Toggle navigation">
+          aria-controls="subNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -49,15 +50,10 @@
           <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
           <li class="nav-item"><a class="nav-link active" href="products.html">SHOP</a></li>
           <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li>
-            <li class="nav-item cart-icon">
-              <!-- <i class="fas fa-shopping-cart"></i>
-              <span class="cart-count">2</span> -->
-
-              <a class="nav-link position-relative" href="#">
+            <a class="nav-link position-relative" href="#">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
-              </a>
-            </li>
+            </a>
           </ul>
         </div>
       </div>
@@ -186,8 +182,13 @@
     <div class="social-icons d-flex justify-content-center gap-3 mb-3">
           <a href="https://www.facebook.com/phothesense" target="_blank"><i class="fab fa-facebook-f"></i></a>
           <a href="https://www.instagram.com/phothesense" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/phothesense" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
+          <a href="https://www.youtube.com/phothesense" target="_blank"><i class="fab fa-youtube"></i></a>            
+    </div>
+    <div>
+       <a href="#" class="footer-logo d-inline-block mb-3">
+          <img src="picture/Logo_orangeColor.png" height="30px">
+        </a>
+    </div>
     <p>Copyright © 2025 PHOTHESENSE</p>
   </footer>
 
