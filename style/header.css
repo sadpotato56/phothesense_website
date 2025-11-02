@@ -234,7 +234,7 @@
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 992px) {
 .navbar-brand img {
-    height: 60px;
+    height: 80px;
 }
 
 .navbar-collapse {
@@ -336,4 +336,5 @@
 } */
 
 }
+
 
