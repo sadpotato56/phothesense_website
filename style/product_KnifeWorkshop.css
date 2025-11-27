@@ -16,35 +16,6 @@ body {
   padding-top: 170px;
 }
 
-/* ---------- Script ---------- */
-
-
-
-
-/* ---------- HERO ---------- */
-.hero-banner {
-  position: relative;
-  height: 5vh;
-  background: url('picture/blacksmith.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  color: #1C4278;
-}
-
-.hero-content {
-  position: relative;
-  margin-left: 50px;
-  z-index: 2;
-  text-align: left;
-}
-
-.subtitle {
-  color: #1C4278;
-  font-size: 18px;
-  opacity: 0.9;
-}
-
 /* ---------- Photo Gallery ---------- */
 .photo-gallery {
   display: flex;
@@ -181,11 +152,35 @@ body {
 }
 
 /* ---------- ABOUT ---------- */
-.about .section-title {
+
+/* Tiêu đề chính */
+.mini-hero .title {
   font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 40px);
   color: #1C4278;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
+
+/* Phụ đề mô tả */
+.mini-hero .subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: clamp(15px, 2vw, 18px);
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* Tiêu đề phần “About this activity” */
+.about-this-activity .section-title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+  font-size: clamp(20px, 2.5vw, 28px);
+  color: #1C4278;
+  margin-bottom: 15px;
+}
+
 
 .about ul li {
   margin-bottom: 10px;
@@ -216,7 +211,7 @@ body {
 
 .highlights .highlight-card {
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 30px;
+  padding: 25px;
   border-radius: 15px;
   transition: all 0.3s ease;
 }
@@ -261,9 +256,6 @@ body {
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
-  .hero-banner {
-    height: 60vh;
-  }
 
   .product-header .title {
     font-size: 28px;
@@ -272,4 +264,8 @@ body {
   .highlight-card {
     padding: 20px;
   }
+}
+
+@media (max-width: 480px) {
+  
 }

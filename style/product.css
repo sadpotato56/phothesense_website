@@ -10,16 +10,16 @@ body, html {
   color: #1C4278;
   background-color: #f8f9fa;
   scroll-behavior: smooth;
-  padding-top: 70px;
+  padding-top: 60px;
 }
 
 
 /* ---------------- Product Layout ---------------- */
 .product-archive {
-  padding: 60px 0;
+  padding: 20px 0;
 }
 
-.filters-sidebar {
+/* .filters-sidebar {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -30,7 +30,48 @@ body, html {
   margin-bottom: 15px;
   color: #1C4278;
   font-family: 'Roboto Slab', serif;
+} 
+
+.filter-tags {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
+
+.filter-tags h4 {
+  font-family: 'Roboto Slab', serif;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #1C4278;
+} 
+
+
+
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tag-btn {
+  background-color: #f0f0f0;
+  color: #1C4278;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.tag-btn:hover, .tag-btn.active {
+  background-color: #FBDC47;
+  color: #1C4278;
+}
+
 
 .search-box {
   position: static;
@@ -51,6 +92,220 @@ body, html {
   transform: translateY(-50%);
   color: #1C4278;
 }
+  */
+
+/* ---------------- Horizontal Filter Bar ---------------- */
+/* FILE: style/product.css  – Filter Bar refined */
+/* ---------- Brand tokens (optional, dùng chung) ---------- */
+:root {
+  --ph-primary:  #FBDC47;
+  --ph-navy:     #1C4278;
+  --ph-bg-soft:  #FFFCEE;
+  --ph-text-light: #FFFCEE;
+}
+
+/* ============================
+   FILTER BAR – PHOTHESENSE
+   ============================ */
+
+/* Thanh filter bám trên cùng, nền kem brand, căn giữa */
+.filter-bar {
+  position: sticky;
+  top: 135px; /* chỉnh theo chiều cao header của bạn */
+  z-index: 950;
+  background: #FFFCEE;
+  border-bottom: 1px solid rgba(28, 66, 120, 0.08);
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+/* Container chứa các chip + sort – căn giữa, max-width để không quá dài */
+.filter-scroll-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 1240px;
+  width: 100%;
+  padding: 0 16px;
+  margin: 0 auto;
+
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap; /* giúp các chip nằm trên 1 hàng, có thể scroll ngang trên mobile */
+}
+
+.filter-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Nhóm Location / Experience */
+.filter-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.filter-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  color: #1C4278;
+}
+
+/* ---------- Filter Chip ---------- */
+.filter-chip {
+  background: #f3f3f3;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ph-navy);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.25s ease,
+              color 0.25s ease,
+              box-shadow 0.25s ease,
+              transform 0.15s ease,
+              border-color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.filter-chip.with-icon i {
+  font-size: 14px;
+  color: var(--ph-navy);
+}
+
+/* Hover + Active */
+.filter-chip:hover,
+.filter-chip.active {
+  background: var(--ph-navy);
+  color: var(--ph-text-light);
+}
+
+.filter-chip:hover i,
+.filter-chip.active i {
+  color: var(--ph-text-light);
+}
+
+/* Focus cho accessibility */
+.filter-chip:focus-visible {
+  outline: 2px solid var(--ph-primary);
+  outline-offset: 2px;
+}
+
+
+/* ============================
+   SORT TRONG FILTER BAR
+   ============================ */
+
+.sort-in-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto; /* đẩy về phía bên phải trong container cuộn */
+  flex-shrink: 0;
+}
+
+.sort-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  color: #1C4278;
+}
+
+/* Wrapper để vẽ arrow custom */
+.sort-dropdown {
+  position: relative;
+}
+
+/* Arrow Font Awesome tự vẽ */
+.sort-dropdown::after {
+  content: "\f107"; /* chevron-down */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 13px;
+  color: #1C4278;
+  opacity: 0.8;
+}
+
+/* Select style */
+.sort-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background: #FFFCEE;
+  border: 1px solid rgba(28, 66, 120, 0.25);
+  border-radius: 999px;
+
+  padding: 7px 32px 7px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1C4278;
+
+  cursor: pointer;
+  transition: border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              background-color 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* Hover */
+.sort-select:hover {
+  border-color: #1C4278;
+  box-shadow: 0 3px 10px rgba(28, 66, 120, 0.14);
+}
+
+/* Focus */
+.sort-select:focus {
+  outline: none;
+  border-color: #FBDC47;
+  box-shadow: 0 0 0 2px rgba(251, 220, 71, 0.4);
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+    .filter-bar {
+    top: 96px;
+    padding: 8px 0;
+  }
+
+  .filter-scroll-container {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .filter-chip {
+    font-size: 12px;
+    padding: 6px 14px;
+  }
+
+  .sort-label {
+    display: none; /* cho gọn trên mobile, chỉ giữ dropdown */
+  }
+
+  .sort-select {
+    font-size: 12px;
+    padding: 6px 28px 6px 10px;
+  }
+}
+
+/* ---------------- Product Cards ---------------- */
 
 /* Product Cards */
 .product-grid {
@@ -146,9 +401,8 @@ body, html {
 
 
 /* ---------------- Responsive ---------------- */
-@media (max-width: 992px) {
- 
 
+@media (max-width: 992px) {
   body.nav-open {
     overflow: hidden;
   }
