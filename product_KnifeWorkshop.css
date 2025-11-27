@@ -1,0 +1,271 @@
+/* ---------------------------------------------
+   PRODUCT PAGE - PHOTHESENSE BRAND STYLE
+--------------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #1C4278;
+  background-color: #FFFCEE;
+  line-height: 1.6;
+  padding-top: 170px;
+}
+
+/* ---------- Photo Gallery ---------- */
+.photo-gallery {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.gallery-left {
+  flex: 2;
+}
+
+.gallery-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.gallery-img:hover {
+  transform: scale(1.03);
+}
+
+/* ----- Lightbox chỉnh sửa ----- */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  text-align: center;
+  overflow: hidden;
+}
+
+.lightbox-img {
+  max-width: 85%;
+  max-height: 80vh;
+  margin-top: 70px;
+  border-radius: 10px;
+}
+
+.top-counter {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 18px;
+  background: rgba(0,0,0,0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.lightbox-btn {
+  display: block;                  
+  margin: 20px auto 0;    
+  padding: 10px 30px;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  color: #fff;
+  background: transparent;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  width: fit-content;  
+  transition: 0.3s ease;
+}
+
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  color: #fff;
+  font-size: 40px;
+  user-select: none;
+  transition: 0.3s;
+}
+
+.prev { left: 50px; }
+.next { right: 50px; }
+
+.prev:hover, .next:hover {
+  color: #FBDC47;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+
+
+.book-btn {
+  display: inline-block;
+  background-color: #FBDC47;
+  color: #1C4278;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 12px 30px;
+  border-radius: 40px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #1C4278;
+  color: #FBDC47;
+  /* border: 2px solid #FBDC47; */
+}
+
+/* ---------- ABOUT ---------- */
+
+/* Tiêu đề chính */
+.mini-hero .title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 40px);
+  color: #1C4278;
+  margin-bottom: 10px;
+}
+
+/* Phụ đề mô tả */
+.mini-hero .subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: clamp(15px, 2vw, 18px);
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* Tiêu đề phần “About this activity” */
+.about-this-activity .section-title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+  font-size: clamp(20px, 2.5vw, 28px);
+  color: #1C4278;
+  margin-bottom: 15px;
+}
+
+
+.about ul li {
+  margin-bottom: 10px;
+}
+
+.about i {
+  color: #FBDC47;
+  margin-right: 8px;
+}
+
+.price-box {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1C4278;
+}
+
+.price-box .per {
+  font-size: 14px;
+  color: #777;
+  margin-left: 4px;
+}
+
+/* ---------- HIGHLIGHTS ---------- */
+.highlights {
+  background-color: #1C4278;
+  color: white;
+}
+
+.highlights .highlight-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.highlight-card i {
+  font-size: 40px;
+  color: #FBDC47;
+  margin-bottom: 15px;
+}
+
+.highlight-card:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- REVIEWS ---------- */
+.reviews {
+  background-color: #FFFCEE;
+  color: #1C4278;
+}
+
+.review-card {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+  transform: scale(1.02);
+}
+
+.review-card span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+
+  .product-header .title {
+    font-size: 28px;
+  }
+
+  .highlight-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  
+}

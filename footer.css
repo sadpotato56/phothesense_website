@@ -1,0 +1,79 @@
+footer {
+  background: #FFFCEE;              /* Nền vàng kem nhẹ */
+  color: #1C4278;                   /* Xanh navy chủ đạo */
+  font-size: 14px;
+  text-align: center;
+  padding: 30px 0;
+  border-top: 1px solid rgba(28, 66, 120, 0.1);
+}
+
+/* --- Navigation Links --- */
+footer .nav-links a {
+  color: #1C4278;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+footer .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 1.5px;
+  background: #FBDC47;
+  transition: width 0.3s ease;
+}
+
+footer .nav-links a:hover {
+  color: #FBDC47;
+}
+
+footer .nav-links a:hover::after {
+  width: 100%;
+}
+
+/* --- Social Icons --- */
+footer .social-icons a {
+  color: #1C4278;
+  font-size: 1.4rem;
+  margin: 0 10px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+footer .social-icons a:hover {
+  color: #FBDC47;
+  transform: scale(1.15);
+}
+
+/* --- Logo --- */
+footer .footer-logo img {
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+footer .footer-logo:hover img {
+  transform: scale(1.05);
+}
+
+/* --- Copyright --- */
+footer p {
+  font-size: 13px;
+  color: #1C4278;
+  opacity: 0.8;
+  margin-top: 10px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 576px) {
+  footer .nav-links a {
+    display: block;
+    margin: 6px 0;
+  }
+  footer {
+    padding: 25px 15px;
+  }
+}

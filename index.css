@@ -1,0 +1,203 @@
+/* ================================================
+   PHOTHESENSE MAIN STYLE (Bootstrap Enhanced)
+================================================ */
+
+/* ---------- RESET & BASE ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  color: white;
+  height: 100%;
+  background-color: #1C4278;
+  /* overflow-x: hidden; */
+}
+
+.hero-header-main {
+  height: 100vh;
+  width: 100%;
+  background: url('../picture/background.jpg') center/cover no-repeat fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+  padding-top: 165.6px; 
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero-content h1 {
+  font-size: clamp(40px, 8vw, 90px);
+  font-weight: 500;
+  color: #FBDC47;
+  letter-spacing: 8px;
+}
+
+.hero-content p {
+  font-size: clamp(16px, 3vw, 28px);
+  color: #FBDC47;
+  margin-top: 15px;
+  letter-spacing: 5px;
+}
+
+.explore-btn {
+  display: inline-block;
+  background-color: #e63946;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 14px 40px;
+  border-radius: 40px;
+  transition: 0.3s ease;
+}
+
+.explore-btn:hover {
+  background-color: #c62828;
+}
+
+/* ---------- THREE COLUMNS (Use Bootstrap Grid) ---------- */
+.three-columns {
+  background-color: #1C4278;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.column h2 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.column p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 540px;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.image-placeholder:hover {
+  transform: scale(1.05);
+}
+
+/* ---------- EXPERIENCES SECTION ---------- */
+.three-experiences {
+  background-color: #1C4278;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.experience-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 480px;
+}
+
+.experience-card h2 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 26px;
+  color: #FBDC47;
+  margin-bottom: 15px;
+}
+
+.experience-card p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  color: #fff;
+}
+
+.experience-link .image-placeholder {
+  height: 300px;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  background-color: #0d1f3b;
+  color: #ccc;
+  text-align: center;
+}
+
+footer img {
+  filter: brightness(0) invert(1);
+}
+
+footer a {
+  color: #FBDC47;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+footer .socials a {
+  font-size: 20px;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+
+footer .socials a:hover {
+  color: #FBDC47;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+/* ---------- IPAD / TABLET ---------- */
+@media  (max-width: 992px) {
+
+  .hero-header-main{
+    background-attachment: scroll;
+    transform: translateZ(0);
+  }
+ 
+  .hero-content h1 {
+    font-size: clamp(30px, 8vw, 60px);
+    letter-spacing: 4px;
+  }
+
+  .hero-content p {
+    font-size: clamp(14px, 3vw, 22px);
+    letter-spacing: 2px;
+  }
+
+  .image-placeholder {
+    height: 500px;             /* tối ưu cho tablet */
+  }
+
+  .experience-card {
+    min-height: 450px;
+  }
+
+
+}
