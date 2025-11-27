@@ -45,17 +45,52 @@
 
         <!-- Menu -->
         <div class="collapse navbar-collapse" id="subNav">
-          <ul class="navbar-nav ms-auto align-items-center gap-3">
-          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
-          <li class="nav-item"><a class="nav-link active" href="products.html">SHOP</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li>
-            <a class="nav-link position-relative" href="#">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
+        <ul class="navbar-nav ms-auto align-items-center gap-3">
+
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">HOME</a>
+          </li>
+
+          <!-- ABOUT (Cal trigger) -->
+          <li class="nav-item">
+            <a 
+              class="nav-link"
+              href="javascript:void(0)"
+              data-cal-link="phothesense/quick-chat"
+              data-cal-namespace="quick-chat"
+              data-cal-config='{"layout":"month_view"}'
+            >
+              ABOUT
             </a>
-          </ul>
-        </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="products.html">SHOP</a>
+          </li>
+
+          <!-- CONTACT (Cal trigger) -->
+          <li class="nav-item">
+            <a 
+              class="nav-link"
+              href="javascript:void(0)"
+              data-cal-link="phothesense/quick-chat"
+              data-cal-namespace="quick-chat"
+              data-cal-config='{"layout":"month_view"}'
+            >
+              CONTACT
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="#">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
       </div>
     </nav>
   </header>
