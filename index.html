@@ -9,96 +9,29 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Fonts & Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Poppins + Roboto + Roboto Slab (đúng với CSS đang dùng) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style/header.css">     <!-- Header dùng chung -->
-  <link rel="stylesheet" href="style/index.css">   
-  <link rel="stylesheet" href="style/footer.css"/>
-
+  <!-- 🔽 CSS dùng chung + theo trang (đúng thứ tự) -->
+  <link rel="stylesheet" href="style/base.css">    <!-- Reset + variables + font chung -->
+  <link rel="stylesheet" href="style/header.css">  <!-- Header dùng chung -->
+  <link rel="stylesheet" href="style/footer.css">  <!-- Footer dùng chung -->
+  <link rel="stylesheet" href="style/index.css">   <!-- Style riêng cho trang home -->
   
+
   <!-- JS -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script defer src="script.js"></script>
 </head>
 
-<body>
-  <!-- ✅ Header / Hero Section -->
-  <header class="hero-header">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="picture/logo.png" alt="PHOTHESENSE Logo">
-        </a>
 
-        <!-- Hamburger (Bootstrap toggler) -->
-        <button class="navbar-toggler" type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#mainNav" 
-        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+<body data-header="hero">
 
-        <!-- Menu links -->
-        <div class="collapse navbar-collapse" id="mainNav">
-          <ul class="navbar-nav ms-auto align-items-center gap-3">
-
-            <li class="nav-item">
-              <a href="#" class="nav-link active">HOME</a>
-            </li>
-
-            <!-- ABOUT (Cal trigger) -->
-            <li class="nav-item">
-              <a 
-                class="nav-link"
-                href="javascript:void(0)"
-                data-cal-link="phothesense/quick-chat"
-                data-cal-namespace="quick-chat"
-                data-cal-config='{"layout":"month_view"}'
-              >
-                ABOUT
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="Product.html" target="_blank" class="nav-link">SHOP</a>
-            </li>
-
-            <!-- CONTACT (Cal trigger) -->
-            <li class="nav-item">
-              <a 
-                class="nav-link"
-                href="javascript:void(0)"
-                data-cal-link="phothesense/quick-chat"
-                data-cal-namespace="quick-chat"
-                data-cal-config='{"layout":"month_view"}'
-              >
-                CONTACT
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link position-relative" href="#">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </nav>
-  </header>
-
+  <!-- Header dynamic -->
+  <div id="header-placeholder"></div>
     <!-- Hero Content -->
   <section class="hero-header-main">
   <div class="hero-content text-center">
@@ -183,16 +116,6 @@
     </div>
   </section>
 
-<script>
-  window.addEventListener('scroll', function() {
-    const header = document.querySelector('.hero-header');
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  });
-</script>
 
 <!-- Cal element-click embed code begins -->
       <script type="text/javascript">
@@ -210,25 +133,11 @@
 <!-- Cal element-click embed code ends -->
 
 
-
+    <button id="scrollToTop" class="scroll-to-top">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+    
   <!-- ✅ Footer -->
-  <footer class="bg-dark text-light py-5">
-    <div class="container text-center">
-      <div class="mb-4">
-        <a href="#" class="footer-logo d-inline-block mb-3">
-          <img src="logo.png" alt="PHOTHESENSE" height="60">
-        </a>
-        <div class="d-flex justify-content-center gap-3 mb-3">
-          <a href="https://www.facebook.com/phothesense" target="_blank" class="text-light"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/phothesense" target="_blank" class="text-light"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/phothesense" target="_blank" class="text-light"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="small mb-3">
-          PHOTHESENSE – Nơi mỗi khoảnh khắc nuôi dưỡng giác quan. Khám phá hành trình du lịch trải nghiệm tại Việt Nam...
-        </div>
-        <div class="text-secondary small">© 2025 PHOTHESENSE</div>
-      </div>
-    </div>
-  </footer>
+  <div id="footer-placeholder"></div>
 </body>
 </html>

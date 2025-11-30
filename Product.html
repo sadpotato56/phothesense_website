@@ -11,10 +11,11 @@
   <!-- ✅ Google Fonts + Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- ✅ Custom CSS -->
+  <link rel="stylesheet" href="style/base.css">    <!-- Reset + variables + font chung -->
   <link rel="stylesheet" href="style/header.css">     <!-- Header dùng chung -->
   <link rel="stylesheet" href="style/footer.css">
   <link rel="stylesheet" href="style/product.css"> 
@@ -25,80 +26,20 @@
 
 </head>
 
-
-<body>
   <!-- ✅ Header (Bootstrap Navbar) -->
-  <header class="subpage-header">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">
-          <img src="picture/Logo_orangeColor.png" alt="PHOTHESENSE Logo">
-        </a>
+  <body data-header="subpage">
+  <div id="header-placeholder"></div>
 
-        <!-- Hamburger -->
-        <button class="navbar-toggler" type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#subNav" 
-          aria-controls="subNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="subNav">
-        <ul class="navbar-nav ms-auto align-items-center gap-3">
-
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">HOME</a>
-          </li>
-
-          <!-- ABOUT (Cal trigger) -->
-          <li class="nav-item">
-            <a 
-              class="nav-link"
-              href="javascript:void(0)"
-              data-cal-link="phothesense/quick-chat"
-              data-cal-namespace="quick-chat"
-              data-cal-config='{"layout":"month_view"}'
-            >
-              ABOUT
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link active" href="products.html">SHOP</a>
-          </li>
-
-          <!-- CONTACT (Cal trigger) -->
-          <li class="nav-item">
-            <a 
-              class="nav-link"
-              href="javascript:void(0)"
-              data-cal-link="phothesense/quick-chat"
-              data-cal-namespace="quick-chat"
-              data-cal-config='{"layout":"month_view"}'
-            >
-              CONTACT
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link position-relative" href="#">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
-            </a>
-          </li>
-
-        </ul>
-      </div>
-
-      </div>
-    </nav>
-  </header>
+  <!-- --------------------------------------------------------------------------------------- -->
 
   <!-- 🔹 Horizontal Filter Bar -->
 <section class="filter-bar">
-  <div class="filter-scroll-container">
+    <!-- Nút sang trái -->
+    <button class="filter-arrow filter-arrow-left" aria-label="Scroll left">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
 
+  <div class="filter-scroll-container">
     <!-- Group: Location -->
     <div class="filter-group">
       <span class="filter-label">Location</span>
@@ -144,20 +85,6 @@
     </div>
 
     <!-- Date -->
-    <!-- Cal element-click embed code begins -->
-      <script type="text/javascript">
-        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-      Cal("init", "quick-chat", {origin:"https://app.cal.com"});
-
-        
-        // Important: Please add the following attributes to the element that should trigger the calendar to open upon clicking.
-        // `data-cal-link="phothesense/quick-chat"`
-        // data-cal-namespace="quick-chat"
-        // `data-cal-config='{"layout":"month_view"}'`
-
-        Cal.ns["quick-chat"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#132c4f"},"dark":{"cal-brand":"#FFFCEE"}},"hideEventTypeDetails":false,"layout":"month_view"});
-        </script>
-        <!-- Cal element-click embed code ends -->
     <button 
       class="filter-chip with-icon"
       data-cal-link="phothesense/quick-chat"
@@ -169,6 +96,11 @@
     </button>
 
   </div>
+
+    <!-- Nút sang phải -->
+    <button class="filter-arrow filter-arrow-right" aria-label="Scroll right">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
 </section>
 
 
@@ -181,18 +113,6 @@
             <div class="location-header">
               <h1>Hanoi</h1> <h2>Top things to do</h2>
             </div>
-
-            <!-- <div class="sort-info">
-              <div class="sort-dropdown">
-                <select class="sort-select">
-                  <option value="recommended">Recommended</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
-                  <option value="rating">Top Rated</option>
-                </select>
-              </div>
-            </div> -->
-
 
           <div class="top-products"> 
             <div class="product-grid">
@@ -248,19 +168,23 @@
                   </div>
                 </a>
 
-              <a href="product-detail.html?id=3" class="product-card">
-                <div class="product-image" style="background-image: url('hanoi-heart-tour.jpg');"></div>
+              <a href="product_CoffeeWorkshop.html" 
+                class="product-card"
+                data-location="hanoi" 
+                data-type="workshop">
+                <div class="product-image" style="background-image: url('picture/coffee_workshop/cf (1).jpg');"></div>
                 <div class="product-info">
-                  <div class="rating">8.6 <i class="fas fa-star"></i></div>
-                  <h3>3. Full-Day Heart of Hanoi Highlights Tour</h3>
-                  <p>Hanoi</p>
-                  <div class="duration">⏱ 8h 30m</div>
-                  <div class="reviews">28 reviews</div>
+                  <div class="rating">4.9 <i class="fas fa-star"></i></div>
+                  <h3>Hanoi Coffee Workshop – Master Vietnamese Brewing</h3>
+                  <p>Hands-on Vietnamese coffee tasting in a cozy local space.</p>
+                  <div class="duration">⏱ 2.5–3 hours</div>
+                  <div class="reviews">312 reviews</div>
                   <span class="free-cancel">Free cancellation available</span>
-                  <div class="price">$36 <span>incl. taxes & fees</span></div>
+                  <div class="price">₫850,000 <span>per person · incl. tasting</span></div>
                   <div class="heart"><i class="fas fa-heart"></i></div>
                 </div>
               </a>
+
 
               <a href="product-detail.html?id=3" class="product-card">
                 <div class="product-image" style="background-image: url('hanoi-heart-tour.jpg');"></div>
@@ -353,26 +277,8 @@
     </div>
   </main>
 
-  <!-- ✅ Footer -->
-  <footer class="text-center py-4">
-    <div class="nav-links mb-2">
-      <a href="index.html">Home</a>
-      <a href="#">About</a>
-      <a href="Product.html">Shop</a>
-      <a href="#">Contact</a>
-    </div>
-    <div class="social-icons d-flex justify-content-center gap-3 mb-3">
-          <a href="https://www.facebook.com/profile.php?id=100066745162486" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/phothesense" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/phothesense" target="_blank"><i class="fab fa-youtube"></i></a>            
-    </div>
-    <div>
-       <a href="#" class="footer-logo d-inline-block mb-3">
-          <img src="picture/Logo_orangeColor.png" height="30px">
-        </a>
-    </div>
-    <p>Copyright © 2025 PHOTHESENSE</p>
-  </footer>
+ 
+
 
   <script>
   const scrollContainer = document.querySelector('.filter-scroll-container');
@@ -430,7 +336,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+      <!-- Cal element-click embed code begins -->
+      <script type="text/javascript">
+        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      Cal("init", "quick-chat", {origin:"https://app.cal.com"});
+
+        
+        // Important: Please add the following attributes to the element that should trigger the calendar to open upon clicking.
+        // `data-cal-link="phothesense/quick-chat"`
+        // data-cal-namespace="quick-chat"
+        // `data-cal-config='{"layout":"month_view"}'`
+
+        Cal.ns["quick-chat"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#132c4f"},"dark":{"cal-brand":"#FFFCEE"}},"hideEventTypeDetails":false,"layout":"month_view"});
+        </script>
+        <!-- Cal element-click embed code ends -->
 
 
+        <button id="scrollToTop" class="scroll-to-top">
+          <i class="fa-solid fa-chevron-up"></i>
+        </button>
+
+ <!-------------------------- ✅ Footer ------------------------->
+    <div id="footer-placeholder"></div>
+    
 </body>
 </html>

@@ -1,47 +1,169 @@
 // FILE: script.js
+// ----------------------------------------------------
+// 1) Cal.com embed (quick-chat) – dùng cho ABOUT / CONTACT
+// 2) Dynamic header + footer include (header-hero / header-subpage + footer.html)
+// 3) Tự set .active cho nav link theo URL
+// 4) Hiệu ứng hero-header đổi style khi scroll
+// 5) Filter + sort product cards (trang products.html)
+// ----------------------------------------------------
 
-// ✅ Hamburger menu + mobile nav
-document.addEventListener('DOMContentLoaded', () => {
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
 
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open');
-      document.body.classList.toggle('nav-open');
-    });
+// ===============================
+// 1. Cal.com – Quick Chat Popup
+// ===============================
+function initCal() {
+  // Đảm bảo chỉ init 1 lần (tránh gọi lại nhiều lần khi load header + footer)
+  if (window.__calInitialized) return;
+  window.__calInitialized = true;
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        navLinks.classList.remove('open');
-        document.body.classList.remove('nav-open');
-      });
-    });
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal;
+      let ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement("script")).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === "string") {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          p(cal.ns[namespace], ar);
+          p(cal, ["initNamespace", namespace]);
+        } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  // Event type "quick-chat"
+  Cal("init", "quick-chat", { origin: "https://app.cal.com" });
+
+  Cal.ns["quick-chat"]("ui", {
+    cssVarsPerTheme: {
+      light: { "cal-brand": "#132c4f" },
+      dark: { "cal-brand": "#FFFCEE" }
+    },
+    hideEventTypeDetails: false,
+    layout: "month_view"
+  });
+}
+
+
+// =========================================
+// 2. Set .active cho nav link theo URL
+// =========================================
+function setActiveNavLink() {
+  const path = window.location.pathname.toLowerCase();
+  const links = document.querySelectorAll('.navbar-nav .nav-link[href]');
+
+  links.forEach(link => {
+    const href = link.getAttribute('href').toLowerCase();
+    link.classList.remove('active');
+
+    // Trang chủ: index.html hoặc '/'
+    if (
+      href === 'index.html' &&
+      (path.endsWith('/') || path.endsWith('index.html'))
+    ) {
+      link.classList.add('active');
+    }
+    // Các trang khác
+    else if (href !== 'index.html' && path.endsWith(href)) {
+      link.classList.add('active');
+    }
+  });
+}
+
+
+// ===================================================
+// 3. Hiệu ứng hero-header đổi style khi scroll
+//    (chỉ áp dụng cho trang có .hero-header – trang chủ)
+// ===================================================
+function initHeroHeaderScroll() {
+  const heroHeader = document.querySelector('.hero-header');
+  if (!heroHeader) return;
+
+  const THRESHOLD = 60; // scroll xuống sâu hơn rồi mới đổi
+  let isScrolled = false;
+
+  function onScroll() {
+    const shouldBeScrolled = window.scrollY > THRESHOLD;
+
+    if (shouldBeScrolled !== isScrolled) {
+      isScrolled = shouldBeScrolled;
+      heroHeader.classList.toggle('scrolled', isScrolled);
+    }
   }
 
-  // ✅ Chỉ chạy filter logic nếu đang ở trang Product (có .product-grid)
+  window.addEventListener('scroll', onScroll);
+  onScroll(); // set state ban đầu
+}
+
+
+
+// ===================================================
+// 4. Dynamic Header + Footer include
+// ===================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // ----- HEADER -----
+  const headerContainer = document.getElementById('header-placeholder');
+  if (headerContainer) {
+    const pageHeaderType = document.body.dataset.header || 'subpage';
+    const headerFile = pageHeaderType === 'hero'
+      ? 'components/header-hero.html'
+      : 'components/header-subpage.html';
+
+    fetch(headerFile)
+      .then(res => res.text())
+      .then(html => {
+        headerContainer.innerHTML = html;
+
+        // Sau khi header đã gắn vào DOM:
+        setActiveNavLink();
+        initHeroHeaderScroll();
+        initCal(); // để ABOUT/CONTACT trong header hoạt động
+      })
+      .catch(err => console.error('Không load được header:', err));
+  }
+
+  // ----- FOOTER -----
+  const footerContainer = document.getElementById('footer-placeholder');
+  if (footerContainer) {
+    fetch('components/footer.html')
+      .then(res => res.text())
+      .then(html => {
+        footerContainer.innerHTML = html;
+
+        // Footer cũng có ABOUT/CONTACT trigger → đảm bảo Cal đã init
+        initCal();
+      })
+      .catch(err => console.error('Không load được footer:', err));
+  }
+
+  // ----- PRODUCT FILTERS (chỉ chạy ở trang có .product-grid) -----
   const productGrid = document.querySelector('.product-grid');
   if (productGrid) {
     initProductFilters();
+    initFilterScrollArrows(); // filter scroll arrows
   }
+  initScrollToTop();        // scroll-to-top button
 });
 
-// ✅ Header scroll effect
-$(function() {
-  $(window).on("scroll", function() {
-    if ($(window).scrollTop() > 50) {
-      $(".header").addClass("active");
-    } else {
-      $(".header").removeClass("active");
-    }
-  });
-});
 
-// =======================
-//  Filter + Sort logic
-// =======================
+// ===================================================
+// 5. Filter + Sort logic cho trang products.html
+//    - Sử dụng data-location & data-type trên .product-card
+//    - Filter bằng .filter-chip.filter-location / .filter-chip.filter-type
+//    - Không ẩn card, chỉ reorder (sort) theo độ match
+// ===================================================
 function initProductFilters() {
   const grid = document.querySelector('.product-grid');
   if (!grid) return;
@@ -59,7 +181,7 @@ function initProductFilters() {
     'sapa': 'Sapa'
   };
 
-  // Lưu trạng thái ban đầu (thứ tự gốc + data)
+  // Lưu trạng thái ban đầu: element + index gốc + data
   const originalCards = cards.map((el, index) => ({
     el,
     originalIndex: index,
@@ -71,7 +193,7 @@ function initProductFilters() {
   let currentLocation = (urlParams.get('location') || '').toLowerCase();
   let currentType = (urlParams.get('type') || '').toLowerCase();
 
-  // Nếu query có giá trị nhưng không nằm trong list, coi như không filter
+  // Nếu query location không hợp lệ → bỏ qua
   if (!LOCATION_LABELS[currentLocation] && currentLocation !== '') {
     currentLocation = '';
   }
@@ -79,7 +201,8 @@ function initProductFilters() {
   // Lắng nghe click trên chip Location
   locationChips.forEach(chip => {
     chip.addEventListener('click', () => {
-      currentLocation = (chip.dataset.location || '').toLowerCase();
+      const loc = (chip.dataset.location || '').toLowerCase();
+      currentLocation = loc === currentLocation ? '' : loc; // click lại chip -> bỏ filter
       applyFilterSort();
     });
   });
@@ -87,7 +210,8 @@ function initProductFilters() {
   // Lắng nghe click trên chip Type
   typeChips.forEach(chip => {
     chip.addEventListener('click', () => {
-      currentType = (chip.dataset.type || '').toLowerCase();
+      const typ = (chip.dataset.type || '').toLowerCase();
+      currentType = typ === currentType ? '' : typ;
       applyFilterSort();
     });
   });
@@ -104,20 +228,18 @@ function initProductFilters() {
       const scoreB = getMatchScore(b, currentLocation, currentType, hasFilter);
 
       // Ưu tiên score cao hơn
-      if (scoreA !== scoreB) {
-        return scoreB - scoreA;
-      }
-      // Nếu score bằng nhau, giữ theo thứ tự gốc
+      if (scoreA !== scoreB) return scoreB - scoreA;
+      // Score bằng nhau → giữ thứ tự gốc
       return a.originalIndex - b.originalIndex;
     });
 
     // Re-append theo thứ tự mới (không ẩn card nào)
     sorted.forEach(item => {
       grid.appendChild(item.el);
-      item.el.style.display = ''; // đảm bảo luôn hiển thị
+      item.el.style.display = '';
     });
 
-    // Cập nhật title nếu filter theo location
+    // Cập nhật title theo location nếu có
     if (locationTitle) {
       if (currentLocation && LOCATION_LABELS[currentLocation]) {
         locationTitle.textContent = LOCATION_LABELS[currentLocation];
@@ -126,25 +248,102 @@ function initProductFilters() {
       }
     }
 
-    // Set active cho chip Location
+    // Active state cho chips Location
     locationChips.forEach(chip => {
       const loc = (chip.dataset.location || '').toLowerCase();
-      chip.classList.toggle('active', loc === (currentLocation || ''));
+      chip.classList.toggle('active', loc === currentLocation && currentLocation !== '');
     });
 
-    // Set active cho chip Type
+    // Active state cho chips Type
     typeChips.forEach(chip => {
       const typ = (chip.dataset.type || '').toLowerCase();
-      chip.classList.toggle('active', typ === (currentType || ''));
+      chip.classList.toggle('active', typ === currentType && currentType !== '');
     });
   }
 
   // score: 0 = không match, 1 = match 1 điều kiện, 2 = match cả location + type
   function getMatchScore(item, loc, typ, hasFilter) {
-    if (!hasFilter) return 1; // không filter thì tất cả score = 1 (giữ nguyên thứ tự)
+    if (!hasFilter) return 1; // không filter thì tất cả score = 1 (giữ thứ tự gốc)
     let score = 0;
     if (loc && item.location === loc) score += 1;
     if (typ && item.type === typ) score += 1;
     return score;
   }
+}
+
+// ===================================================
+// Filter scroll arrows (mobile)
+// - Hiện mũi tên phải ở đầu
+// - Khi cuộn / bấm thì update: đầu -> chỉ phải, cuối -> chỉ trái, giữa -> cả 2
+// ===================================================
+function initFilterScrollArrows() {
+  const scroller = document.querySelector('.filter-scroll-container');
+  const leftBtn = document.querySelector('.filter-arrow-left');
+  const rightBtn = document.querySelector('.filter-arrow-right');
+
+  if (!scroller || !leftBtn || !rightBtn) return;
+
+  function updateArrows() {
+    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+
+    // Nếu không đủ dài để cuộn -> ẩn cả 2
+    if (maxScroll <= 0) {
+      leftBtn.classList.add('hidden');
+      rightBtn.classList.add('hidden');
+      return;
+    }
+
+    const current = scroller.scrollLeft;
+
+    // Đầu list -> ẩn trái, hiện phải
+    leftBtn.classList.toggle('hidden', current <= 2);
+    // Cuối list -> ẩn phải, hiện trái
+    rightBtn.classList.toggle('hidden', current >= maxScroll - 2);
+  }
+
+  function scrollByStep(direction) {
+    const step = scroller.clientWidth * 0.6; // cuộn ~60% chiều rộng
+    scroller.scrollBy({ left: direction * step, behavior: 'smooth' });
+  }
+
+  // Click arrow
+  leftBtn.addEventListener('click', () => scrollByStep(-1));
+  rightBtn.addEventListener('click', () => scrollByStep(1));
+
+  // Khi user tự kéo tay thì cũng update state mũi tên
+  scroller.addEventListener('scroll', () => {
+    window.requestAnimationFrame(updateArrows);
+  });
+
+  // Khi resize màn hình, tính lại
+  window.addEventListener('resize', updateArrows);
+
+  // Gọi lần đầu
+  updateArrows();
+}
+
+// ===================================================
+// Scroll-to-top button
+// ===================================================
+function initScrollToTop() {
+  const btn = document.getElementById('scrollToTop');
+  if (!btn) return;
+
+  function toggleVisibility() {
+    if (window.scrollY > 120) {  // user kéo xuống >200px
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  }
+
+  window.addEventListener('scroll', toggleVisibility);
+  toggleVisibility(); // chạy lúc load
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
 }
