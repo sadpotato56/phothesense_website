@@ -1,16 +1,9 @@
 /* ---------------- Reset & Fonts ---------------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body, html {
-  font-family: 'Roboto', sans-serif;
-  color: #1C4278;
-  background-color: #f8f9fa;
-  scroll-behavior: smooth;
-  padding-top: 60px;
+body {
+  background-color: #f8f9fa;  /* nền riêng cho trang product */
+  color: var(--ph-navy);
+  padding-top: 120px;          /* chừa chỗ cho header fixed nếu cần */
 }
 
 
@@ -19,90 +12,8 @@ body, html {
   padding: 20px 0;
 }
 
-/* .filters-sidebar {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.filters-sidebar h3, .filters-sidebar h4, .filters-sidebar h5 {
-  margin-bottom: 15px;
-  color: #1C4278;
-  font-family: 'Roboto Slab', serif;
-} 
-
-.filter-tags {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.filter-tags h4 {
-  font-family: 'Roboto Slab', serif;
-  margin-top: 10px;
-  margin-bottom: 8px;
-  color: #1C4278;
-} 
-
-
-
-.tag-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.tag-btn {
-  background-color: #f0f0f0;
-  color: #1C4278;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.tag-btn:hover, .tag-btn.active {
-  background-color: #FBDC47;
-  color: #1C4278;
-}
-
-
-.search-box {
-  position: static;
-  margin-bottom: 20px;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 12px 40px 12px 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.search-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #1C4278;
-}
-  */
 
 /* ---------------- Horizontal Filter Bar ---------------- */
-/* FILE: style/product.css  – Filter Bar refined */
-/* ---------- Brand tokens (optional, dùng chung) ---------- */
-:root {
-  --ph-primary:  #FBDC47;
-  --ph-navy:     #1C4278;
-  --ph-bg-soft:  #FFFCEE;
-  --ph-text-light: #FFFCEE;
-}
 
 /* ============================
    FILTER BAR – PHOTHESENSE
@@ -278,31 +189,30 @@ body, html {
   box-shadow: 0 0 0 2px rgba(251, 220, 71, 0.4);
 }
 
-/* Mobile tweaks */
-@media (max-width: 768px) {
-    .filter-bar {
-    top: 96px;
-    padding: 8px 0;
-  }
+/* ---------- Filter Arrow Buttons ---------- */
+.filter-arrow {
+  border: none;
+  background: #FFFCEE;
+  color: #1C4278;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: none; /* mặc định ẩn trên desktop */
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  cursor: pointer;
+  flex-shrink: 0;
+  z-index: 960;
+}
 
-  .filter-scroll-container {
-    gap: 8px;
-    padding: 0 12px;
-  }
+.filter-arrow i {
+  font-size: 14px;
+}
 
-  .filter-chip {
-    font-size: 12px;
-    padding: 6px 14px;
-  }
-
-  .sort-label {
-    display: none; /* cho gọn trên mobile, chỉ giữ dropdown */
-  }
-
-  .sort-select {
-    font-size: 12px;
-    padding: 6px 28px 6px 10px;
-  }
+/* class hidden để JS bật/tắt */
+.filter-arrow.hidden {
+  display: none !important;
 }
 
 /* ---------------- Product Cards ---------------- */
@@ -400,11 +310,42 @@ body, html {
 }
 
 
-/* ---------------- Responsive ---------------- */
 
-@media (max-width: 992px) {
-  body.nav-open {
-    overflow: hidden;
+
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+
+    .filter-bar {
+    position: static;    /* không sticky trên mobile */
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
   }
 
+  .filter-arrow {
+    display: flex;
+  }
+
+  .filter-scroll-container {
+    gap: 8px;
+    padding: 0 12px;
+     flex: 1; 
+    justify-content: flex-start;
+  }
+
+  .filter-chip {
+    font-size: 12px;
+    padding: 6px 14px;
+  }
+
+  .sort-label {
+    display: none; /* cho gọn trên mobile, chỉ giữ dropdown */
+  }
+
+  .sort-select {
+    font-size: 12px;
+    padding: 6px 28px 6px 10px;
+  }
 }
+

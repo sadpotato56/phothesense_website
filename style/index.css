@@ -2,20 +2,14 @@
    PHOTHESENSE MAIN STYLE (Bootstrap Enhanced)
 ================================================ */
 
-/* ---------- RESET & BASE ---------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ---------- HOME PAGE SPECIFIC ---------- */
+body {
+  height: 100%;
+  background-color: #1C4278; /* nền xanh đậm riêng cho home */
+  color: #fff;
+  /* overflow-x: hidden;  // nếu cần thì bỏ comment */
 }
 
-body, html {
-  font-family: 'Poppins', 'Roboto', sans-serif;
-  color: white;
-  height: 100%;
-  background-color: #1C4278;
-  /* overflow-x: hidden; */
-}
 
 .hero-header-main {
   height: 100vh;
@@ -29,6 +23,7 @@ body, html {
   text-align: center;
   position: relative;
   padding-top: 165.6px; 
+  z-index: 1;
 }
 
 .hero-content {
@@ -141,35 +136,6 @@ body, html {
   height: 300px;
 }
 
-/* ---------- FOOTER ---------- */
-footer {
-  background-color: #0d1f3b;
-  color: #ccc;
-  text-align: center;
-}
-
-footer img {
-  filter: brightness(0) invert(1);
-}
-
-footer a {
-  color: #FBDC47;
-  text-decoration: none;
-}
-
-footer a:hover {
-  color: #fff;
-}
-
-footer .socials a {
-  font-size: 20px;
-  margin: 0 10px;
-  transition: 0.3s;
-}
-
-footer .socials a:hover {
-  color: #FBDC47;
-}
 
 /* ---------- RESPONSIVE ---------- */
 
@@ -198,6 +164,4 @@ footer .socials a:hover {
   .experience-card {
     min-height: 450px;
   }
-
-
 }

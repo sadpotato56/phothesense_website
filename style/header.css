@@ -93,14 +93,22 @@
 /* ==================== 1️⃣ HEADER TRANG CHÍNH ==================== */
 .hero-header {
   position: fixed;
-  width: 100%;
-  background: transparent;
   top: 0;
   left: 0;
+  width: 100%;
   z-index: 1000;
-  
-  transition: background-color 0.4s ease, box-shadow 0.4s ease, padding 0.3s ease;
+  background: transparent;
+  /* chiều cao cố định, không phụ thuộc padding */
+  height: 110px;
+  display: flex;
+  align-items: center;
+
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.3s ease;
 }
+
 
 .hero-header .navbar {
   position: absolute;
@@ -111,12 +119,22 @@
 }
 
 /* Khi header được thêm class .scrolled */
+/* KHI SCROLL */
 .hero-header.scrolled {
-  background-color: #1C4278; /* nền trắng trong suốt nhẹ */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* đổ bóng nhẹ */
-  padding: 57px 0; /* thu gọn chiều cao header khi cuộn */
+  background-color: #1C4278;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(0); /* chỉ transform, không đổi height/padding */
 }
 
+/* Logo thu nhỏ mượt mà khi scroll */
+.hero-header .navbar-brand img {
+  height: 100px;
+  transition: transform 0.3s ease;
+}
+
+.hero-header.scrolled .navbar-brand img {
+  transform: scale(0.85);
+}
 
 /* màu chữ header */
 .hero-header .navbar-nav .nav-link {

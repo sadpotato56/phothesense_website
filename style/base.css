@@ -1,12 +1,32 @@
-/* ==================== BASE & RESET ==================== */
-* {
+/* ===========================================
+   BASE & RESET – PHOTHESENSE
+   Dùng chung cho mọi trang
+=========================================== */
+
+/* Box sizing reset + margin/padding reset */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+/* Brand tokens dùng chung */
+:root {
+  --ph-primary:        #FBDC47;
+  --ph-navy:           #1C4278;
+  --ph-bg-soft:        #FFFCEE;
+  --ph-text-light:     #FFFCEE;
+}
+
+/* HTML & BODY – default cho toàn site */
+html,
+body {
   font-family: 'Poppins', 'Roboto', sans-serif;
+  color: var(--ph-navy);
+  background-color: var(--ph-bg-soft);
+  line-height: 1.5;
   scroll-behavior: smooth;
 }
 
@@ -14,17 +34,74 @@ html, body {
 a {
   text-decoration: none;
   transition: all 0.3s ease;
+  color: inherit;
 }
 
+/* Images */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* Container Utility */
+/* Container Utility (chung, vẫn có thể dùng container của Bootstrap song song) */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+
+/* ============================
+   SCROLL TO TOP BUTTON
+   ============================ */
+.scroll-to-top {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  border: none;
+  outline: none;
+
+  background: #1C4278;       /* Navy brand */
+  color: #FFFCEE;            /* Cream text */
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.25s ease;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 99999999;
+}
+
+.scroll-to-top:hover {
+  background: #FBDC47;        /* Yellow brand */
+  color: #1C4278;
+}
+
+/* Khi hiện */
+.scroll-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Mobile tweak */
+@media (max-width: 576px) {
+  .scroll-to-top {
+    bottom: 18px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+  }
 }
