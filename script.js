@@ -154,6 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initProductFilters();
     initFilterScrollArrows(); // filter scroll arrows
   }
+
+  initWorkshopGallery();  // gallery + lightbox từ JSON
+
   initScrollToTop();        // scroll-to-top button
 });
 
@@ -347,3 +350,215 @@ function initScrollToTop() {
     });
   });
 }
+
+// ===================================================
+// GALLERY + LIGHTBOX từ JSON (cho các trang product)
+// - Desktop: 1 ảnh lớn + 2 ảnh nhỏ (layout cũ)
+// - Mobile: slider ngang dùng scroll-snap (.gallery-track)
+// - Dots luôn sync với ảnh hiện tại
+// ===================================================
+function initWorkshopGallery() {
+  const galleryContainer = document.getElementById('auto-gallery');
+  const lightbox = document.getElementById('lightbox');
+  const dotsContainer = document.getElementById('gallery-dots');
+
+  if (!galleryContainer || !lightbox) return;
+
+  const jsonPath = galleryContainer.dataset.galleryJson;
+  if (!jsonPath) {
+    console.warn('Không có data-gallery-json trên #auto-gallery');
+    return;
+  }
+
+  fetch(jsonPath)
+    .then(res => res.json())
+    .then(data => {
+      const imageList = data.images || [];
+      if (!imageList.length) return;
+
+      let currentIndex = 0;
+      let mainImageDesktop = null;  // ảnh lớn bên trái (desktop)
+      let track = null;             // track cho slider mobile
+
+      // ---------- TẠO LAYOUT DESKTOP (1 lớn + 2 nhỏ) ----------
+      const galleryLeft  = document.createElement('div');
+      const galleryRight = document.createElement('div');
+      galleryLeft.className  = 'gallery-left';
+      galleryRight.className = 'gallery-right';
+
+      galleryContainer.append(galleryLeft, galleryRight);
+
+      // ---------- TẠO TRACK MOBILE (scroll-snap slider) ----------
+      track = document.createElement('div');
+      track.className = 'gallery-track';
+      galleryContainer.appendChild(track);
+
+      imageList.forEach((src, index) => {
+        // --- Ảnh DESKTOP ---
+        const imgDesktop = document.createElement('img');
+        imgDesktop.src = src;
+        imgDesktop.className = 'gallery-img';
+        imgDesktop.dataset.index = index;
+        imgDesktop.alt = `Workshop gallery image ${index + 1}`;
+
+        if (index === 0) {
+          galleryLeft.appendChild(imgDesktop);
+          mainImageDesktop = imgDesktop;
+        } else if (index === 1 || index === 2) {
+          galleryRight.appendChild(imgDesktop);
+        }
+
+        // --- Slide MOBILE ---
+        const slide = document.createElement('div');
+        slide.className = 'gallery-slide';
+
+        const imgMobile = document.createElement('img');
+        imgMobile.src = src;
+        imgMobile.className = 'gallery-img';
+        imgMobile.dataset.index = index;
+        imgMobile.alt = `Workshop gallery image ${index + 1}`;
+
+        slide.appendChild(imgMobile);
+        track.appendChild(slide);
+      });
+
+      // ---------- DOTS NAVIGATION ----------
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        imageList.forEach((_, index) => {
+          const dot = document.createElement('button');
+          dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
+          dot.dataset.index = index;
+
+          dot.addEventListener('click', () => {
+            currentIndex = index;
+            updateUI(false); // update preview + dots
+
+            // Scroll tới slide tương ứng (mobile)
+            if (track) {
+              const slideWidth = track.clientWidth;
+              track.scrollTo({
+                left: slideWidth * index,
+                behavior: 'smooth'
+              });
+            }
+          });
+
+          dotsContainer.appendChild(dot);
+        });
+      }
+
+      function updateDots() {
+        if (!dotsContainer) return;
+        const dots = dotsContainer.querySelectorAll('.gallery-dot');
+        dots.forEach(dot => {
+          const idx = Number(dot.dataset.index);
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+      }
+
+      // ---------- LIGHTBOX SETUP ----------
+      const lightboxImg = lightbox.querySelector('.lightbox-img');
+      const closeBtn    = lightbox.querySelector('.close');
+      const counter     = lightbox.querySelector('.counter');
+      const prevBtn     = lightbox.querySelector('.prev');
+      const nextBtn     = lightbox.querySelector('.next');
+
+      function updateUI(updateLightbox = true) {
+        const newSrc = imageList[currentIndex];
+
+        // Update lightbox
+        if (updateLightbox && lightboxImg) {
+          lightboxImg.src = newSrc;
+        }
+
+        // Update ảnh lớn desktop
+        if (mainImageDesktop) {
+          mainImageDesktop.src = newSrc;
+        }
+
+        // Counter
+        if (counter) {
+          counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
+        }
+
+        // Dots
+        updateDots();
+      }
+
+      // Sync lần đầu
+      updateUI(false);
+
+      // Click ảnh (desktop + mobile) -> mở lightbox
+      galleryContainer.addEventListener('click', e => {
+        const img = e.target.closest('.gallery-img');
+        if (!img) return;
+
+        const idx = parseInt(img.dataset.index, 10);
+        if (!Number.isNaN(idx)) {
+          currentIndex = idx;
+        }
+
+        updateUI(true);
+        lightbox.style.display = 'block';
+      });
+
+      // Đóng lightbox
+      closeBtn.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+      });
+
+      lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) {
+          lightbox.style.display = 'none';
+        }
+      });
+
+      // Mũi tên trong lightbox
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+        updateUI(true);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % imageList.length;
+        updateUI(true);
+      });
+
+      // Bàn phím
+      document.addEventListener('keydown', e => {
+        if (lightbox.style.display === 'block') {
+          if (e.key === 'ArrowLeft')  prevBtn.click();
+          if (e.key === 'ArrowRight') nextBtn.click();
+          if (e.key === 'Escape')     closeBtn.click();
+        }
+      });
+
+      // ---------- SCROLL-SNAP SYNC (MOBILE) ----------
+      if (track) {
+        let scrollTimeout = null;
+
+        track.addEventListener('scroll', () => {
+          if (scrollTimeout) {
+            window.cancelAnimationFrame(scrollTimeout);
+          }
+
+          scrollTimeout = window.requestAnimationFrame(() => {
+            const slideWidth = track.clientWidth || 1;
+            const rawIndex = track.scrollLeft / slideWidth;
+            const idx = Math.round(rawIndex);
+
+            const clampedIndex = Math.max(0, Math.min(idx, imageList.length - 1));
+
+            if (clampedIndex !== currentIndex) {
+              currentIndex = clampedIndex;
+              updateUI(false); // chỉ update preview + dots
+            }
+          });
+        });
+      }
+    })
+    .catch(err => console.error('Không thể tải gallery JSON:', err));
+}
+
+

@@ -27,7 +27,6 @@
   <script defer src="script.js"></script>
 </head>
 
-<body>
   <!-- Header -->
   <body data-header="subpage">
   <div id="header-placeholder"></div>
@@ -40,7 +39,11 @@
     <div class="row align-items-center">
       <!-- Gallery -->
       <div class="col-md-6">
-        <div id="auto-gallery" class="photo-gallery"></div>
+        <div id="auto-gallery" 
+            class="photo-gallery"
+            data-gallery-json="picture/coffee_workshop/gallery.json">
+          </div>
+          <div id="gallery-dots" class="gallery-dots"></div>
 
         <!-- Lightbox overlay -->
         <div id="lightbox" class="lightbox">
@@ -208,119 +211,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="text-center py-4">
-    <div class="nav-links mb-2">
-      <a href="index.html">Home</a>
-      <a href="#">About</a>
-      <a href="Product.html">Shop</a>
-      <a href="#">Contact</a>
-    </div>
-    <div class="social-icons d-flex justify-content-center gap-3 mb-3">
-      <a href="https://www.facebook.com/phothesense" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/phothesense" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.youtube.com/phothesense" target="_blank"><i class="fab fa-youtube"></i></a>            
-    </div>
-    <div>
-      <a href="#" class="footer-logo d-inline-block mb-3">
-        <img src="picture/Logo_orangeColor.png" height="30" alt="PHOTHESENSE Logo">
-      </a>
-    </div>
-    <p>Copyright © 2025 PHOTHESENSE</p>
-  </footer>
-
-  <!-- Gallery Script -->
-  <script>
-    // Load images from JSON
-    fetch('picture/coffee_workshop/gallery.json')
-      .then(res => res.json())
-      .then(data => {
-        const imageList = data.images;
-        const galleryContainer = document.getElementById('auto-gallery');
-
-        // Layout: 1 big left, 2 small right
-        const galleryLeft = document.createElement('div');
-        const galleryRight = document.createElement('div');
-        galleryLeft.className = 'gallery-left';
-        galleryRight.className = 'gallery-right';
-        galleryContainer.append(galleryLeft, galleryRight);
-
-        imageList.forEach((src, index) => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.className = 'gallery-img';
-          img.dataset.index = index;
-          img.alt = "Hanoi Coffee Workshop - Vietnamese coffee " + (index + 1);
-
-          if (index === 0) galleryLeft.appendChild(img);
-          else if (index === 1 || index === 2) galleryRight.appendChild(img);
-        });
-
-        // Lightbox
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.querySelector('.lightbox-img');
-        const closeBtn = document.querySelector('.close');
-        const counter = document.querySelector('.counter');
-        const prevBtn = document.querySelector('.prev');
-        const nextBtn = document.querySelector('.next');
-
-        let currentIndex = 0;
-
-        function showImage() {
-          lightboxImg.src = imageList[currentIndex];
-          counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
-        }
-
-        // Open lightbox
-        galleryContainer.addEventListener('click', e => {
-          if (e.target.classList.contains('gallery-img')) {
-            currentIndex = parseInt(e.target.dataset.index, 10);
-            showImage();
-            lightbox.style.display = 'block';
-          }
-        });
-
-        // Close lightbox
-        closeBtn.addEventListener('click', () => lightbox.style.display = 'none');
-        lightbox.addEventListener('click', e => {
-          if (e.target === lightbox) lightbox.style.display = 'none';
-        });
-
-        // Prev / Next
-        prevBtn.addEventListener('click', () => {
-          currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
-          showImage();
-        });
-        nextBtn.addEventListener('click', () => {
-          currentIndex = (currentIndex + 1) % imageList.length;
-          showImage();
-        });
-
-        // Keyboard controls
-        document.addEventListener('keydown', e => {
-          if (lightbox.style.display === 'block') {
-            if (e.key === 'ArrowLeft') prevBtn.click();
-            if (e.key === 'ArrowRight') nextBtn.click();
-            if (e.key === 'Escape') closeBtn.click();
-          }
-        });
-      })
-      .catch(err => console.error("Cannot load coffee workshop gallery.json", err));
-  </script>
-
-   <!-- Cal element-click embed code begins -->
-      <script type="text/javascript">
-        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-      Cal("init", "quick-chat", {origin:"https://app.cal.com"});
-
-        
-        // Important: Please add the following attributes to the element that should trigger the calendar to open upon clicking.
-        // `data-cal-link="phothesense/quick-chat"`
-        // data-cal-namespace="quick-chat"
-        // `data-cal-config='{"layout":"month_view"}'`
-
-        Cal.ns["quick-chat"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#132c4f"},"dark":{"cal-brand":"#FFFCEE"}},"hideEventTypeDetails":false,"layout":"month_view"});
-        </script>
-        <!-- Cal element-click embed code ends -->
+  <div id="footer-placeholder"></div>
 
         <button id="scrollToTop" class="scroll-to-top">
           <i class="fa-solid fa-chevron-up"></i>
