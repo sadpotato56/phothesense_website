@@ -22,7 +22,7 @@ body {
 /* Thanh filter bám trên cùng, nền kem brand, căn giữa */
 .filter-bar {
   position: sticky;
-  top: 135px; /* chỉnh theo chiều cao header của bạn */
+  top: 70px; /* chỉnh theo chiều cao header của bạn */
   z-index: 950;
   background: #FFFCEE;
   border-bottom: 1px solid rgba(28, 66, 120, 0.08);

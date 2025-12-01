@@ -2,19 +2,13 @@
    KNIFE WORKSHOP PAGE - PHOTHESENSE BRAND STYLE
 --------------------------------------------- */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body {
+  background-color: #FFFCEE;  /* màu riêng cho trang */
+  color: #1C4278;
+  line-height: 1.6;
+  padding-top: 120px; /* nên khớp với chiều cao subpage-header */
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  color: #1C4278;
-  background-color: #FFFCEE;
-  line-height: 1.6;
-  padding-top: 170px; /* chừa chỗ cho fixed header */
-}
 
 /* ---------- Photo Gallery ---------- */
 .photo-gallery {
@@ -47,6 +41,33 @@ body {
   transform: scale(1.03);
 }
 
+/* ============= GALLERY DOTS ============= */
+
+.gallery-dots {
+  display: none;              /* Desktop ẩn, mobile mới hiện */
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.gallery-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(28, 66, 120, 0.25);   /* ph-navy nhạt */
+  cursor: pointer;
+  padding: 0;
+}
+
+.gallery-dot.active {
+  width: 8px;
+  height: 8px;
+  background: var(--ph-primary);          /* vàng brand */
+}
+
+
 /* ---------- Lightbox ---------- */
 .lightbox {
   display: none;
@@ -64,7 +85,8 @@ body {
 .lightbox-img {
   max-width: 85%;
   max-height: 80vh;
-  margin-top: 70px;
+  margin-top: 0;
+  margin: 30px auto;
   border-radius: 10px;
 }
 
@@ -201,12 +223,6 @@ body {
   margin-left: 4px;
 }
 
-/* ---------- SECTION TITLES (HIGHLIGHTS + REVIEWS) ---------- */
-.section-title {
-  font-family: 'Roboto Slab', serif;
-  font-weight: 600;
-}
-
 /* ---------- HIGHLIGHTS ---------- */
 .highlights {
   background-color: #1C4278;
@@ -267,16 +283,111 @@ body {
   margin-top: 8px;
 }
 
+.gallery-track {
+  display: none;
+}
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
 
-  .photo-gallery {
-    flex-direction: column;
-  }
-
   .gallery-left,
   .gallery-right {
+    display: none;
+  }
+
+   .photo-gallery {
+    /* bọc track, không cần flex nữa */
+    overflow: hidden; 
+    margin-bottom: 10px;
+  }
+
+  /* Track cho slider ngang */
+  .gallery-track {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;          /* tí space cho đẹp */
+  }
+
+  .gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mỗi slide = full chiều rộng màn hình */
+  .gallery-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+  }
+
+  .gallery-slide .gallery-img {
     width: 100%;
+    height: 480px;               /* bạn có thể tăng lên 300–320 nếu muốn to hơn */
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .gallery-img {
+    height: 430px;           /* cho vừa màn mobile */
+    border-radius: 12px;
+  }
+
+
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .gallery-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(28, 66, 120, 0.25);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .gallery-dot.active {
+    width: 8px;
+    height: 8px;
+    background: var(--ph-primary, #FBDC47);
+  }
+
+
+  /* Lightbox trên mobile – cho ảnh to hơn 1 chút */
+  .lightbox-img {
+    max-width: 94%;
+    max-height: 65vh;
+    margin-top: 60px;
+  }
+
+  .top-counter {
+    top: 10px;
+    font-size: 14px;
+    padding: 4px 10px;
+  }
+
+  .lightbox-btn {
+    margin-top: 10px;
+    padding: 8px 18px;
+    font-size: 13px;
+  }
+
+  .prev,
+  .next {
+    font-size: 26px;
+    padding: 10px;
+  }
+
+  .close {
+    font-size: 32px;
+    top: 10px;
+    right: 18px;
   }
 
   .mini-hero .title {
