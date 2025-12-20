@@ -1,0 +1,505 @@
+/* ============================================
+   PRODUCT DETAIL PAGE - PHOTHESENSE BRAND STYLE
+   Dùng chung cho tất cả trang product (Coffee Workshop, Knife Workshop, v.v.)
+============================================ */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #1C4278;
+  background-color: #FFFCEE;
+  line-height: 1.6;
+  padding-top: 120px; /* chừa chỗ cho fixed header */
+}
+
+/* ---------- Photo Gallery ---------- */
+.photo-gallery {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  position: relative; /* để mũi tên absolute */
+}
+
+.gallery-left {
+  flex: 2;
+}
+
+.gallery-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.gallery-img:hover {
+  transform: scale(1.03);
+}
+
+.gallery-track {
+  display: none;
+}
+
+/* Mũi tên gallery - ẩn trên desktop */
+.gallery-arrow {
+  display: none;
+}
+
+/* ============= GALLERY DOTS ============= */
+
+.gallery-dots {
+  display: none;              /* Desktop ẩn, mobile mới hiện */
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.gallery-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(28, 66, 120, 0.25);   /* ph-navy nhạt */
+  cursor: pointer;
+  padding: 0;
+}
+
+.gallery-dot.active {
+  width: 8px;
+  height: 8px;
+  background: var(--ph-primary);          /* vàng brand */
+}
+
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  text-align: center;
+  overflow: hidden;
+}
+
+.lightbox-img {
+  max-width: 85%;
+  max-height: 80vh;
+  margin-top: 0;
+  margin: 30px auto;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: pan-y; /* Cho phép swipe dọc nhưng vẫn swipe ngang được */
+}
+
+.top-counter {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 18px;
+  background: rgba(0,0,0,0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.lightbox-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 30px;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  color: #fff;
+  background: transparent;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  width: fit-content;
+  transition: 0.3s ease;
+}
+
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 15px 20px;
+  color: #fff;
+  font-size: 40px;
+  user-select: none;
+  transition: all 0.3s ease;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+.prev:hover, .next:hover {
+  color: #FBDC47;
+  background: rgba(0, 0, 0, 0.5);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close:hover {
+  background: rgba(0, 0, 0, 0.5);
+  color: #FBDC47;
+  transform: scale(1.1);
+}
+
+/* ---------- BOOK Buttons ---------- */
+.book-btn {
+  display: inline-block;
+  background-color: #FBDC47;
+  color: #1C4278;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 12px 30px;
+  border-radius: 40px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #1C4278;
+  color: #FBDC47;
+}
+
+/* ---------- About / Text ---------- */
+
+/* Tiêu đề chính */
+.mini-hero .title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 40px);
+  color: #1C4278;
+  margin-bottom: 10px;
+}
+
+/* Phụ đề mô tả */
+.mini-hero .subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: clamp(15px, 2vw, 18px);
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* Tiêu đề phần "About this activity" */
+.about-this-activity .section-title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+  font-size: clamp(20px, 2.5vw, 28px);
+  color: #1C4278;
+  margin-bottom: 15px;
+}
+
+.about ul li {
+  margin-bottom: 10px;
+}
+
+.about i {
+  color: #EF3C32;
+  margin-right: 8px;
+}
+
+.price-box {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1C4278;
+  margin-top: 10px;
+}
+
+.price-box .per {
+  font-size: 14px;
+  color: #777;
+  margin-left: 4px;
+}
+
+/* ---------- Highlights ---------- */
+.highlights {
+  background-color: #1C4278;
+  color: white;
+}
+
+.highlights .highlight-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.highlight-card i {
+  font-size: 40px;
+  color: #FBDC47;
+  margin-bottom: 15px;
+}
+
+.highlight-card h5 {
+  font-family: 'Roboto Slab', serif;
+  margin-bottom: 10px;
+}
+
+.highlight-card p {
+  font-size: 14px;
+}
+
+.highlight-card:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Reviews ---------- */
+.reviews {
+  background-color: #FFFCEE;
+  color: #1C4278;
+}
+
+.review-card {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+  transform: scale(1.02);
+}
+
+.review-card span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+
+  .gallery-left,
+  .gallery-right {
+    display: none;
+  }
+
+  .photo-gallery {
+    /* bọc track, không cần flex nữa */
+    overflow: hidden; 
+    margin-bottom: 10px;
+    position: relative; /* để mũi tên absolute */
+  }
+
+  /* Mũi tên điều hướng gallery (chỉ hiện trên mobile) */
+  .gallery-arrow {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    background: rgba(28, 66, 120, 0.8);
+    color: #FBDC47; /* Màu vàng brand */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .gallery-arrow i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #FBDC47; /* Màu vàng brand cho icon */
+    margin: 0 !important; /* Xóa margin để icon căn giữa hoàn hảo */
+  }
+
+  .gallery-arrow.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .gallery-arrow:hover {
+    background: rgba(28, 66, 120, 1);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .gallery-arrow-left {
+    left: 10px;
+  }
+
+  .gallery-arrow-right {
+    right: 10px;
+  }
+
+  /* Track cho slider ngang */
+  .gallery-track {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;          /* tí space cho đẹp */
+  }
+
+  .gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mỗi slide = full chiều rộng màn hình */
+  .gallery-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+  }
+
+  .gallery-slide .gallery-img {
+    width: 100%;
+    height: 480px;               /* bạn có thể tăng lên 300–320 nếu muốn to hơn */
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .gallery-img {
+    height: 430px;           /* cho vừa màn mobile */
+    border-radius: 12px;
+  }
+
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .gallery-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(28, 66, 120, 0.25);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .gallery-dot.active {
+    width: 8px;
+    height: 8px;
+    background: var(--ph-primary, #FBDC47);
+  }
+
+  /* Lightbox trên mobile – cho ảnh to hơn 1 chút */
+  .lightbox-img {
+    max-width: 95%;
+    max-height: 70vh;
+    margin-top: 50px;
+  }
+
+  .top-counter {
+    top: 10px;
+    font-size: 14px;
+    padding: 4px 10px;
+  }
+
+  .lightbox-btn {
+    margin-top: 15px;
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  .prev,
+  .next {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+  }
+
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+
+  .close {
+    font-size: 32px;
+    top: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .mini-hero .title {
+    font-size: 24px;
+  }
+
+  .highlight-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+

@@ -1,7 +1,7 @@
 /* ---------------- Reset & Fonts ---------------- */
 
 body {
-  background-color: #f8f9fa;  /* nền riêng cho trang product */
+  background-color: #FFFCEE;  /* nền riêng cho trang product */
   color: var(--ph-navy);
   padding-top: 120px;          /* chừa chỗ cho header fixed nếu cần */
 }

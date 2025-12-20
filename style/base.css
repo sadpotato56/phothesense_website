@@ -66,8 +66,8 @@ img {
   border: none;
   outline: none;
 
-  background: #1C4278;       /* Navy brand */
-  color: #FFFCEE;            /* Cream text */
+  background: #FBDC47;       /* Yellow brand - mặc định vàng */
+  color: #1C4278;            /* Navy text trên nền vàng */
   font-size: 16px;
 
   display: flex;
@@ -84,9 +84,10 @@ img {
   z-index: 99999999;
 }
 
-.scroll-to-top:hover {
-  background: #FBDC47;        /* Yellow brand */
-  color: #1C4278;
+.scroll-to-top:hover,
+.scroll-to-top:active {
+  background: #1C4278;        /* Navy brand - khi bấm/hover đổi xanh */
+  color: #FFFCEE;            /* Cream text trên nền xanh */
 }
 
 /* Khi hiện */
