@@ -393,6 +393,19 @@ function initWorkshopGallery() {
       track.className = 'gallery-track';
       galleryContainer.appendChild(track);
 
+      // ---------- TẠO MŨI TÊN ĐIỀU HƯỚNG (MOBILE) ----------
+      const arrowLeft = document.createElement('button');
+      arrowLeft.className = 'gallery-arrow gallery-arrow-left';
+      arrowLeft.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+      arrowLeft.setAttribute('aria-label', 'Previous image');
+      galleryContainer.appendChild(arrowLeft);
+
+      const arrowRight = document.createElement('button');
+      arrowRight.className = 'gallery-arrow gallery-arrow-right';
+      arrowRight.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+      arrowRight.setAttribute('aria-label', 'Next image');
+      galleryContainer.appendChild(arrowRight);
+
       imageList.forEach((src, index) => {
         // --- Ảnh DESKTOP ---
         const imgDesktop = document.createElement('img');
@@ -525,6 +538,35 @@ function initWorkshopGallery() {
         updateUI(true);
       });
 
+      // ---------- SWIPE GESTURE CHO LIGHTBOX (MOBILE) ----------
+      let touchStartX = 0;
+      let touchEndX = 0;
+      const SWIPE_THRESHOLD = 50; // khoảng cách tối thiểu để nhận diện swipe
+
+      lightbox.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+
+      function handleSwipe() {
+        const diff = touchStartX - touchEndX;
+        
+        // Swipe trái (vuốt sang trái) -> ảnh tiếp theo
+        if (diff > SWIPE_THRESHOLD) {
+          currentIndex = (currentIndex + 1) % imageList.length;
+          updateUI(true);
+        }
+        // Swipe phải (vuốt sang phải) -> ảnh trước
+        else if (diff < -SWIPE_THRESHOLD) {
+          currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+          updateUI(true);
+        }
+      }
+
       // Bàn phím
       document.addEventListener('keydown', e => {
         if (lightbox.style.display === 'block') {
@@ -534,10 +576,52 @@ function initWorkshopGallery() {
         }
       });
 
-      // ---------- SCROLL-SNAP SYNC (MOBILE) ----------
+      // ---------- SCROLL-SNAP SYNC (MOBILE) + GALLERY ARROWS ----------
       if (track) {
         let scrollTimeout = null;
 
+        // Function update visibility mũi tên
+        function updateGalleryArrows() {
+          if (!track || imageList.length <= 1) {
+            arrowLeft.classList.remove('show');
+            arrowRight.classList.remove('show');
+            return;
+          }
+
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          const currentScroll = track.scrollLeft;
+
+          // Đầu list -> chỉ hiện mũi tên phải
+          if (currentScroll <= 2) {
+            arrowLeft.classList.remove('show');
+            arrowRight.classList.add('show');
+          }
+          // Cuối list -> chỉ hiện mũi tên trái
+          else if (currentScroll >= maxScroll - 2) {
+            arrowLeft.classList.add('show');
+            arrowRight.classList.remove('show');
+          }
+          // Giữa -> hiện cả 2
+          else {
+            arrowLeft.classList.add('show');
+            arrowRight.classList.add('show');
+          }
+        }
+
+        // Click mũi tên để scroll
+        arrowLeft.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const slideWidth = track.clientWidth;
+          track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+        });
+
+        arrowRight.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const slideWidth = track.clientWidth;
+          track.scrollBy({ left: slideWidth, behavior: 'smooth' });
+        });
+
+        // Update arrows khi scroll
         track.addEventListener('scroll', () => {
           if (scrollTimeout) {
             window.cancelAnimationFrame(scrollTimeout);
@@ -554,11 +638,23 @@ function initWorkshopGallery() {
               currentIndex = clampedIndex;
               updateUI(false); // chỉ update preview + dots
             }
+
+            // Update arrows visibility
+            updateGalleryArrows();
           });
         });
+
+        // Update arrows khi resize
+        window.addEventListener('resize', () => {
+          updateGalleryArrows();
+        });
+
+        // Gọi lần đầu để set state ban đầu
+        updateGalleryArrows();
       }
     })
     .catch(err => console.error('Không thể tải gallery JSON:', err));
 }
+
 
 
