@@ -134,25 +134,46 @@
                 </div>
               </div>
 
-  <!-- ✅ Three Columns Section -->
-  <section class="three-columns py-5">
-    <div class="container">
-      <!-- <div class="text-center mb-4 start-place-intro">
-        <h2 class="section-title">
-          Boutique experiences, designed around real local life
-        </h2>
 
-        <div class="start-place-note">
-          <p>
-            Each journey is thoughtfully crafted with local hosts.
-            You don’t just visit Vietnam, you understand how life is lived here.
-          </p>
-        </div>
-      </div> -->
+<!-- =========================
+PHOTHESENSE — CUSTOMIZABLE PACKAGES (Conversion block)
+Place: right after .value-pill, before .three-columns / featured-section
+========================== -->
+<section class="ph-custom-packages">
+  <div class="container">
+    <div class="ph-custom-label">
+      <span class="ph-custom-bar" aria-hidden="true"></span>
+      <span class="ph-custom-label-text">
+        FULLY CUSTOMIZABLE <b>PACKAGES</b>
+      </span>
+    </div>
 
+    <div class="ph-custom-row">
+      <div class="ph-custom-avatar" aria-hidden="true"></div>
 
-      <!-- Featured experiences (2–3 cards row on larger screens) -->
-      <!-- Featured Experiences (1 large + 2 small) -->
+      <div class="ph-custom-content">
+        <strong class="ph-custom-headline">
+          Our team designs calm, meaningful Vietnam experiences | great value, thoughtful comfort, and real local connection.
+          <a
+            class="ph-custom-link"
+            href="javascript:void(0)"
+            data-cal-link="phothesense/quick-chat"
+            data-cal-namespace="quick-chat"
+            data-cal-config='{"layout":"month_view"}'
+          >
+            Start customizing your days with a local travel advisor.
+          </a>
+        </strong>
+
+        <p class="ph-custom-footnote">
+          Designed by PHOTHESENSE — Hanoi-based team working directly with local hosts and artisans.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <section class="featured-section">
   <div class="container">
     <div class="featured-mosaic">
@@ -279,41 +300,105 @@
       </a>
 
     </div>
+
+    <!-- Explore more experiences (Cal.com trigger) -->
+    <div class="text-center mt-5">
+      <a
+        href="javascript:void(0)"
+        class="explore-btn"
+        data-cal-link="phothesense/quick-chat"
+        data-cal-namespace="quick-chat"
+        data-cal-config='{"layout":"month_view"}'
+      >
+        EXPLORE MORE EXPERIENCES
+      </a>
+    </div>
+
   </div>
 </section>
 
-      <div class="row g-5 text-white">
-        <div class="col-md-4 column">
-          <a href="product.html?location=hanoi" class="location-card-link text-decoration-none text-white">
-          <h2>Hà Nội</h2>
-          <p>Hanoi surprises you — old streets packed with life, lakes that invite you to pause,
-              and food that hits every sense. It doesn’t just show you Vietnam — it pulls you into its heart.</p>
-          <div class="image-placeholder" style="background-image: url('picture/hanoi/hanoi.jpg');" aria-label="Hanoi Old Quarter street scene with traditional architecture"></div>
+
+  <!-- ✅ Three Columns Section -->
+  <section class="three-columns py-4">
+    <div class="container">
+      <!-- <div class="text-center mb-4 start-place-intro">
+        <h2 class="section-title">
+          Boutique experiences, designed around real local life
+        </h2>
+
+        <div class="start-place-note">
+          <p>
+            Each journey is thoughtfully crafted with local hosts.
+            You don’t just visit Vietnam, you understand how life is lived here.
+          </p>
+        </div>
+      </div> Đây là để dùng cho mobile version -->
+      <div class="row g-5">
+
+        <!-- Travel Blog -->
+        <div class="col-md-4">
+          <a href="product.html?location=hanoi" class="overlay-card">
+            <div
+              class="overlay-card-bg"
+              style="background-image: url('picture/hanoi/hanoi.jpg');"
+              aria-label="Hanoi Old Quarter street scene"
+            ></div>
+            <div class="overlay-gradient"></div>
+            <div class="overlay-content">
+              <h3 class="overlay-title">TRAVEL BLOG</h3>
+              <p class="overlay-text">
+                Our travel blog is jam-packed with wanderlust inspiration, the best things to do,
+                insider tips and so much. More!
+              </p>
+              <span class="overlay-btn">Read More</span>
+            </div>
           </a>
         </div>
 
-        <div class="col-md-4 column">
-          <a href="product.html?location=ninh-binh" class="location-card-link text-decoration-none text-white">
-          <h2>Ninh Bình</h2>
-          <p>Limestone mountains, calm rivers, and rice fields glowing at golden hour.
-              Ninh Binh is peaceful, raw, and alive — beauty that invites you to live it, not just photograph it.
-            </p>
-          <div class="image-placeholder" style="background-image: url('picture/ninhbinh/ninhbinh.jpg');" aria-label="Ninh Binh limestone mountains and rice fields landscape"></div>
+        <!-- 5 start review -->
+        <div class="col-md-4">
+          <a href="product.html?location=ninh-binh" class="overlay-card">
+            <div
+              class="overlay-card-bg"
+              style="background-image: url('picture/ninhbinh/ninhbinh.jpg');"
+              aria-label="Ninh Binh limestone mountains"
+            ></div>
+
+            <div class="overlay-gradient"></div>
+
+            <div class="overlay-content">
+              <h3 class="overlay-title">5-STAR REVIEWS</h3>
+              <p class="overlay-text">
+                We are proud of the over 5,000 outstanding reviews from our happy travelers.
+              </p>
+              <span class="overlay-btn">Read More</span>
+            </div>
           </a>
         </div>
 
-        <div class="col-md-4 column">
-         <a href="product.html?location=sapa" class="location-card-link text-decoration-none text-white">
-          <h2>Sapa</h2>
-          <p> Misty mornings, terraced fields like waves, and villages with stories older than time.
-              Sapa is where nature and culture dance together — a feeling that stays after you leave.
-            </p>
-          <div class="image-placeholder" style="background-image: url('picture/sapa/sapa.jpg');" aria-label="Sapa terraced rice fields and mountain scenery"></div>
-          </a>
+          <!-- Travel Advisor -->
+          <div class="col-md-4">
+            <a href="product.html?location=sapa" class="overlay-card">
+              <div
+                class="overlay-card-bg"
+                style="background-image: url('picture/sapa/sapa.jpg');"
+                aria-label="Sapa terraced rice fields"
+              ></div>
+              <div class="overlay-gradient"></div>
+              <div class="overlay-content">
+                <h3 class="overlay-title">TRAVEL ADVISORS</h3>
+                <p class="overlay-text">
+                  Our extensive knowledge is rooted in our own travel experiences. Let us guide 
+                  you as you plan your trip of a lifetime!
+                </p>
+                <span class="overlay-btn">Read More</span>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
+
+  </div>
+</section>
 
   <!-- ✅ Experience Section -->
   <section class="three-experiences py-5">

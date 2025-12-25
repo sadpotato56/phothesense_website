@@ -7,7 +7,8 @@ Accent - Đỏ : #EF3C32
 Brand Color Catalog
 Vàng: #feda00
 Đỏ: #EF3C32
-Xanh: #1f4278    
+Xanh: #1f4278   
+Cam: #f26230 
 
 Tạo các structure cho website;
 
