@@ -45,11 +45,10 @@ img {
 }
 
 /* Container Utility (chung, vẫn có thể dùng container của Bootstrap song song) */
-.container {
-  max-width: 1200px;
+/* .container {
   margin: 0 auto;
   padding: 0 20px;
-}
+} */
 
 
 /* ============================

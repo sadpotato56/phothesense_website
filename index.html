@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>PHOTHESENSE | Local Travel Experiences & Workshops in Vietnam</title>
   <meta name="description" content="Discover authentic local experiences in Hanoi, Ninh Binh, and Sapa. Join hands-on workshops, city tours, and walking tours. Travel made easy, feel the sense." />
   
@@ -73,8 +74,8 @@
 <main>
   <section class="hero-header-main">
   <div class="hero-content text-center">
-    <h1>PHOTHESENSE</h1>
-    <p>Guided by locals, shaped by real stories</p>
+    <h1>Hanoi Niche Experience</h1>
+    <p>Explore Beyond - Discover Hanoi in every Sense</p>
     <a href="product.html" class="explore-btn">BEGIN YOUR JOURNEY</a>
     </div>
   </section>
@@ -84,22 +85,21 @@
        ========================================================= -->
       <!-- Trust section (white background) -->
         <section class="trust-section">
-          <!-- Confidence bar (laptop-first) -->
             <div class="confidence-bar">
               <div class="confidence-inner">
                 <div class="confidence-left">
-                  <h2 class="confidence-title">Book with Confidence</h2>
+                  <h2 class="confidence-title">Experience Hanoi's </h2>
                 </div>
                 <div class="confidence-right">
                   <p class="confidence-text">
-                    Plans change — we get it. Reschedule up to <strong>20 days</strong> before your experience with
-                    <strong>zero fees</strong>.
-                    <a class="confidence-link" href="javascript:void(0)">Learn more →</a>
+                    Our carefully crafted itineraries collaborate with <strong>passionate Hanoians—experts, thinkers, and storytellers</strong> who transform each walk into a deeper understanding of the city they call 
+                    <strong>home</strong>.
+                    <a class="confidence-link" href="#our-people">Meet Our People →</a>
                   </p>
                 </div>
               </div>
             </div>
-            <!-- Optional: featured-in row (only keep if you truly have these) -->
+            
             <div class="featured-in">
               <span class="featured-in-label">Featured in:</span>
               <div class="featured-in-logos">
@@ -135,45 +135,9 @@
               </div>
 
 
-<!-- =========================
-PHOTHESENSE — CUSTOMIZABLE PACKAGES (Conversion block)
-Place: right after .value-pill, before .three-columns / featured-section
-========================== -->
-<section class="ph-custom-packages">
-  <div class="container">
-    <div class="ph-custom-label">
-      <span class="ph-custom-bar" aria-hidden="true"></span>
-      <span class="ph-custom-label-text">
-        FULLY CUSTOMIZABLE <b>PACKAGES</b>
-      </span>
-    </div>
-
-    <div class="ph-custom-row">
-      <div class="ph-custom-avatar" aria-hidden="true"></div>
-
-      <div class="ph-custom-content">
-        <strong class="ph-custom-headline">
-          Our team designs calm, meaningful Vietnam experiences | great value, thoughtful comfort, and real local connection.
-          <a
-            class="ph-custom-link"
-            href="javascript:void(0)"
-            data-cal-link="phothesense/quick-chat"
-            data-cal-namespace="quick-chat"
-            data-cal-config='{"layout":"month_view"}'
-          >
-            Start customizing your days with a local travel advisor.
-          </a>
-        </strong>
-
-        <p class="ph-custom-footnote">
-          Designed by PHOTHESENSE — Hanoi-based team working directly with local hosts and artisans.
-        </p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
+  <!-- =========================================================
+       (F) FEATURED EXPERIENCES (Mosaic layout)
+       ========================================================= -->
 <section class="featured-section">
   <div class="container">
     <div class="featured-mosaic">
@@ -280,7 +244,7 @@ Place: right after .value-pill, before .three-columns / featured-section
          class="featured-card featured-card--large card--text-bottom">
 
         <div class="featured-media"
-             style="background-image:url('picture/coffee_workshop/cf\ \(1\).jpg');"
+             style="background-image:url('picture/coffee_workshop/cf-20.jpg');"
              role="img"
              aria-label="Vietnamese coffee workshop experience">
         </div>
@@ -317,23 +281,191 @@ Place: right after .value-pill, before .three-columns / featured-section
   </div>
 </section>
 
+<!-- =========================================================
+     (F2) OUR PEOPLE (A/2/i)
+     A: media height scales with viewport (vh)
+     2: list fits content (no scroll)
+     i: default active person; bio hidden unless active/hover
+========================================================= -->
+<section class="our-people" id="our-people">
+  <div class="container">
+    <div class="text-center our-people__head">
+      <h2 class="our-people__title">Meet Our People</h2>
+      <p class="our-people__subtitle">
+        Meet the team behind each experience — guides, hosts, and makers who bring Hanoi to life.
+      </p>
+    </div>
+
+    <div class="our-people__split" data-our-people>
+      <!-- Media (left) -->
+      <div class="our-people__media" aria-hidden="true">
+        <!-- Replace with real portraits -->
+        <img class="our-people__img is-active" data-person="p1" src="picture/hanoi/hanoi.jpg" alt="Team member 1" loading="lazy">
+        <img class="our-people__img" data-person="p2" src="picture/hanoi/city_tour.jpg" alt="Team member 2" loading="lazy">
+        <img class="our-people__img" data-person="p3" src="picture/hanoi/market_1.jpg" alt="Team member 3" loading="lazy">
+        <img class="our-people__img" data-person="p4" src="picture/hanoi/market_2.jpg" alt="Team member 4" loading="lazy">
+      </div>
+
+      <!-- List + Bio (right) -->
+      <div class="our-people__panel" aria-label="Our People">
+        <div class="our-people__list" role="listbox" aria-label="Team list">
+          <!-- NOTE:
+               - data-person must match image data-person
+               - data-role and data-bio are used to render the bio panel below
+          -->
+          <button class="our-people__item is-active" type="button"
+                  data-person="p1"
+                  data-name="Đỗ Thị Tuyến"
+                  data-role="Craft Host • Workshops & makers"
+                  data-bio="Tuyến grew up in Hanoi’s Old Blacksmith Village. She mastered the Blacksmith skill to become the only female blacksmith in Hanoi. Her workshop are thrilling, story-driven work — small moments, personalized, and the everyday rhythm locals know by heart.">
+            <span class="our-people__name">Mrs Tuyến</span>
+            <span class="our-people__chev" aria-hidden="true">›</span>
+          </button>
+
+          <button class="our-people__item" type="button"
+                  data-person="p2"
+                  data-name="Mai"
+                  data-role="Experience Designer • Pacing & detail"
+                  data-bio="Mai designs experiences with thoughtful pacing: where to pause, what to taste, and how to meet people naturally — so the day feels effortless and meaningful.">
+            <span class="our-people__name">Mai</span>
+            <span class="our-people__chev" aria-hidden="true">›</span>
+          </button>
+
+          <button class="our-people__item" type="button"
+                  data-person="p3"
+                  data-name="An"
+                  data-role="Food Storyteller • Markets & street eats"
+                  data-bio="An’s specialty is food culture — not just what to eat, but why it matters. Markets, street stalls, and the stories behind each flavor.">
+            <span class="our-people__name">An</span>
+            <span class="our-people__chev" aria-hidden="true">›</span>
+          </button>
+
+          <button class="our-people__item" type="button"
+                  data-person="p4"
+                  data-name="Huy"
+                  data-role="Local Guide • Old Quarter stories"
+                  data-bio="Huy works with local artisans and workshops. Expect hands-on making, slow learning, and real conversations with people who keep traditions alive.">
+            <span class="our-people__name">Huy</span>
+            <span class="our-people__chev" aria-hidden="true">›</span>
+          </button>
+        </div>
+
+        <!-- Bio panel (hidden until active/hover) -->
+        <div class="our-people__bio" aria-live="polite">
+          <div class="our-people__bioInner">
+            <div class="our-people__bioMeta" id="ourPeopleRole"></div>
+            <h3 class="our-people__bioName" id="ourPeopleName"></h3>
+            <p class="our-people__bioText" id="ourPeopleBio"></p>
+
+            <div class="our-people__cta">
+              <a href="product.html" class="explore-btn our-people__btn">Explore experiences</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     (G) SOCIAL PROOF — REVIEW WALL (masonry + lightbox)
+     ========================================================= -->
+<section class="review-proof">
+  <div class="container">
+    <div class="review-proof__head text-center">
+      <h2 class="review-proof__title">What travelers say</h2>
+      <p class="review-proof__sub">
+        Real screenshots from guests — proof you can feel, not just read.
+      </p>
+    </div>
+
+    <div class="review-proof__foot text-center">
+      <span class="review-proof__hint">Tap any screenshot to zoom</span>
+    </div>
+
+    <!-- Desktop: masonry | Mobile: horizontal swipe -->
+    <div class="review-wall" aria-label="Guest review screenshots">
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-01.jpg" aria-label="Open review 1">
+    <img src="picture/testimonial/tsm-01.jpg" alt="Guest testimonial screenshot 1" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-02.jpg" aria-label="Open review 2">
+    <img src="picture/testimonial/tsm-02.jpg" alt="Guest testimonial screenshot 2" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-03.jpg" aria-label="Open review 3">
+    <img src="picture/testimonial/tsm-03.jpg" alt="Guest testimonial screenshot 3" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-04.jpg" aria-label="Open review 4">
+    <img src="picture/testimonial/tsm-04.jpg" alt="Guest testimonial screenshot 4" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-05.jpg" aria-label="Open review 5">
+    <img src="picture/testimonial/tsm-05.jpg" alt="Guest testimonial screenshot 5" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-06.jpg" aria-label="Open review 6">
+    <img src="picture/testimonial/tsm-06.jpg" alt="Guest testimonial screenshot 6" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-07.jpg" aria-label="Open review 7">
+    <img src="picture/testimonial/tsm-07.jpg" alt="Guest testimonial screenshot 7" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-08.jpg" aria-label="Open review 8">
+    <img src="picture/testimonial/tsm-08.jpg" alt="Guest testimonial screenshot 8" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-09.jpg" aria-label="Open review 9">
+    <img src="picture/testimonial/tsm-09.jpg" alt="Guest testimonial screenshot 9" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-10.jpg" aria-label="Open review 10">
+    <img src="picture/testimonial/tsm-10.jpg" alt="Guest testimonial screenshot 10" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-11.jpg" aria-label="Open review 11">
+    <img src="picture/testimonial/tsm-11.jpg" alt="Guest testimonial screenshot 11" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-12.jpg" aria-label="Open review 12">
+    <img src="picture/testimonial/tsm-12.jpg" alt="Guest testimonial screenshot 12" loading="lazy">
+  </button>
+
+  <button class="review-shot" type="button" data-review-src="picture/testimonial/tsm-13.jpg" aria-label="Open review 13">
+    <img src="picture/testimonial/tsm-13.jpg" alt="Guest testimonial screenshot 13" loading="lazy">
+  </button>
+
+</div>
+
+
+  <div class="review-proof__badges">
+  <span class="review-badge">Read more Testimonials from past travelers</span>
+    </div>
+    
+  </div>
+</section>
+
+<!-- Lightbox (đặt ngay sau section hoặc cuối body đều được) -->
+<div class="review-lightbox" id="reviewLightbox" aria-hidden="true">
+  <div class="review-lightbox__backdrop" data-review-close></div>
+
+  <div class="review-lightbox__panel" role="dialog" aria-modal="true" aria-label="Review image viewer">
+    <button class="review-lightbox__close" type="button" aria-label="Close" data-review-close>×</button>
+    <img class="review-lightbox__img" alt="Guest review full view">
+  </div>
+</div>
+  <!-- =========================================================
+       (H) THREE COLUMNS SECTION (Conversion block)
+       ========================================================= -->
 
   <!-- ✅ Three Columns Section -->
   <section class="three-columns py-4">
     <div class="container">
-      <!-- <div class="text-center mb-4 start-place-intro">
-        <h2 class="section-title">
-          Boutique experiences, designed around real local life
-        </h2>
-
-        <div class="start-place-note">
-          <p>
-            Each journey is thoughtfully crafted with local hosts.
-            You don’t just visit Vietnam, you understand how life is lived here.
-          </p>
-        </div>
-      </div> Đây là để dùng cho mobile version -->
-      <div class="row g-5">
+      <div class="row gy-5 gx-3 gx-md-5">
 
         <!-- Travel Blog -->
         <div class="col-md-4">
@@ -397,132 +529,8 @@ Place: right after .value-pill, before .three-columns / featured-section
           </div>
         </div>
 
-  </div>
+      </div>
 </section>
-
-  <!-- ✅ Experience Section -->
-  <section class="three-experiences py-5">
-    <div class="container">
-      <div class="row g-4 text-white justify-content-center">
-        <div class="col-md-4">
-          <div class="experience-card">
-            <a href="product.html?type=workshop" class="experience-link text-decoration-none text-white">
-            <h2>WORKSHOP</h2>
-            <p>Join our hands-on workshops — from coffee brewing to knife forging...</p>
-              <div class="image-placeholder" style="background-image: url('picture/hanoi/market_1.jpg');" aria-label="Hands-on workshop experience - coffee brewing or knife forging"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="experience-card">
-            <a href="product.html?type=city-tour" class="experience-link text-decoration-none text-white">
-            <h2>CITY TOUR</h2>
-            <p>Whether by car or scooter, you and your local guide will explore together...</p>
-              <div class="image-placeholder" style="background-image: url('picture/hanoi/city_tour.jpg');" aria-label="City tour by car or scooter with local guide"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="experience-card">
-            <a href="product.html?type=walking-tour" class="experience-link text-decoration-none text-white">
-            <h2>WALKING TOUR</h2>
-            <p>Explore Hanoi by foot, following hidden alleys and markets...</p>
-              <div class="image-placeholder" style="background-image: url('picture/hanoi/market_2.jpg');" aria-label="Walking tour through hidden alleys and local markets"></div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
-     <!-- =========================================================
-       (F) WHY PHOTHESENSE (Discovery-style authority)
-       ========================================================= -->
-  <section class="py-5" style="background:#FFFCEE;color:#1C4278;">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 style="font-family:'Roboto Slab', serif; font-weight:700;">What sets us apart</h2>
-        <p style="max-width:760px;margin:0 auto;color:#555;">
-          We’re Hanoi-based and work directly with local hosts — small groups, real stories, and thoughtful pacing.
-        </p>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="p-4 h-100" style="background:#ffffff;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-            <div style="font-size:28px;color:#EF3C32;"><i class="fa-solid fa-people-group"></i></div>
-            <h3 style="font-family:'Roboto Slab', serif;font-size:20px;margin-top:10px;">Small groups, real connection</h3>
-            <p style="color:#666;margin:0;">
-              Less rushing, more meaning — space to ask, taste, learn, and connect.
-            </p>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="p-4 h-100" style="background:#ffffff;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-            <div style="font-size:28px;color:#EF3C32;"><i class="fa-solid fa-handshake"></i></div>
-            <h3 style="font-family:'Roboto Slab', serif;font-size:20px;margin-top:10px;">Direct local hosts</h3>
-            <p style="color:#666;margin:0;">
-              Workshops and routes built with artisans and locals — not copied itineraries.
-            </p>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="p-4 h-100" style="background:#ffffff;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-            <div style="font-size:28px;color:#EF3C32;"><i class="fa-solid fa-compass"></i></div>
-            <h3 style="font-family:'Roboto Slab', serif;font-size:20px;margin-top:10px;">Niche by design</h3>
-            <p style="color:#666;margin:0;">
-              Hanoi • Sapa • Ninh Binh — we go deep, not wide.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center mt-4">
-        <a href="product.html" class="explore-btn">BROWSE EXPERIENCES</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       (G) SOCIAL PROOF (lightweight, easy to expand later)
-       ========================================================= -->
-  <section class="py-5" style="background:#1C4278;color:#FFFCEE;">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 style="font-family:'Roboto Slab', serif; font-weight:700; color:#FBDC47;">What travelers say</h2>
-        <p style="max-width:760px;margin:0 auto;opacity:.9;">
-          Real stories from curious travelers who wanted more than “top 10 things to do”.
-        </p>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="p-4 h-100" style="background:rgba(255,255,255,0.06);border-radius:14px;">
-            <p style="margin:0;line-height:1.7;">
-              “This didn’t feel like a tour. It felt like being welcomed into real local life —
-              we learned, laughed, and left with stories we couldn’t have found ourselves.”
-            </p>
-            <div class="mt-3" style="opacity:.9;">— Traveler from the UK</div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="p-4 h-100" style="background:rgba(255,255,255,0.06);border-radius:14px;">
-            <p style="margin:0;line-height:1.7;">
-              “The pacing was perfect, the host was incredible, and everything felt thoughtful.
-              We saw Vietnam beyond the surface — exactly what we hoped for.”
-            </p>
-            <div class="mt-3" style="opacity:.9;">— Traveler from Italy</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- =========================================================
        (H) FINAL CTA
@@ -549,21 +557,6 @@ Place: right after .value-pill, before .three-columns / featured-section
   </section>
 
 </main>
-
-<!-- Cal element-click embed code begins -->
-      <script type="text/javascript">
-        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-      Cal("init", "quick-chat", {origin:"https://app.cal.com"});
-
-        
-        // Important: Please add the following attributes to the element that should trigger the calendar to open upon clicking.
-        // `data-cal-link="phothesense/quick-chat"`
-        // data-cal-namespace="quick-chat"
-        // `data-cal-config='{"layout":"month_view"}'`
-
-        Cal.ns["quick-chat"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#132c4f"},"dark":{"cal-brand":"#FFFCEE"}},"hideEventTypeDetails":false,"layout":"month_view"});
-        </script>
-<!-- Cal element-click embed code ends -->
 
 
     <button id="scrollToTop" class="scroll-to-top">

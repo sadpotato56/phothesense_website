@@ -257,7 +257,9 @@
 .navbar-collapse {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: 0;
+  transform: translateX(100%);
+
   width: 75%;          /* hoặc 80–100% nếu bạn muốn full-screen */
   height: 100vh;       /* luôn kín chiều cao màn hình */
   z-index: 3000;
@@ -271,7 +273,8 @@
 
 
 .navbar-collapse.show {
-  right: 0; /* slide vào màn hình */
+  transform: translateX(0);
+ /* slide vào màn hình */
 }
 
 .subpage-header .navbar-collapse.show{

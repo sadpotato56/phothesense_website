@@ -12,49 +12,70 @@
 // 1. Cal.com – Quick Chat Popup
 // ===============================
 function initCal() {
-  // Đảm bảo chỉ init 1 lần (tránh gọi lại nhiều lần khi load header + footer)
-  if (window.__calInitialized) return;
-  window.__calInitialized = true;
+  // 1) Load embed.js chỉ 1 lần
+  if (!window.__calEmbedLoaded) {
+    window.__calEmbedLoaded = true;
 
-  (function (C, A, L) {
-    let p = function (a, ar) { a.q.push(ar); };
-    let d = C.document;
-    C.Cal = C.Cal || function () {
-      let cal = C.Cal;
-      let ar = arguments;
-      if (!cal.loaded) {
-        cal.ns = {};
-        cal.q = cal.q || [];
-        d.head.appendChild(d.createElement("script")).src = A;
-        cal.loaded = true;
-      }
-      if (ar[0] === L) {
-        const api = function () { p(api, arguments); };
-        const namespace = ar[1];
-        api.q = api.q || [];
-        if (typeof namespace === "string") {
-          cal.ns[namespace] = cal.ns[namespace] || api;
-          p(cal.ns[namespace], ar);
-          p(cal, ["initNamespace", namespace]);
-        } else p(cal, ar);
-        return;
-      }
-      p(cal, ar);
-    };
-  })(window, "https://app.cal.com/embed/embed.js", "init");
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+  }
 
-  // Event type "quick-chat"
-  Cal("init", "quick-chat", { origin: "https://app.cal.com" });
+  // 2) Tìm tất cả trigger trên page để biết cần init namespace nào
+  const triggers = Array.from(document.querySelectorAll('[data-cal-namespace][data-cal-link]'));
+  if (!triggers.length) return;
 
-  Cal.ns["quick-chat"]("ui", {
-    cssVarsPerTheme: {
-      light: { "cal-brand": "#132c4f" },
-      dark: { "cal-brand": "#FFFCEE" }
-    },
-    hideEventTypeDetails: false,
-    layout: "month_view"
+  // Lưu các namespace đã init để không init lại
+  window.__calNamespacesInited = window.__calNamespacesInited || {};
+
+  // 3) Init từng namespace xuất hiện trên page
+  const uniqueNamespaces = [...new Set(triggers.map(el => (el.dataset.calNamespace || '').trim()).filter(Boolean))];
+
+  uniqueNamespaces.forEach((ns) => {
+    if (window.__calNamespacesInited[ns]) return;
+    window.__calNamespacesInited[ns] = true;
+
+    Cal("init", ns, { origin: "https://app.cal.com" });
+
+    // 4) UI config theo namespace (brand màu)
+    // - quick-chat dùng brand #132c4f (như bạn đang set)
+    // - workshop dùng brand #1C4278 (brand navy)
+    const brand = (ns === "quick-chat") ? "#132c4f" : "#1C4278";
+
+    Cal.ns[ns]("ui", {
+      cssVarsPerTheme: {
+        light: { "cal-brand": brand },
+        dark: { "cal-brand": "#FFFCEE" }
+      },
+      hideEventTypeDetails: false,
+      layout: "month_view"
+    });
   });
 }
+
 
 
 // =========================================
@@ -155,9 +176,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initFilterScrollArrows(); // filter scroll arrows
   }
 
-  initWorkshopGallery();  // gallery + lightbox từ JSON
-
+  initWorkshopGallery();  // gallery + lightbox từ JSON (product pages)    
+  initOurPeopleHome(); // our-people hover + touch swap image + bio (home)
+  initReviewWallLightbox(); // review wall lightbox
   initScrollToTop();        // scroll-to-top button
+});
+
+document.addEventListener("click", (e) => {
+  const el = e.target.closest('[data-cal-link][data-cal-namespace]');
+  if (!el) return;
+
+  // nếu vẫn là <a>, chặn navigate
+  if (el.tagName === "A") e.preventDefault();
+
+  if (typeof window.Cal !== "function") return;
+
+  Cal("preload", { calLink: el.dataset.calLink });
 });
 
 
@@ -656,5 +690,110 @@ function initWorkshopGallery() {
     .catch(err => console.error('Không thể tải gallery JSON:', err));
 }
 
+// ===================================================
+// OUR PEOPLE (Home) — A/2/i
+// - Hover/focus/click item -> swap image + update bio
+// - Bio panel is hidden unless active/hover (CSS uses .our-people.is-bio-open)
+// Markup:
+//   [data-our-people] inside section#our-people
+//   .our-people__item[data-person][data-name][data-role][data-bio]
+//   .our-people__img[data-person]
+// ===================================================
+function initOurPeopleHome() {
+  const root = document.querySelector('[data-our-people]');
+  const section = document.querySelector('#our-people');
+  if (!root || !section) return;
+
+  const items = Array.from(root.querySelectorAll('.our-people__item[data-person]'));
+  const images = Array.from(root.querySelectorAll('.our-people__img[data-person]'));
+  if (!items.length || !images.length) return;
+
+  const nameEl = document.getElementById('ourPeopleName');
+  const roleEl = document.getElementById('ourPeopleRole');
+  const bioEl  = document.getElementById('ourPeopleBio');
+
+  function setActive(key) {
+    const activeBtn = items.find(b => b.dataset.person === key);
+    if (!activeBtn) return;
+
+    items.forEach(btn => {
+      const isActive = btn.dataset.person === key;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-selected', String(isActive));
+    });
+
+    images.forEach(img => img.classList.toggle('is-active', img.dataset.person === key));
+
+    // Update bio panel content
+    if (nameEl) nameEl.textContent = activeBtn.dataset.name || '';
+    if (roleEl) roleEl.textContent = activeBtn.dataset.role || '';
+    if (bioEl)  bioEl.textContent  = activeBtn.dataset.bio  || '';
+
+    // Open bio panel
+    section.classList.add('is-bio-open');
+  }
+
+  // Default active (i): first .is-active else first item
+  const initialKey =
+    items.find(b => b.classList.contains('is-active'))?.dataset.person || items[0].dataset.person;
+
+  setActive(initialKey);
+
+  // Desktop: hover + focus preview
+  items.forEach(btn => {
+    btn.addEventListener('mouseenter', () => setActive(btn.dataset.person));
+    btn.addEventListener('focus', () => setActive(btn.dataset.person));
+  });
+
+  // Mobile/touch: click
+  items.forEach(btn => {
+    btn.addEventListener('click', () => setActive(btn.dataset.person));
+  });
+}
+
+// ===============================
+// Review Wall (Home) — lightbox
+// ===============================
+function initReviewWallLightbox() {
+  const wall = document.querySelector('.review-wall');
+  const lb = document.getElementById('reviewLightbox');
+  if (!wall || !lb) return;
+
+  const lbImg = lb.querySelector('.review-lightbox__img');
+  const closeEls = lb.querySelectorAll('[data-review-close]');
+
+  function openLightbox(src, alt = '') {
+    lbImg.src = src;
+    lbImg.alt = alt || 'Guest review full view';
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+  }
+
+  wall.addEventListener('click', (e) => {
+    const btn = e.target.closest('.review-shot');
+    if (!btn) return;
+
+    const img = btn.querySelector('img');
+    const src = btn.dataset.reviewSrc || (img ? img.currentSrc || img.src : '');
+    const alt = img ? img.alt : '';
+    if (!src) return;
+
+    openLightbox(src, alt);
+  });
+
+  closeEls.forEach(el => el.addEventListener('click', closeLightbox));
+
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+  });
+}
 
 

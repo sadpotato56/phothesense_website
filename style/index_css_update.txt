@@ -1,0 +1,96 @@
+Thống nhất thứ tự structure
+
+- xem đâu sẽ tối ưu trải nghiệm người xem hơn
+1. Hero / Positioning
+Nội dung nên có:
+
+Headline rõ, không thơ mộng quá
+Sub-headline định vị niche
+1 CTA duy nhất
+
+2. What makes PhoTheSense different
+
+3. Featured Experiences
+
+4. Value / Feeling section
+
+5. Reviews
+
+6. About Us
+
+7. Social Impact
+
+8. CTA
+
+= Tối ưu flow người dùng
+
+Peru for Less - Bán tour ở Peru, có nhiều lựa chọn để desgin, Có thể tạo lịch trình tuỳ theo nhu cầu khách hàng
+              - Có Cố vấn thiết kế tour là Journer nổi tiếng
+              - Thông tin nhanh, nhiều màu dễ theo dõi - so sánh
+
+                
+    - landing trang bìa
+    - Điểm đặc biệt
+    - Tour: 9 Tour
+    - Sale: ý chính
+        Từ travler cho travler
+        Ksan hàng đầu
+        Support 24/7
+        Local Base
+        - Hình minh hoạ tạo cảm giác dễ dàng, nhanh, có độ tuỳ biến cao cho ý tưởng của bạn, Tận hưởng chuyến đi 1 trong đời
+    - Review từ khách
+    - Why us
+    - Social Impact
+    - CTA
+
+Discovery Voyages   -ĐẮT 1000$/1day = nhiều thông tin để đưa ra cho khách hàng hơn 
+                    - Bán tour thiết kế sẵn, cruise, khác nhau ở lịch trình
+                    -Tập trung nói vào vẻ đẹp của địa điểm -> từ đó dẫn ra tại sao chúng tôi khác biệt
+                    - Spacing tốt, có quoãng nghỉ giữa các section
+    -Landing page 
+        - Khẳng định chắc nịch: cruise của tao là xịn và hoang dã nhất 
+        -> Hanoi Niche Experiacne + 
+        Explore Beyond - Discover Hanoi in every Sense
+    - Small text section giới thiệu về địa điểm
+    - About us 
+        -THuyền
+        - Ngày và giá
+        - About us
+    - Small text section nói về Why us
+    - Tour
+        - Tên tour
+        - Mô tả tour
+        - Duration
+        - Tour type
+        - Location
+        - giá || CTA
+    - Spacing - quãng nghỉ trắng
+    -Small text section nói về Why us
+    - Các thẻ What Sets Us Apart
+    - Các thẻ về unique perspective 
+        -Private Charters
+        -Alaska Photography Tours
+    - Unique cruise offer unique Experiacne
+    -Các offer Đặc biết mà avalible
+    -Ảnh
+    -Review: 6 cái
+    -CTA
+
+    
+Vaya Adventure
+    -landing
+    - What make us different
+    - Tour theo vị trí địa lí
+        -Africa
+        -Asia
+        -Europe
+        +3
+    - Review khách
+    - Our team 
+    - Blog
+    - 5 Start Review trên các nền tảng
+    - Social Impact
+
+- Các phần tử đang bị co rúm vào nhau chưa tối ưu cho mobile là
+    -featured-section
+    -

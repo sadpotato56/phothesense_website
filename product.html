@@ -172,7 +172,7 @@
                 class="product-card"
                 data-location="hanoi" 
                 data-type="workshop">
-                <div class="product-image" style="background-image: url('picture/coffee_workshop/cf (1).jpg');"></div>
+                <div class="product-image" style="background-image: url('picture/coffee_workshop/cf-20.jpg');"></div>
                 <div class="product-info">
                   <div class="rating">4.9 <i class="fas fa-star"></i></div>
                   <h3>Hanoi Coffee Workshop – Master Vietnamese Brewing</h3>
@@ -276,81 +276,7 @@
       </div>
     </div>
   </main>
-
- 
-
-
-  <script>
-  const scrollContainer = document.querySelector('.filter-scroll-container');
-  document.querySelector('.scroll-btn.next').addEventListener('click', () => {
-    scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
-  });
-  document.querySelector('.scroll-btn.prev').addEventListener('click', () => {
-    scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
-  });
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const scrollContainer = document.querySelector('.filter-scroll-container');
-  const btnPrev = document.querySelector('.scroll-btn.prev');
-  const btnNext = document.querySelector('.scroll-btn.next');
-
-  if (!scrollContainer || !btnPrev || !btnNext) return;
-
-  // Ẩn nút prev ban đầu
-  btnPrev.style.display = 'none';
-
-  function updateButtonVisibility() {
-    // Nếu scroll về đầu -> ẩn nút prev
-    if (scrollContainer.scrollLeft <= 0) {
-      btnPrev.style.display = 'none';
-    } else {
-      btnPrev.style.display = 'flex';
-    }
-
-    // Nếu scroll đến cuối -> ẩn nút next
-    if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 10) {
-      btnNext.style.display = 'none';
-    } else {
-      btnNext.style.display = 'flex';
-    }
-  }
-
-  // Cập nhật khi user cuộn
-  scrollContainer.addEventListener('scroll', updateButtonVisibility);
-
-  // Cập nhật khi click nút next/prev
-  btnNext.addEventListener('click', () => {
-    scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
-    setTimeout(updateButtonVisibility, 300);
-  });
-
-  btnPrev.addEventListener('click', () => {
-    scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
-    setTimeout(updateButtonVisibility, 300);
-  });
-
-  // Cập nhật lần đầu
-  updateButtonVisibility();
-});
-</script>
-
-      <!-- Cal element-click embed code begins -->
-      <script type="text/javascript">
-        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-      Cal("init", "quick-chat", {origin:"https://app.cal.com"});
-
-        
-        // Important: Please add the following attributes to the element that should trigger the calendar to open upon clicking.
-        // `data-cal-link="phothesense/quick-chat"`
-        // data-cal-namespace="quick-chat"
-        // `data-cal-config='{"layout":"month_view"}'`
-
-        Cal.ns["quick-chat"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#132c4f"},"dark":{"cal-brand":"#FFFCEE"}},"hideEventTypeDetails":false,"layout":"month_view"});
-        </script>
-        <!-- Cal element-click embed code ends -->
-
+  <!-- --------------------------------------------------------------------------------------- -->
 
         <button id="scrollToTop" class="scroll-to-top">
           <i class="fa-solid fa-chevron-up"></i>

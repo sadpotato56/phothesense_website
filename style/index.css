@@ -7,7 +7,8 @@ body {
   height: 100%;
   background-color: #1C4278; /* nền xanh đậm riêng cho home */
   color: #fff;
-  /* overflow-x: hidden;  // nếu cần thì bỏ comment */
+  margin: 0;
+  overflow-x: hidden;
 }
 
 
@@ -225,20 +226,6 @@ body {
   z-index: 5;
 }
 
-.value-pill--between {
-  position: relative;
-  z-index: 20;
-
-  /* kéo pill lên ăn vào section phía trên */
-  margin-top: -70px;
-  margin-bottom: 40px;
-
-  max-width: 1100px;
-  padding: 0 12px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .value-pill-inner {
   background: #ffffff;
   border-radius: 999px;
@@ -288,114 +275,404 @@ body {
 }
 
 /* =========================================
-   PHOTHESENSE — CUSTOMIZABLE PACKAGES CTA
-   Matches HTML exactly (no unused selectors)
+   OUR PEOPLE (A/2/i)
+   A: media height scales with viewport (vh)
+   2: list fits content (no scroll)
+   i: default active person; bio hidden unless active/hover
 ========================================= */
 
-.ph-custom-packages{
-  background: #1C4278;
-  padding: 62px 0 60px;
+.our-people{
+  background: #FFFCEE;
+  color: #1C4278;
+  padding: clamp(56px, 6vw, 92px) 0; /* more “breathing room” */
 }
 
-.ph-custom-label{
+.our-people__head{ margin-bottom: 28px; }
+
+.our-people__title{
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+}
+
+.our-people__subtitle{
+  margin: 10px auto 0;
+  max-width: 760px;
+  color: rgba(28,66,120,0.85);
+}
+
+.our-people__split{
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+/* MEDIA (A): scale with viewport */
+.our-people__media{
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(28,66,120,0.06);
+  height: clamp(320px, 65vh, 780px); /* key change vs 750px fixed */
+}
+
+.our-people__img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 260ms ease, transform 600ms ease;
+  pointer-events: none;
+}
+
+.our-people__img.is-active{
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* PANEL */
+.our-people__panel{
+  background: #ffffff;
+  border: 1px solid rgba(28,66,120,0.14);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+  display: flex;
+  flex-direction: column;
+}
+
+/* LIST (2): fit content */
+.our-people__list{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+}
+
+.our-people__item{
+  appearance: none;
+  border: 1px solid rgba(28,66,120,0.12);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+
+  padding: 14px 14px;
+  border-radius: 14px;
+
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 0 0 14px;
+  justify-content: space-between;
+  gap: 14px;
+
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease;
 }
 
-.ph-custom-bar{
-  width: 44px;
-  height: 4px;
-  background: #FBDC47;
+.our-people__item:hover{
+  background: rgba(28,66,120,0.05);
+  border-color: rgba(28,66,120,0.18);
+}
+
+.our-people__item.is-active{
+  background: rgba(28,66,120,0.10);
+  border-color: rgba(28,66,120,0.22);
+}
+
+.our-people__name{
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1C4278;
+}
+
+/* chevron */
+.our-people__chev{
+  width: 38px;
+  height: 38px;
   border-radius: 999px;
-}
-
-.ph-custom-label-text{
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 800;
-  color: #FBDC47;
-}
-
-.ph-custom-label-text b{
-  color: #ffffff;
-}
-
-.ph-custom-row{
-  display: flex;
-  align-items: center;   /* items-center */
-  gap: 20px;             /* gap-5 */
-  padding-top: 24px;     /* pt-6 */
-  padding-bottom: 28px;  /* pb-12 */
-}
-
-.ph-custom-avatar{
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
+  background: #FFFCEE;
+  border: 1px solid rgba(28,66,120,0.18);
+  display: grid;
+  place-items: center;
   flex: 0 0 auto;
-
-  /* avatar nổi trên nền navy */
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
-    #FBDC47;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+  color: #1C4278;
+  font-size: 22px;
+  line-height: 1;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
-.ph-custom-content{
-  flex: 1;
-  min-width: 0;
-   max-width: 628px; 
+.our-people__item.is-active .our-people__chev{
+  background: #1C4278;
+  color: #FFFCEE;
+  border-color: rgba(28,66,120,0.35);
 }
 
-.ph-custom-headline{
-  display: block;
-  font-family: 'Open sans', sans-serif;
-  font-weight: 600;
-  font-size: clamp(16px, 2.2vw, 23px);
-  line-height: 1.25;
+/* BIO (i): hidden unless active/hover */
+.our-people__bio{
+  padding: 0 10px 12px;
+}
+
+.our-people__bioInner{
+  border-radius: 14px;
+  border: 1px solid rgba(28,66,120,0.12);
+  background: rgba(28,66,120,0.04);
+  padding: 16px 16px 14px;
+
+  /* hidden state */
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-4px);
+  transition: opacity 220ms ease, max-height 260ms ease, transform 260ms ease;
+}
+
+/* Show when panel has an active item (JS toggles .is-bio-open on root) */
+.our-people.is-bio-open .our-people__bioInner{
+  opacity: 1;
+  max-height: 260px; /* enough for 2–3 lines bio + button */
+  transform: translateY(0);
+}
+
+.our-people__bioMeta{
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(28,66,120,0.75);
+  margin-bottom: 6px;
+}
+
+.our-people__bioName{
+  margin: 0 0 6px;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 800;
+  color: #1C4278;
+}
+
+.our-people__bioText{
+  margin: 0;
+  color: rgba(28,66,120,0.9);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.our-people__cta{
+  margin-top: 12px;
+}
+
+.our-people__btn{
+  width: 100%;
+  text-align: center;
+}
+
+/* Desktop split */
+@media (min-width: 1200px){
+  .our-people__split{
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 24px;
+  }
+
+  /* .our-people__media{
+    height: clamp(420px, 56vh, 620px);
+  } */
+}
+
+/* Small screens */
+@media (max-width: 576px){
+  .our-people__media{
+    height: clamp(260px, 40vh, 360px);
+  }
+}
+
+/* =========================
+   REVIEW WALL (Home)
+   ========================= */
+.review-proof{
+  padding: 56px 0;
+  background: #1C4278;
   color: #FFFCEE;
 }
 
-.ph-custom-link{
-  font-weight: 600;
-  font-family: 'Open sans', sans-serif;
-  color: #f26230;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  margin-left: 6px;
-  /* tránh tràn dòng khi headline dài */
-  white-space: normal;
+.review-proof__title{
+  font-family: "Roboto Slab", serif;
+  font-weight: 700;
+  color: #FBDC47;
+  margin: 0 0 10px;
 }
 
-.ph-custom-footnote{
-  margin: 10px 0 0;
-  font-size: 16px;
-  color: rgba(255,252,238,0.9);
+.review-proof__sub{
+  max-width: 760px;
+  margin: 0 auto;
+  opacity: .9;
 }
 
-@media (max-width: 576px){
-  .ph-custom-row{
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 14px 0;
-  }
+.review-proof__foot{
+  margin-top: 14px;
+  opacity: .85;
+  font-size: 14px;
+}
 
-  .ph-custom-avatar{
-    width: 60px;
-    height: 60px;
-  }
+.review-wall{
+  margin-top: 28px;
+}
 
-  .ph-custom-link{
-    display: inline-block;
-    margin-left: 0;
-    margin-top: 6px;
+/* Desktop masonry using CSS columns (nhẹ, không cần JS) */
+@media (min-width: 992px){
+  .review-wall{
+    column-count: 4;
+    column-gap: 16px;
   }
 }
 
+/* Màn lớn hơn chút: 5 cột (tuỳ bạn) */
+@media (min-width: 1400px){
+  .review-wall{
+    column-count: 5;
+  }
+}
 
+.review-shot{
+  display: inline-block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0 0 16px;
+  background: transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  break-inside: avoid;
+  cursor: zoom-in;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.review-shot img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.review-shot:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.25);
+}
+
+/* Mobile = swipe ngang (scroll-snap) */
+@media (max-width: 991.98px){
+  .review-wall{
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .review-shot{
+    flex: 0 0 auto;
+    width: 72%;
+    max-width: 320px;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+
+  .review-wall::-webkit-scrollbar{
+    height: 8px;
+  }
+}
+
+/* Lightbox */
+.review-lightbox{
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 9999;
+}
+
+.review-lightbox.is-open{
+  display: block;
+}
+
+.review-lightbox__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+}
+
+.review-lightbox__panel{
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 720px);
+  max-height: 86vh;
+  margin: 6vh auto 0;
+  background: rgba(19,44,79,.92);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+
+.review-lightbox__img{
+  width: 100%;
+  height: auto;
+  max-height: calc(86vh - 56px);
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+}
+
+.review-lightbox__close{
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  color: #FFFCEE;
+  font-size: 22px;
+  line-height: 38px;
+  cursor: pointer;
+}
+.review-lightbox__close:hover{
+  background: rgba(255,255,255,.18);
+}
+
+/* ===== Review proof badges ===== */
+.review-proof__badges{
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.review-badge{
+  font-size: 13px;
+  line-height: 1;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #FFFCEE;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(251,220,71,0.35); /* gold hint */
+  backdrop-filter: blur(2px);
+  letter-spacing: .2px;
+}
+
+/* subtle hover – desktop only */
+@media (hover:hover){
+  .review-badge:hover{
+    background: rgba(251,220,71,0.18);
+    border-color: rgba(251,220,71,0.6);
+    color: #bed9ff;
+  }
+}
 
 /* ---------- THREE COLUMNS (Use Bootstrap Grid) ---------- */
 .three-columns {
@@ -406,56 +683,13 @@ body {
   padding-top: 50px !important;
 }
 
-.start-place-note {
-  max-width: 760px;
-  margin: 18px auto 0;
-  padding: 14px 18px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 8px;
-  font-size: 15px;
-  line-height: 1.7;
-}
-
-
-.column h2 {
-  font-family: 'Roboto Slab', serif;
-  font-size: 28px;
-  margin-bottom: 15px;
-  color: #fff;
-}
-
-.column p {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 25px;
-}
-
-.image-placeholder {
-  width: 100%;
-  height: 540px;
-  border-radius: 10px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-}
-
-.image-placeholder:hover {
-  transform: scale(1.05);
-}
-
-/* =========================================
-   Featured grid (mobile-first)
-========================================= */
 /* =========================================
    Featured Experiences (Mosaic: 1 large + 2 small)
    Laptop-first
 ========================================= */
 
 .featured-section {
-  padding: 20px 0 40px;
+  padding: 40px 0 40px;
   background: #1C4278; /* giữ tone hiện tại của home */
 }
 
@@ -487,16 +721,6 @@ body {
 .featured-mosaic > .featured-card:nth-child(6n + 5) { grid-column: 2; }
 .featured-mosaic > .featured-card:nth-child(6n)     { grid-column: 3 / span 2; } /* 6,12,18... */
 
-/* Media sizing giữ như bạn đang dùng */
-.featured-card--large .featured-media {
-  min-height: 520px;
-  aspect-ratio: 16 / 9;
-}
-
-.featured-card--small .featured-media {
-  min-height: 520px;
-  aspect-ratio: 3 / 4;
-}
 
 
 /* Shared card base */
@@ -543,12 +767,12 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;              /* FIX cramp */
+  justify-content: space-between;/* pill/price tách ra khi hẹp */
 }
 
 .featured-price {
-  font-size: 16px;
-  font-weight: 600;
-  opacity: 0.95;
+  white-space: nowrap;          /* tránh "from $1" bị xuống dòng/cắt */
 }
 
 .featured-title {
@@ -586,8 +810,6 @@ body {
   border-radius: 40px;
   transition: 0.3s ease;
 }
-
-/* Container width already in base.css, so this plays nicely */
 
 /* ================================
    TEXT POSITION CONTROL
@@ -658,24 +880,150 @@ body {
   font-weight: 600;
 }
 
-@media (max-width: 992px) {
-  .featured-mosaic { grid-template-columns: 1fr; }
-  .featured-mosaic > .featured-card { grid-column: auto; } /* reset placements */
+/* ===== Tablet landscape / iPad fix: show all items (avoid mosaic placement gaps) ===== */
+@media (max-width: 1280px) and (min-width: 993px) {
+  .featured-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  /* Reset mosaic placement pattern so items auto-flow (prevents “missing” card) */
+  .featured-mosaic > .featured-card {
+    grid-column: auto !important;
+  }
+
+  /* Make all cards same size on iPad landscape for consistency */
+  .featured-card--large,
+  .featured-card--small {
+    grid-column: auto !important;
+  }
+
   .featured-card--large .featured-media,
   .featured-card--small .featured-media {
-    min-height: 420px;
-    aspect-ratio: 16 / 9;
+    /* min-height: 420px; */
+    aspect-ratio: 4 / 3;
   }
 }
 
-@media (max-width: 576px) {
+/* ===== Tablet portrait / small screens: stack cards vertically ===== */
+@media (max-width: 992px) {
+  .featured-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* CHỐT: 2 cột */
+    gap: 14px;
+  }
+
+  /* reset mosaic placements để auto-flow đúng */
+  .featured-mosaic > .featured-card,
+  .featured-card--large,
+  .featured-card--small {
+    grid-column: auto !important;
+  }
+
+  /* Card rõ hơn: giảm overlay dày + chữ vừa */
+  .featured-overlay { padding: 14px; }
+
+  .featured-title {
+    font-size: 16px;
+    margin: 8px 0 6px;
+    line-height: 1.08;
+  }
+
+  .featured-subtitle {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* 2 cột thì ảnh không nên quá cao */
   .featured-card--large .featured-media,
   .featured-card--small .featured-media {
     min-height: 320px;
+    aspect-ratio: 3 / 4; /* hợp 2 cột, nhìn “đứng” và rõ */
   }
 }
 
 
+
+@media (max-width: 576px) {
+  .featured-section {
+    padding: 40px 0 30px;
+  }
+
+  .featured-card:active {
+    transform: translateY(1px);
+  }
+
+  /* MOBILE: chuyển mosaic thành carousel ngang để card không bị bó hẹp */
+  .featured-mosaic {
+    display: flex;                 /* EDIT: từ grid -> flex */
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 14px 10px;          /* tạo “khung thở” 2 bên */
+  }
+
+  /* Ẩn scrollbar (nhẹ nhàng hơn trên mobile) */
+  .featured-mosaic::-webkit-scrollbar {
+    height: 0;
+  }
+
+  /* Mỗi card chiếm ~82% màn hình: nhìn rõ, không cramped */
+  .featured-mosaic > .featured-card {
+    flex: 0 0 82%;
+    max-width: 82%;
+    scroll-snap-align: start;
+  }
+
+  /* Nếu muốn card thứ 2 ló ra 1 chút (cảm giác “còn nữa”) */
+  @supports (width: 1dvw) {
+    .featured-mosaic > .featured-card {
+      flex-basis: 84dvw;
+      max-width: 84dvw;
+    }
+  }
+
+  /* Giảm “độ dày” chữ trên mobile */
+  .featured-overlay {
+    padding: 14px;
+  }
+
+  .featured-content {
+    padding: 0;                    /* EDIT: bỏ padding 5px gây bí */
+  }
+
+  .featured-title {
+    font-size: 16px;
+    margin: 8px 0 6px;
+    line-height: 1.08;
+  }
+
+  .featured-subtitle {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  /* Mobile: media gọn, ít dài */
+  .featured-card--large .featured-media,
+  .featured-card--small .featured-media {
+    /* min-height: 240px; */
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Meta không bị cắt/chật */
+  .featured-meta {
+    gap: 8px;
+  }
+
+  .featured-pill {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .featured-price {
+    font-size: 12px;
+  }
+}
 
 
 /* ===== IMAGE OVERLAY LOCATION CARDS ===== */
@@ -802,14 +1150,6 @@ body {
     padding: 12px 30px;
     font-size: 14px;
   }
-
-  .image-placeholder {
-    height: 500px;             /* tối ưu cho tablet */
-  }
-
-  .experience-card {
-    min-height: 450px;
-  }
 }
 
 @media (max-width: 576px) {
@@ -819,18 +1159,27 @@ body {
   .hero-content p {
     letter-spacing: 1px;
   }
-   .image-placeholder {
-    height: 240px;
+
+  .confidence-inner{
+    flex-wrap: wrap;
+    border-radius: 16px;
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .confidence-left{
+    border-right: 0;
+    padding-right: 0;
   }
 
-  .experience-card {
-    min-height: auto;
+  .value-pill-inner{
+    grid-template-columns: 1fr;
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .value-divider{
+    width: 100%;
+    height: 1px;
   }
 }
 
-@media (hover: none) {
-  .image-placeholder:hover {
-    transform: none;
-  }
-}
 
