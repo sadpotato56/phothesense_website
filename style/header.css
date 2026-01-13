@@ -353,3 +353,17 @@
 }
 
 }
+
+/* ==================== MOBILE SAFARI BAR (AUTO-HIDE HEADER) ==================== */
+@media (max-width: 768px) {
+  .hero-header,
+  .subpage-header {
+    will-change: transform;
+    transition: transform 0.25s ease;
+  }
+
+  .hero-header.is-hidden,
+  .subpage-header.is-hidden {
+    transform: translateY(-110%);
+  }
+}
