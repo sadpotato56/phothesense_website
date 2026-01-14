@@ -484,9 +484,7 @@ body {
     gap: 24px;
   }
 
-  .our-people__media{
-    height: clamp(420px, 56vh, 620px);
-  }
+  
 }
 
 /* Small screens */
