@@ -207,8 +207,15 @@ body {
   }
 
   .featured-in-logos {
+    padding-top: 20px;
+    padding-bottom: 20px;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 25px;
+  }
+
+  .featured-in-logos img {
+    height: 80px;
+    max-width: 80px;
   }
 }
 
@@ -477,15 +484,19 @@ body {
     gap: 24px;
   }
 
-  /* .our-people__media{
+  .our-people__media{
     height: clamp(420px, 56vh, 620px);
-  } */
+  }
 }
 
 /* Small screens */
 @media (max-width: 576px){
   .our-people__media{
     height: clamp(260px, 40vh, 360px);
+  }
+
+  .our-people.is-bio-open .our-people__bioInner{
+    max-height: 360px; /* tăng thêm để chắc chắn CTA không bị cắt */
   }
 }
 
