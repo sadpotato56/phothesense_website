@@ -129,6 +129,81 @@ function initHeroHeaderScroll() {
 }
 
 
+// ===================================================
+// Mobile: Auto-hide header like Safari bar
+//   - Scroll down: hide header
+//   - Scroll up: show header
+//   - Near top: always show
+//   Defaults: <=768px, topLock=16px, threshold=40px, delta=8px
+// ===================================================
+function initMobileHeaderAutoHide() {
+  const header = document.querySelector('.hero-header, .subpage-header');
+  if (!header) return;
+
+  const mq = window.matchMedia('(max-width: 768px)');
+  const TOP_LOCK = 16;
+  const THRESHOLD = 40;
+  const DELTA = 8;
+
+  // Prevent duplicate listeners
+  if (header.dataset.autoHideBound === '1') return;
+  header.dataset.autoHideBound = '1';
+
+  let lastY = 0;
+
+  const isMenuOpen = () => {
+    return !!(
+      header.querySelector('.navbar-collapse.show') ||
+      header.querySelector('.navbar-toggler[aria-expanded="true"]')
+    );
+  };
+
+  const showHeader = () => header.classList.remove('is-hidden');
+  const hideHeader = () => header.classList.add('is-hidden');
+
+  function onScroll() {
+    // Desktop/tablet: always show
+    if (!mq.matches) {
+      showHeader();
+      lastY = window.scrollY || 0;
+      return;
+    }
+
+    const y = window.scrollY || 0;
+
+    // Keep visible while menu open
+    if (isMenuOpen()) {
+      showHeader();
+      lastY = y;
+      return;
+    }
+
+    // Near top: always show
+    if (y <= TOP_LOCK) {
+      showHeader();
+      lastY = y;
+      return;
+    }
+
+    const goingDown = y > lastY + DELTA;
+    const goingUp = y < lastY - DELTA;
+
+    if (goingDown && y > THRESHOLD) hideHeader();
+    else if (goingUp) showHeader();
+
+    lastY = y;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+
+  // If breakpoint changes (rotate), re-evaluate immediately
+  if (mq.addEventListener) mq.addEventListener('change', onScroll);
+  else mq.addListener(onScroll); // Safari fallback
+
+  onScroll();
+}
+
 
 // ===================================================
 // 4. Dynamic Header + Footer include
@@ -146,11 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.text())
       .then(html => {
         headerContainer.innerHTML = html;
-
         // Sau khi header đã gắn vào DOM:
         setActiveNavLink();
-        initHeroHeaderScroll();
         initMobileHeaderAutoHide();
+        initHeroHeaderScroll();
         initCal(); // để ABOUT/CONTACT trong header hoạt động
       })
       .catch(err => console.error('Không load được header:', err));
@@ -797,78 +871,4 @@ function initReviewWallLightbox() {
   });
 }
 
-// ===================================================
-// Mobile: Auto-hide header like Safari bar
-//   - Scroll down: hide header
-//   - Scroll up: show header
-//   - Near top: always show
-//   Defaults: <=768px, topLock=16px, threshold=40px, delta=8px
-// ===================================================
-function initMobileHeaderAutoHide() {
-  const header = document.querySelector('.hero-header, .subpage-header');
-  if (!header) return;
-
-  const MOBILE_MAX = 768;
-  const TOP_LOCK = 16;
-  const THRESHOLD = 40;
-  const DELTA = 8;
-
-  // Only run on mobile
-  if (window.innerWidth > MOBILE_MAX) {
-    header.classList.remove('is-hidden');
-    return;
-  }
-
-  // Prevent duplicate listeners if called multiple times (header injected async)
-  if (header.dataset.autoHideBound === '1') return;
-  header.dataset.autoHideBound = '1';
-
-  let lastY = window.scrollY || 0;
-
-  const isMenuOpen = () => {
-    return !!(
-      header.querySelector('.navbar-collapse.show') ||
-      header.querySelector('.navbar-toggler[aria-expanded="true"]')
-    );
-  };
-
-  const showHeader = () => header.classList.remove('is-hidden');
-  const hideHeader = () => header.classList.add('is-hidden');
-
-  function onScroll() {
-    // Re-check breakpoint in case of orientation change
-    if (window.innerWidth > MOBILE_MAX) {
-      showHeader();
-      return;
-    }
-
-    const y = window.scrollY || 0;
-
-    // If menu is open, keep header visible (avoids jitter)
-    if (isMenuOpen()) {
-      showHeader();
-      lastY = y;
-      return;
-    }
-
-    // Near top: always show
-    if (y <= TOP_LOCK) {
-      showHeader();
-      lastY = y;
-      return;
-    }
-
-    const goingDown = y > lastY + DELTA;
-    const goingUp = y < lastY - DELTA;
-
-    if (goingDown && y > THRESHOLD) hideHeader();
-    else if (goingUp) showHeader();
-
-    lastY = y;
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  onScroll();
-}
 
