@@ -1,0 +1,31 @@
+Discoveryvoyages
+1. Overview 
+    Giới thiệu qua về tour, những USP + picture
+2. Highlights
+    3 Highlights
+    - Activities
+    - Wildlife
+    - Great For
+
+3. Whats Include
+    -
+    -
+    -
+4. Itinerary
+    +
+    Dấu cộng đóng mở lịch trình được, không bị quá dài
+5. Date & Rate
+    Giá cả -  Reach out to us if dont see your date
+    * Section khá to, nhiều spacing, 
+    * List Các ngày còn trống + giá
+6. Photo 
+    * 28 ảnh, spacing ra 
+        1 dòng 3 ảnh nhỏ, 1 dòng 2 ảnh lớn, spacing giữa các ảnh 
+7. Review
+    Tên                                     Star* * * * *
+    Ngày Review                             Tiêu đề
+                                            Nội dung
+
+                                        DATE of experience
+
+8. Related Cruises
