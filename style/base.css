@@ -96,6 +96,12 @@ img {
   transform: translateY(0);
 }
 
+/* Class này sẽ được JS thêm vào khi Sticky Bar hiện ra */
+.scroll-to-top.lifted {
+  bottom: 80px !important; /* Cao hơn chiều cao Sticky Bar (thường là 80px) */
+  transition: bottom 0.4s ease; /* Hiệu ứng trượt mượt mà */
+}
+
 /* Mobile tweak */
 @media (max-width: 576px) {
   .scroll-to-top {

@@ -1,28 +1,20 @@
-/* ---------------- Reset & Fonts ---------------- */
+/* ---------------- 1. Reset & Layout Chung ---------------- */
 
 body {
-  background-color: #FFFCEE;  /* nền riêng cho trang product */
+  background-color: #FFFCEE;
   color: var(--ph-navy);
-  padding-top: 120px;          /* chừa chỗ cho header fixed nếu cần */
+  padding-top: 120px;
 }
 
-
-/* ---------------- Product Layout ---------------- */
 .product-archive {
   padding: 20px 0;
 }
 
+/* ---------------- 2. Filter Bar (Desktop Default) ---------------- */
 
-/* ---------------- Horizontal Filter Bar ---------------- */
-
-/* ============================
-   FILTER BAR – PHOTHESENSE
-   ============================ */
-
-/* Thanh filter bám trên cùng, nền kem brand, căn giữa */
 .filter-bar {
   position: sticky;
-  top: 70px; /* chỉnh theo chiều cao header của bạn */
+  top: 70px; /* Chỉnh theo height header */
   z-index: 950;
   background: #FFFCEE;
   border-bottom: 1px solid rgba(28, 66, 120, 0.08);
@@ -31,7 +23,7 @@ body {
   padding: 10px 0;
 }
 
-/* Container chứa các chip + sort – căn giữa, max-width để không quá dài */
+/* Container cuộn ngang */
 .filter-scroll-container {
   display: flex;
   align-items: center;
@@ -41,10 +33,9 @@ body {
   width: 100%;
   padding: 0 16px;
   margin: 0 auto;
-
   overflow-x: auto;
   scroll-behavior: smooth;
-  white-space: nowrap; /* giúp các chip nằm trên 1 hàng, có thể scroll ngang trên mobile */
+  white-space: nowrap;
 }
 
 .filter-scroll-container::-webkit-scrollbar {
@@ -67,7 +58,17 @@ body {
   color: #1C4278;
 }
 
-/* ---------- Filter Chip ---------- */
+/* Logic ẩn hiện Dropdown/Button trên Desktop */
+.filter-buttons-desktop {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.mobile-filter-dropdown {
+  display: none; /* Mặc định ẩn dropdown trên desktop */
+}
+
+/* ---------- Filter Chip (Nút bấm) ---------- */
 .filter-chip {
   background: #f3f3f3;
   border: 1px solid transparent;
@@ -82,11 +83,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: background-color 0.25s ease,
-              color 0.25s ease,
-              box-shadow 0.25s ease,
-              transform 0.15s ease,
-              border-color 0.25s ease;
+  transition: all 0.25s ease;
   flex-shrink: 0;
 }
 
@@ -95,7 +92,6 @@ body {
   color: var(--ph-navy);
 }
 
-/* Hover + Active */
 .filter-chip:hover,
 .filter-chip.active {
   background: var(--ph-navy);
@@ -107,22 +103,17 @@ body {
   color: var(--ph-text-light);
 }
 
-/* Focus cho accessibility */
 .filter-chip:focus-visible {
   outline: 2px solid var(--ph-primary);
   outline-offset: 2px;
 }
 
-
-/* ============================
-   SORT TRONG FILTER BAR
-   ============================ */
-
+/* ---------- Sort Dropdown & Select ---------- */
 .sort-in-bar {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto; /* đẩy về phía bên phải trong container cuộn */
+  margin-left: auto;
   flex-shrink: 0;
 }
 
@@ -134,14 +125,13 @@ body {
   color: #1C4278;
 }
 
-/* Wrapper để vẽ arrow custom */
 .sort-dropdown {
   position: relative;
 }
 
-/* Arrow Font Awesome tự vẽ */
+/* Mũi tên custom cho select */
 .sort-dropdown::after {
-  content: "\f107"; /* chevron-down */
+  content: "\f107"; /* FontAwesome chevron-down */
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   position: absolute;
@@ -154,70 +144,58 @@ body {
   opacity: 0.8;
 }
 
-/* Select style */
 .sort-select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
   background: #FFFCEE;
   border: 1px solid rgba(28, 66, 120, 0.25);
   border-radius: 999px;
-
   padding: 7px 32px 7px 12px;
   font-size: 13px;
   font-weight: 500;
   color: #1C4278;
-
   cursor: pointer;
-  transition: border-color 0.2s ease,
-              box-shadow 0.2s ease,
-              background-color 0.2s ease;
+  transition: all 0.2s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
 
-/* Hover */
 .sort-select:hover {
   border-color: #1C4278;
   box-shadow: 0 3px 10px rgba(28, 66, 120, 0.14);
 }
 
-/* Focus */
-.sort-select:focus {
-  outline: none;
-  border-color: #FBDC47;
-  box-shadow: 0 0 0 2px rgba(251, 220, 71, 0.4);
-}
-
-/* ---------- Filter Arrow Buttons ---------- */
+/* ---------- Filter Arrow Buttons (Nút cuộn) ---------- */
 .filter-arrow {
   border: none;
   background: #FFFCEE;
   color: #1C4278;
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  display: none; /* mặc định ẩn trên desktop */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: none; /* Ẩn trên desktop */
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   cursor: pointer;
   flex-shrink: 0;
   z-index: 960;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  position: relative; 
 }
 
-.filter-arrow i {
-  font-size: 14px;
+.filter-arrow:active {
+  transform: scale(0.95);
 }
 
-/* class hidden để JS bật/tắt */
 .filter-arrow.hidden {
   display: none !important;
 }
 
-/* ---------------- Product Cards ---------------- */
 
-/* Product Cards */
+/* ---------------- 3. Product Cards (Premium Style) ---------------- */
+
+/* Grid Layout */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -225,113 +203,170 @@ body {
   margin-bottom: 20px;
 }
 
+/* Card Base */
 .product-card {
   display: block;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
   text-decoration: none;
   color: inherit;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+/* Premium Card Design */
+.premium-card {
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-.product-image {
-  width: 100%;
-  height: 200px;
-  background-size: cover;
-  background-position: center;
+.premium-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(28, 66, 120, 0.15);
 }
 
-.product-info {
-  padding: 15px;
-  position: static;
-}
-
-.rating {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #1C4278;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 15px;
-  font-size: 12px;
-}
-
-.product-info h3 {
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #1C4278;
-  font-family: 'Roboto Slab', serif;
-}
-
-.product-info p {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.duration, .reviews {
-  font-size: 12px;
-  color: #1C4278;
-  margin-bottom: 5px;
-}
-
-.free-cancel {
+/* Image Wrapper */
+.card-img-wrapper {
+  position: relative;
   display: block;
-  font-size: 12px;
-  color: #28a745;
-  margin-bottom: 10px;
+  width: 100%;
+  padding-top: 66.66%; /* Tỉ lệ 3:2 */
+  overflow: hidden;
 }
 
-.price {
-  font-size: 18px;
-  font-weight: bold;
-  color: #1C4278;
-}
-
-.price span {
-  font-size: 12px;
-  font-weight: normal;
-}
-
-.heart {
+.card-img-wrapper img {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  color: #ff6b6b;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.premium-card:hover .card-img-wrapper img {
+  transform: scale(1.08);
+}
+
+/* Badges */
+.badge-tag {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--ph-primary);
+  color: var(--ph-navy);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 4px;
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+/* Content Body */
+.card-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.meta-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.meta-info .location i { color: var(--ph-primary); margin-right: 4px; }
+.meta-info .rating i { color: #FFC107; margin-right: 4px; }
+
+.card-title {
+  margin: 0 0 15px;
+  line-height: 1.4;
+}
+
+.card-title a {
+  font-family: 'Roboto Slab', serif;
   font-size: 18px;
+  font-weight: 700;
+  color: var(--ph-navy);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.card-title a:hover {
+  color: var(--ph-primary);
+}
+
+/* Footer Info (Duration & Price) */
+.card-footer-info {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-footer-info .duration {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+  margin: 0; /* Reset margin cũ */
+}
+
+.price-block {
+  text-align: right;
+  line-height: 1;
+}
+
+.price-block .label {
+  display: block;
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.price-block .amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ph-navy);
 }
 
 
+/* ---------------- 4. Mobile Responsive (Gộp chung) ---------------- */
 
-
-
-/* Mobile tweaks */
 @media (max-width: 768px) {
-
-    .filter-bar {
-    position: static;    /* không sticky trên mobile */
-    padding: 6px 0;
+  
+  /* --- Filter Bar Tweaks --- */
+  .filter-bar {
+    position: static; /* Bỏ sticky để tránh lỗi trên một số mobile */
+    padding: 8px 0;
     display: flex;
     align-items: center;
+    gap: 8px;
   }
 
+  /* Hiện mũi tên cuộn */
   .filter-arrow {
     display: flex;
   }
 
+  /* Điều chỉnh container cuộn */
   .filter-scroll-container {
-    gap: 8px;
-    padding: 0 12px;
-     flex: 1; 
-    justify-content: flex-start;
+    gap: 10px;
+    /* padding: 0 4px; */
+    padding-left: 12px;
+    padding-right: 2px;
+    flex: 1;
+    justify-content: flex-start; /* Căn trái để cuộn đúng */
+    overflow-x: auto; /* Bắt buộc để cuộn được */
   }
 
   .filter-chip {
@@ -339,13 +374,31 @@ body {
     padding: 6px 14px;
   }
 
+  /* Ẩn chữ "Sort by", chỉ giữ dropdown */
   .sort-label {
-    display: none; /* cho gọn trên mobile, chỉ giữ dropdown */
+    display: none; 
   }
 
+  /* Chỉnh lại dropdown sort cho gọn */
   .sort-select {
     font-size: 12px;
     padding: 6px 28px 6px 10px;
   }
-}
 
+  /* --- Logic Ẩn/Hiện Filter (Dropdown vs Buttons) --- */
+  
+  /* Ẩn danh sách nút bấm trên mobile */
+  .filter-buttons-desktop {
+    display: none;
+  }
+
+  /* Hiện dropdown chọn Location/Type trên mobile */
+  .mobile-filter-dropdown {
+    display: inline-block;
+  }
+  
+  .mobile-filter-dropdown .sort-select {
+    width: 100%;
+    min-width: 120px; 
+  }
+}

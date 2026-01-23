@@ -1192,3 +1192,311 @@ body {
 }
 
 
+/* =========================================
+   FEATURED EXPERIENCES - PREMIUM UPGRADE
+   (Copy đè lên phần CSS cũ)
+========================================= */
+
+/* 1. Base Setup */
+.featured-section {
+  padding: 80px 0; /* Tăng padding để thoáng hơn */
+  background: #1C4278;
+}
+
+.featured-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Đơn giản hóa syntax */
+  gap: 24px; /* Tăng khoảng cách khe hở cho sang */
+  align-items: stretch;
+}
+
+/* Card Base & Hover Animation */
+.featured-card {
+  display: block;
+  position: relative;
+  border-radius: 12px; /* Bo góc vừa phải, 18px hơi tròn quá */
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  /* Bóng đổ chiều sâu */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 2. Slow Zoom Effect (Quan trọng) */
+.featured-media {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s ease; /* Chuyển động chậm đậm chất điện ảnh */
+}
+
+.featured-card:hover .featured-media {
+  transform: scale(1.06); /* Zoom nhẹ khi hover */
+}
+
+/* Kích thước card */
+.featured-card--large { grid-column: span 2; }
+.featured-card--small { grid-column: span 1; }
+
+.featured-card--large .featured-media {
+  min-height: 480px; /* Giảm chút cho đỡ bị dài quá trên laptop nhỏ */
+  aspect-ratio: 16 / 9;
+}
+.featured-card--small .featured-media {
+  min-height: 480px;
+  aspect-ratio: 3 / 4;
+}
+
+/* 3. Cinematic Overlay (Khắc phục lỗi đọc chữ) */
+.featured-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Luôn đẩy chữ xuống dưới để khoe ảnh */
+  
+  /* Gradient mượt từ đen -> trong suốt */
+  /* background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(0, 0, 0, 0) 100%
+  ); */
+}
+
+.card--text-bottom .featured-overlay::before {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Text top → gradient from top */
+.card--text-top .featured-overlay::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.35) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+/* ================================
+   TEStING CONTENT STYLES
+================================ */
+/* 4. Content Hierarchy */
+
+/* Tag thời gian (Glassmorphism) */
+.featured-pill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.featured-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+
+/* Giá tiền */
+.featured-price {
+  font-family: 'Roboto Slab', serif;
+  font-size: 18px;
+  color: var(--ph-primary); /* Màu vàng brand */
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Tiêu đề */
+.featured-title {
+  margin: 0 0 8px;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 26px; /* To hơn chút cho rõ */
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Card nhỏ thì chữ bé lại chút */
+.featured-card--small .featured-title {
+  font-size: 22px;
+}
+
+.featured-subtitle {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.9;
+  font-weight: 300;
+  max-width: 90%; /* Không để chữ tràn hết chiều ngang */
+}
+
+/* Grid Logic (Giữ nguyên logic thông minh của bạn) */
+.featured-mosaic > .featured-card:nth-child(6n + 1) { grid-column: 1 / span 2; }
+.featured-mosaic > .featured-card:nth-child(6n + 2) { grid-column: 3; }
+.featured-mosaic > .featured-card:nth-child(6n + 3) { grid-column: 4; }
+.featured-mosaic > .featured-card:nth-child(6n + 4) { grid-column: 1; }
+.featured-mosaic > .featured-card:nth-child(6n + 5) { grid-column: 2; }
+.featured-mosaic > .featured-card:nth-child(6n)     { grid-column: 3 / span 2; }
+
+
+
+/* ===== Tablet landscape / iPad fix: show all items (avoid mosaic placement gaps) ===== */
+@media (max-width: 1280px) and (min-width: 993px) {
+  .featured-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  /* Reset mosaic placement pattern so items auto-flow (prevents “missing” card) */
+  .featured-mosaic > .featured-card {
+    grid-column: auto !important;
+  }
+
+  /* Make all cards same size on iPad landscape for consistency */
+  .featured-card--large,
+  .featured-card--small {
+    grid-column: auto !important;
+  }
+
+  .featured-card--large .featured-media,
+  .featured-card--small .featured-media {
+    /* min-height: 420px; */
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ===== Tablet portrait / small screens: stack cards vertically ===== */
+@media (max-width: 992px) {
+  .featured-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* CHỐT: 2 cột */
+    gap: 14px;
+  }
+
+  /* reset mosaic placements để auto-flow đúng */
+  .featured-mosaic > .featured-card,
+  .featured-card--large,
+  .featured-card--small {
+    grid-column: auto !important;
+  }
+
+  /* Card rõ hơn: giảm overlay dày + chữ vừa */
+  .featured-overlay { padding: 14px; }
+
+  .featured-title {
+    font-size: 16px;
+    margin: 8px 0 6px;
+    line-height: 1.08;
+  }
+
+  .featured-subtitle {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* 2 cột thì ảnh không nên quá cao */
+  .featured-card--large .featured-media,
+  .featured-card--small .featured-media {
+    min-height: 320px;
+    aspect-ratio: 3 / 4; /* hợp 2 cột, nhìn “đứng” và rõ */
+  }
+}
+
+
+
+@media (max-width: 576px) {
+  .featured-section {
+    padding: 40px 0 30px;
+  }
+
+  .featured-card:active {
+    transform: translateY(1px);
+  }
+
+  /* MOBILE: chuyển mosaic thành carousel ngang để card không bị bó hẹp */
+  .featured-mosaic {
+    display: flex;                 /* EDIT: từ grid -> flex */
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 14px 10px;          /* tạo “khung thở” 2 bên */
+  }
+
+  /* Ẩn scrollbar (nhẹ nhàng hơn trên mobile) */
+  .featured-mosaic::-webkit-scrollbar {
+    height: 0;
+  }
+
+  /* Mỗi card chiếm ~82% màn hình: nhìn rõ, không cramped */
+  .featured-mosaic > .featured-card {
+    flex: 0 0 82%;
+    max-width: 82%;
+    scroll-snap-align: start;
+  }
+
+  /* Nếu muốn card thứ 2 ló ra 1 chút (cảm giác “còn nữa”) */
+  @supports (width: 1dvw) {
+    .featured-mosaic > .featured-card {
+      flex-basis: 84dvw;
+      max-width: 84dvw;
+    }
+  }
+
+  /* Giảm “độ dày” chữ trên mobile */
+  .featured-overlay {
+    padding: 14px;
+  }
+
+  .featured-content {
+    padding: 0;                    /* EDIT: bỏ padding 5px gây bí */
+  }
+
+  .featured-title {
+    font-size: 16px;
+    margin: 8px 0 6px;
+    line-height: 1.08;
+  }
+
+  .featured-subtitle {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  /* Mobile: media gọn, ít dài */
+  .featured-card--large .featured-media,
+  .featured-card--small .featured-media {
+    /* min-height: 240px; */
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Meta không bị cắt/chật */
+  .featured-meta {
+    gap: 8px;
+  }
+
+  .featured-pill {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .featured-price {
+    font-size: 15px;
+  }
+}

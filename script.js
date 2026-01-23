@@ -1,21 +1,71 @@
 // FILE: script.js
 // ----------------------------------------------------
-// 1) Cal.com embed (quick-chat) – dùng cho ABOUT / CONTACT
-// 2) Dynamic header + footer include (header-hero / header-subpage + footer.html)
-// 3) Tự set .active cho nav link theo URL
-// 4) Hiệu ứng hero-header đổi style khi scroll
-// 5) Filter + sort product cards (trang products.html)
+// 1) Global Components (Header, Footer, Cal.com)
+// 2) Product Logic (Filter, Sort, Gallery)
+// 3) UI Effects (Hero Scroll, Mobile Header, Sticky Bar)
 // ----------------------------------------------------
 
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Load Header & Footer
+  initDynamicIncludes();
 
-// ===============================
-// 1. Cal.com – Quick Chat Popup
-// ===============================
+  // 2. Các chức năng cho trang Product (chỉ chạy nếu có filter-bar)
+  if (document.querySelector('.filter-bar')) { 
+    initProductFilters();
+    // Chờ 0.5s để đảm bảo layout mobile render xong mới tính toán mũi tên
+    initFilterScrollArrows();
+  }
+
+  // 3. Các chức năng khác
+  initWorkshopGallery();  
+  initOurPeopleHome(); 
+  initReviewWallLightbox(); 
+  initScrollToTop(); 
+  initStickyFeatures(); // Premium UX: Sticky Bar & Accordion
+});
+
+
+// =========================================
+// 1. DYNAMIC INCLUDES & HEADER LOGIC
+// =========================================
+function initDynamicIncludes() {
+  // ----- HEADER -----
+  const headerContainer = document.getElementById('header-placeholder');
+  if (headerContainer) {
+    const pageHeaderType = document.body.dataset.header || 'subpage';
+    const headerFile = pageHeaderType === 'hero' ? 'components/header-hero.html' : 'components/header-subpage.html';
+
+    fetch(headerFile)
+      .then(res => res.text())
+      .then(html => {
+        headerContainer.innerHTML = html;
+        setActiveNavLink();
+        initMobileHeaderAutoHide();
+        initHeroHeaderScroll();
+        initCal(); 
+      })
+      .catch(err => console.error('Lỗi load header:', err));
+  }
+
+  // ----- FOOTER -----
+  const footerContainer = document.getElementById('footer-placeholder');
+  if (footerContainer) {
+    fetch('components/footer.html')
+      .then(res => res.text())
+      .then(html => {
+        footerContainer.innerHTML = html;
+        initCal();
+      })
+      .catch(err => console.error('Lỗi load footer:', err));
+  }
+}
+
+// =========================================
+// 2. CAL.COM & UTILITIES
+// =========================================
 function initCal() {
-  // 1) Load embed.js chỉ 1 lần
   if (!window.__calEmbedLoaded) {
     window.__calEmbedLoaded = true;
-
     (function (C, A, L) {
       let p = function (a, ar) { a.q.push(ar); };
       let d = C.document;
@@ -44,831 +94,398 @@ function initCal() {
     })(window, "https://app.cal.com/embed/embed.js", "init");
   }
 
-  // 2) Tìm tất cả trigger trên page để biết cần init namespace nào
   const triggers = Array.from(document.querySelectorAll('[data-cal-namespace][data-cal-link]'));
   if (!triggers.length) return;
 
-  // Lưu các namespace đã init để không init lại
   window.__calNamespacesInited = window.__calNamespacesInited || {};
-
-  // 3) Init từng namespace xuất hiện trên page
   const uniqueNamespaces = [...new Set(triggers.map(el => (el.dataset.calNamespace || '').trim()).filter(Boolean))];
 
   uniqueNamespaces.forEach((ns) => {
     if (window.__calNamespacesInited[ns]) return;
     window.__calNamespacesInited[ns] = true;
-
     Cal("init", ns, { origin: "https://app.cal.com" });
-
-    // 4) UI config theo namespace (brand màu)
-    // - quick-chat dùng brand #132c4f (như bạn đang set)
-    // - workshop dùng brand #1C4278 (brand navy)
     const brand = (ns === "quick-chat") ? "#132c4f" : "#1C4278";
-
     Cal.ns[ns]("ui", {
-      cssVarsPerTheme: {
-        light: { "cal-brand": brand },
-        dark: { "cal-brand": "#FFFCEE" }
-      },
-      hideEventTypeDetails: false,
-      layout: "month_view"
+      cssVarsPerTheme: { light: { "cal-brand": brand }, dark: { "cal-brand": "#FFFCEE" } },
+      hideEventTypeDetails: false, layout: "month_view"
     });
   });
 }
 
-
-
-// =========================================
-// 2. Set .active cho nav link theo URL
-// =========================================
-function setActiveNavLink() {
-  const path = window.location.pathname.toLowerCase();
-  const links = document.querySelectorAll('.navbar-nav .nav-link[href]');
-
-  links.forEach(link => {
-    const href = link.getAttribute('href').toLowerCase();
-    link.classList.remove('active');
-
-    // Trang chủ: index.html hoặc '/'
-    if (
-      href === 'index.html' &&
-      (path.endsWith('/') || path.endsWith('index.html'))
-    ) {
-      link.classList.add('active');
-    }
-    // Các trang khác
-    else if (href !== 'index.html' && path.endsWith(href)) {
-      link.classList.add('active');
-    }
-  });
-}
-
-
-// ===================================================
-// 3. Hiệu ứng hero-header đổi style khi scroll
-//    (chỉ áp dụng cho trang có .hero-header – trang chủ)
-// ===================================================
-function initHeroHeaderScroll() {
-  const heroHeader = document.querySelector('.hero-header');
-  if (!heroHeader) return;
-
-  const THRESHOLD = 60; // scroll xuống sâu hơn rồi mới đổi
-  let isScrolled = false;
-
-  function onScroll() {
-    const shouldBeScrolled = window.scrollY > THRESHOLD;
-
-    if (shouldBeScrolled !== isScrolled) {
-      isScrolled = shouldBeScrolled;
-      heroHeader.classList.toggle('scrolled', isScrolled);
-    }
-  }
-
-  window.addEventListener('scroll', onScroll);
-  onScroll(); // set state ban đầu
-}
-
-
-// ===================================================
-// Mobile: Auto-hide header like Safari bar
-//   - Scroll down: hide header
-//   - Scroll up: show header
-//   - Near top: always show
-//   Defaults: <=768px, topLock=16px, threshold=40px, delta=8px
-// ===================================================
-function initMobileHeaderAutoHide() {
-  const header = document.querySelector('.hero-header, .subpage-header');
-  if (!header) return;
-
-  const mq = window.matchMedia('(max-width: 768px)');
-  const TOP_LOCK = 16;
-  const THRESHOLD = 40;
-  const DELTA = 8;
-
-  // Prevent duplicate listeners
-  if (header.dataset.autoHideBound === '1') return;
-  header.dataset.autoHideBound = '1';
-
-  let lastY = 0;
-
-  const isMenuOpen = () => {
-    return !!(
-      header.querySelector('.navbar-collapse.show') ||
-      header.querySelector('.navbar-toggler[aria-expanded="true"]')
-    );
-  };
-
-  const showHeader = () => header.classList.remove('is-hidden');
-  const hideHeader = () => header.classList.add('is-hidden');
-
-  function onScroll() {
-    // Desktop/tablet: always show
-    if (!mq.matches) {
-      showHeader();
-      lastY = window.scrollY || 0;
-      return;
-    }
-
-    const y = window.scrollY || 0;
-
-    // Keep visible while menu open
-    if (isMenuOpen()) {
-      showHeader();
-      lastY = y;
-      return;
-    }
-
-    // Near top: always show
-    if (y <= TOP_LOCK) {
-      showHeader();
-      lastY = y;
-      return;
-    }
-
-    const goingDown = y > lastY + DELTA;
-    const goingUp = y < lastY - DELTA;
-
-    if (goingDown && y > THRESHOLD) hideHeader();
-    else if (goingUp) showHeader();
-
-    lastY = y;
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-
-  // If breakpoint changes (rotate), re-evaluate immediately
-  if (mq.addEventListener) mq.addEventListener('change', onScroll);
-  else mq.addListener(onScroll); // Safari fallback
-
-  onScroll();
-}
-
-
-// ===================================================
-// 4. Dynamic Header + Footer include
-// ===================================================
-document.addEventListener('DOMContentLoaded', () => {
-  // ----- HEADER -----
-  const headerContainer = document.getElementById('header-placeholder');
-  if (headerContainer) {
-    const pageHeaderType = document.body.dataset.header || 'subpage';
-    const headerFile = pageHeaderType === 'hero'
-      ? 'components/header-hero.html'
-      : 'components/header-subpage.html';
-
-    fetch(headerFile)
-      .then(res => res.text())
-      .then(html => {
-        headerContainer.innerHTML = html;
-        // Sau khi header đã gắn vào DOM:
-        setActiveNavLink();
-        initMobileHeaderAutoHide();
-        initHeroHeaderScroll();
-        initCal(); // để ABOUT/CONTACT trong header hoạt động
-      })
-      .catch(err => console.error('Không load được header:', err));
-  }
-
-  // ----- FOOTER -----
-  const footerContainer = document.getElementById('footer-placeholder');
-  if (footerContainer) {
-    fetch('components/footer.html')
-      .then(res => res.text())
-      .then(html => {
-        footerContainer.innerHTML = html;
-
-        // Footer cũng có ABOUT/CONTACT trigger → đảm bảo Cal đã init
-        initCal();
-      })
-      .catch(err => console.error('Không load được footer:', err));
-  }
-
-  // ----- PRODUCT FILTERS (chỉ chạy ở trang có .product-grid) -----
-  const productGrid = document.querySelector('.product-grid');
-  if (productGrid) {
-    initProductFilters();
-    initFilterScrollArrows(); // filter scroll arrows
-  }
-
-  initWorkshopGallery();  // gallery + lightbox từ JSON (product pages)    
-  initOurPeopleHome(); // our-people hover + touch swap image + bio (home)
-  initReviewWallLightbox(); // review wall lightbox
-  initScrollToTop();        // scroll-to-top button
-});
-
+// Global click delegation for Cal.com
 document.addEventListener("click", (e) => {
   const el = e.target.closest('[data-cal-link][data-cal-namespace]');
   if (!el) return;
-
-  // nếu vẫn là <a>, chặn navigate
   if (el.tagName === "A") e.preventDefault();
-
-  if (typeof window.Cal !== "function") return;
-
-  Cal("preload", { calLink: el.dataset.calLink });
+  if (typeof window.Cal === "function") Cal("preload", { calLink: el.dataset.calLink });
 });
 
+function setActiveNavLink() {
+  const path = window.location.pathname.toLowerCase();
+  const links = document.querySelectorAll('.navbar-nav .nav-link[href]');
+  links.forEach(link => {
+    const href = link.getAttribute('href').toLowerCase();
+    link.classList.remove('active');
+    if (href === 'index.html' && (path.endsWith('/') || path.endsWith('index.html'))) link.classList.add('active');
+    else if (href !== 'index.html' && path.endsWith(href)) link.classList.add('active');
+  });
+}
 
-// ===================================================
-// 5. Filter + Sort logic cho trang products.html
-//    - Sử dụng data-location & data-type trên .product-card
-//    - Filter bằng .filter-chip.filter-location / .filter-chip.filter-type
-//    - Không ẩn card, chỉ reorder (sort) theo độ match
-// ===================================================
+// =========================================
+// 3. UI EFFECTS (Scroll, Hide Header)
+// =========================================
+function initHeroHeaderScroll() {
+  const heroHeader = document.querySelector('.hero-header');
+  if (!heroHeader) return;
+  const THRESHOLD = 60;
+  window.addEventListener('scroll', () => {
+    heroHeader.classList.toggle('scrolled', window.scrollY > THRESHOLD);
+  });
+}
+
+function initMobileHeaderAutoHide() {
+  const header = document.querySelector('.hero-header, .subpage-header');
+  if (!header) return;
+  const mq = window.matchMedia('(max-width: 768px)');
+  let lastY = 0;
+  
+  if (header.dataset.autoHideBound === '1') return;
+  header.dataset.autoHideBound = '1';
+
+  const onScroll = () => {
+    if (!mq.matches) { header.classList.remove('is-hidden'); return; }
+    const y = window.scrollY || 0;
+    const isMenuOpen = !!(header.querySelector('.show') || header.querySelector('[aria-expanded="true"]'));
+    
+    if (isMenuOpen || y <= 16) { header.classList.remove('is-hidden'); lastY = y; return; }
+    if (y > lastY + 8 && y > 40) header.classList.add('is-hidden');
+    else if (y < lastY - 8) header.classList.remove('is-hidden');
+    lastY = y;
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+}
+
+function initScrollToTop() {
+  const btn = document.getElementById('scrollToTop');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('show', window.scrollY > 120);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+// =========================================
+// 4. PRODUCT FILTER & SORT LOGIC
+// =========================================
 function initProductFilters() {
-  const grid = document.querySelector('.product-grid');
-  if (!grid) return;
+  const productContainer = document.querySelector('.main-content .row');
+  if (!productContainer) return;
 
-  const cards = Array.from(grid.querySelectorAll('.product-card'));
+  const items = Array.from(productContainer.querySelectorAll('.product-item'));
+  items.forEach((item, index) => item.dataset.originalIndex = index);
+
   const locationChips = document.querySelectorAll('.filter-chip.filter-location');
   const typeChips = document.querySelectorAll('.filter-chip.filter-type');
+  const mobileLocationSelect = document.getElementById('mobileLocationSelect');
+  const mobileTypeSelect = document.getElementById('mobileTypeSelect');
+  const sortSelect = document.getElementById('sortSelect');
   const locationTitle = document.querySelector('.location-header h1');
+  const originalTitle = locationTitle ? locationTitle.textContent : 'Vietnam';
 
-  const defaultLocationTitle = locationTitle ? locationTitle.textContent.trim() : '';
+  let currentState = { location: '', type: '', sortBy: 'recommended' };
 
-  const LOCATION_LABELS = {
-    'hanoi': 'Hanoi',
-    'ninh-binh': 'Ninh Binh',
-    'sapa': 'Sapa'
-  };
+  function updateDisplay() {
+    items.forEach(item => item.style.display = '');
 
-  // Lưu trạng thái ban đầu: element + index gốc + data
-  const originalCards = cards.map((el, index) => ({
-    el,
-    originalIndex: index,
-    location: (el.dataset.location || '').toLowerCase(),
-    type: (el.dataset.type || '').toLowerCase()
-  }));
-
-  const urlParams = new URLSearchParams(window.location.search);
-  let currentLocation = (urlParams.get('location') || '').toLowerCase();
-  let currentType = (urlParams.get('type') || '').toLowerCase();
-
-  // Nếu query location không hợp lệ → bỏ qua
-  if (!LOCATION_LABELS[currentLocation] && currentLocation !== '') {
-    currentLocation = '';
-  }
-
-  // Lắng nghe click trên chip Location
-  locationChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const loc = (chip.dataset.location || '').toLowerCase();
-      currentLocation = loc === currentLocation ? '' : loc; // click lại chip -> bỏ filter
-      applyFilterSort();
-    });
-  });
-
-  // Lắng nghe click trên chip Type
-  typeChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const typ = (chip.dataset.type || '').toLowerCase();
-      currentType = typ === currentType ? '' : typ;
-      applyFilterSort();
-    });
-  });
-
-  // Áp dụng filter + sort lần đầu khi load trang
-  applyFilterSort();
-
-  function applyFilterSort() {
-    const hasFilter = !!currentLocation || !!currentType;
-
-    // Tính điểm match cho từng card
-    const sorted = originalCards.slice().sort((a, b) => {
-      const scoreA = getMatchScore(a, currentLocation, currentType, hasFilter);
-      const scoreB = getMatchScore(b, currentLocation, currentType, hasFilter);
-
-      // Ưu tiên score cao hơn
+    const sortedItems = items.sort((a, b) => {
+      const scoreA = calculateScore(a);
+      const scoreB = calculateScore(b);
       if (scoreA !== scoreB) return scoreB - scoreA;
-      // Score bằng nhau → giữ thứ tự gốc
-      return a.originalIndex - b.originalIndex;
-    });
 
-    // Re-append theo thứ tự mới (không ẩn card nào)
-    sorted.forEach(item => {
-      grid.appendChild(item.el);
-      item.el.style.display = '';
-    });
+      const priceA = parsePrice(a);
+      const priceB = parsePrice(b);
+      const ratingA = parseRating(a);
+      const ratingB = parseRating(b);
 
-    // Cập nhật title theo location nếu có
-    if (locationTitle) {
-      if (currentLocation && LOCATION_LABELS[currentLocation]) {
-        locationTitle.textContent = LOCATION_LABELS[currentLocation];
-      } else {
-        locationTitle.textContent = defaultLocationTitle;
+      switch (currentState.sortBy) {
+        case 'price-asc': return priceA - priceB;
+        case 'price-desc': return priceB - priceA;
+        case 'rating': return ratingB - ratingA;
+        default: return parseInt(a.dataset.originalIndex) - parseInt(b.dataset.originalIndex);
       }
-    }
-
-    // Active state cho chips Location
-    locationChips.forEach(chip => {
-      const loc = (chip.dataset.location || '').toLowerCase();
-      chip.classList.toggle('active', loc === currentLocation && currentLocation !== '');
     });
 
-    // Active state cho chips Type
-    typeChips.forEach(chip => {
-      const typ = (chip.dataset.type || '').toLowerCase();
-      chip.classList.toggle('active', typ === currentType && currentType !== '');
-    });
+    sortedItems.forEach(item => productContainer.appendChild(item));
+    updateUI();
   }
 
-  // score: 0 = không match, 1 = match 1 điều kiện, 2 = match cả location + type
-  function getMatchScore(item, loc, typ, hasFilter) {
-    if (!hasFilter) return 1; // không filter thì tất cả score = 1 (giữ thứ tự gốc)
+  function calculateScore(item) {
     let score = 0;
-    if (loc && item.location === loc) score += 1;
-    if (typ && item.type === typ) score += 1;
+    const itemLoc = (item.dataset.location || '').toLowerCase();
+    const itemType = (item.dataset.type || '').toLowerCase();
+    if (currentState.location && itemLoc === currentState.location) score += 10;
+    if (currentState.type && itemType === currentState.type) score += 10;
     return score;
   }
+
+  function parsePrice(item) {
+    const el = item.querySelector('.price-block .amount');
+    if (!el) return 0;
+    let t = el.textContent.toLowerCase().replace(/[^0-9k.]/g, '');
+    if (t.includes('k')) return parseFloat(t) * 1000;
+    return parseFloat(t) || 0;
+  }
+
+  function parseRating(item) {
+    const el = item.querySelector('.rating');
+    return el ? (parseFloat(el.textContent) || 0) : 0;
+  }
+
+  function updateUI() {
+    if (locationTitle) {
+      if (currentState.location === 'hanoi') locationTitle.textContent = 'Hanoi';
+      else if (currentState.location === 'ninh-binh') locationTitle.textContent = 'Ninh Binh';
+      else if (currentState.location === 'sapa') locationTitle.textContent = 'Sapa';
+      else locationTitle.textContent = originalTitle;
+    }
+    const setAct = (list, val, key) => list.forEach(b => b.classList.toggle('active', b.dataset[key] === val));
+    setAct(locationChips, currentState.location, 'location');
+    setAct(typeChips, currentState.type, 'type');
+
+    if (mobileLocationSelect) mobileLocationSelect.value = currentState.location;
+    if (mobileTypeSelect) mobileTypeSelect.value = currentState.type;
+  }
+
+  // Events: Chips
+  const bindChip = (list, key) => list.forEach(b => b.addEventListener('click', (e) => {
+    e.preventDefault();
+    const v = b.dataset[key] || '';
+    currentState[key] = (currentState[key] === v) ? '' : v;
+    updateDisplay();
+  }));
+  bindChip(locationChips, 'location');
+  bindChip(typeChips, 'type');
+
+  // Events: Mobile Select
+  if (mobileLocationSelect) mobileLocationSelect.addEventListener('change', e => { currentState.location = e.target.value; updateDisplay(); });
+  if (mobileTypeSelect) mobileTypeSelect.addEventListener('change', e => { currentState.type = e.target.value; updateDisplay(); });
+  if (sortSelect) sortSelect.addEventListener('change', e => { currentState.sortBy = e.target.value; updateDisplay(); });
+
+  updateDisplay();
 }
 
 // ===================================================
-// Filter scroll arrows (mobile)
-// - Hiện mũi tên phải ở đầu
-// - Khi cuộn / bấm thì update: đầu -> chỉ phải, cuối -> chỉ trái, giữa -> cả 2
+// 5. FILTER SCROLL ARROWS (UPDATED & ROBUST)
 // ===================================================
 function initFilterScrollArrows() {
   const scroller = document.querySelector('.filter-scroll-container');
   const leftBtn = document.querySelector('.filter-arrow-left');
   const rightBtn = document.querySelector('.filter-arrow-right');
 
+  // Kiểm tra element tồn tại
   if (!scroller || !leftBtn || !rightBtn) return;
 
   function updateArrows() {
-    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+    const scrollLeft = Math.ceil(scroller.scrollLeft);
+    const scrollWidth = Math.ceil(scroller.scrollWidth);
+    const clientWidth = Math.ceil(scroller.clientWidth);
+    const maxScroll = scrollWidth - clientWidth;
 
     // Nếu không đủ dài để cuộn -> ẩn cả 2
-    if (maxScroll <= 0) {
+    if (maxScroll <= 2) { 
       leftBtn.classList.add('hidden');
       rightBtn.classList.add('hidden');
       return;
     }
 
-    const current = scroller.scrollLeft;
-
-    // Đầu list -> ẩn trái, hiện phải
-    leftBtn.classList.toggle('hidden', current <= 2);
-    // Cuối list -> ẩn phải, hiện trái
-    rightBtn.classList.toggle('hidden', current >= maxScroll - 2);
+    // Ẩn/Hiện trái
+    leftBtn.classList.toggle('hidden', scrollLeft <= 5);
+    // Ẩn/Hiện phải
+    rightBtn.classList.toggle('hidden', scrollLeft >= maxScroll - 5);
   }
 
   function scrollByStep(direction) {
-    const step = scroller.clientWidth * 0.6; // cuộn ~60% chiều rộng
-    scroller.scrollBy({ left: direction * step, behavior: 'smooth' });
+    const step = 200; // Khoảng cách cuộn cố định để đảm bảo hoạt động
+    const current = scroller.scrollLeft;
+    scroller.scrollTo({
+      left: current + (direction * step),
+      behavior: 'smooth'
+    });
   }
 
   // Click arrow
-  leftBtn.addEventListener('click', () => scrollByStep(-1));
-  rightBtn.addEventListener('click', () => scrollByStep(1));
+  leftBtn.addEventListener('click', (e) => { e.preventDefault(); scrollByStep(-1); });
+  rightBtn.addEventListener('click', (e) => { e.preventDefault(); scrollByStep(1); });
 
-  // Khi user tự kéo tay thì cũng update state mũi tên
-  scroller.addEventListener('scroll', () => {
-    window.requestAnimationFrame(updateArrows);
-  });
-
-  // Khi resize màn hình, tính lại
-  window.addEventListener('resize', updateArrows);
-
-  // Gọi lần đầu
+  // Update logic
+  scroller.addEventListener('scroll', () => window.requestAnimationFrame(updateArrows));
+  window.addEventListener('resize', () => { setTimeout(updateArrows, 100); });
+  
+  // Chạy lần đầu
   updateArrows();
 }
 
 // ===================================================
-// Scroll-to-top button
-// ===================================================
-function initScrollToTop() {
-  const btn = document.getElementById('scrollToTop');
-  if (!btn) return;
-
-  function toggleVisibility() {
-    if (window.scrollY > 120) {  // user kéo xuống >200px
-      btn.classList.add('show');
-    } else {
-      btn.classList.remove('show');
-    }
-  }
-
-  window.addEventListener('scroll', toggleVisibility);
-  toggleVisibility(); // chạy lúc load
-
-  btn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
-
-// ===================================================
-// GALLERY + LIGHTBOX từ JSON (cho các trang product)
-// - Desktop: 1 ảnh lớn + 2 ảnh nhỏ (layout cũ)
-// - Mobile: slider ngang dùng scroll-snap (.gallery-track)
-// - Dots luôn sync với ảnh hiện tại
+// 6. GALLERY & REVIEW LIGHTBOX
 // ===================================================
 function initWorkshopGallery() {
   const galleryContainer = document.getElementById('auto-gallery');
   const lightbox = document.getElementById('lightbox');
   const dotsContainer = document.getElementById('gallery-dots');
-
   if (!galleryContainer || !lightbox) return;
 
   const jsonPath = galleryContainer.dataset.galleryJson;
-  if (!jsonPath) {
-    console.warn('Không có data-gallery-json trên #auto-gallery');
-    return;
-  }
+  if (!jsonPath) return;
 
-  fetch(jsonPath)
-    .then(res => res.json())
-    .then(data => {
+  fetch(jsonPath).then(res => res.json()).then(data => {
       const imageList = data.images || [];
       if (!imageList.length) return;
 
       let currentIndex = 0;
-      let mainImageDesktop = null;  // ảnh lớn bên trái (desktop)
-      let track = null;             // track cho slider mobile
+      let mainImageDesktop = null;
+      let track = null;
 
-      // ---------- TẠO LAYOUT DESKTOP (1 lớn + 2 nhỏ) ----------
-      const galleryLeft  = document.createElement('div');
-      const galleryRight = document.createElement('div');
-      galleryLeft.className  = 'gallery-left';
-      galleryRight.className = 'gallery-right';
-
+      const galleryLeft  = document.createElement('div'); galleryLeft.className  = 'gallery-left';
+      const galleryRight = document.createElement('div'); galleryRight.className = 'gallery-right';
       galleryContainer.append(galleryLeft, galleryRight);
 
-      // ---------- TẠO TRACK MOBILE (scroll-snap slider) ----------
-      track = document.createElement('div');
-      track.className = 'gallery-track';
+      track = document.createElement('div'); track.className = 'gallery-track';
       galleryContainer.appendChild(track);
 
-      // ---------- TẠO MŨI TÊN ĐIỀU HƯỚNG (MOBILE) ----------
-      const arrowLeft = document.createElement('button');
-      arrowLeft.className = 'gallery-arrow gallery-arrow-left';
-      arrowLeft.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
-      arrowLeft.setAttribute('aria-label', 'Previous image');
-      galleryContainer.appendChild(arrowLeft);
-
-      const arrowRight = document.createElement('button');
-      arrowRight.className = 'gallery-arrow gallery-arrow-right';
-      arrowRight.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
-      arrowRight.setAttribute('aria-label', 'Next image');
-      galleryContainer.appendChild(arrowRight);
+      const createArrow = (cls, icon, label) => {
+        const btn = document.createElement('button'); btn.className = `gallery-arrow ${cls}`;
+        btn.innerHTML = `<i class="fa-solid ${icon}"></i>`; btn.setAttribute('aria-label', label);
+        return btn;
+      };
+      const arrowLeft = createArrow('gallery-arrow-left', 'fa-chevron-left', 'Previous');
+      const arrowRight = createArrow('gallery-arrow-right', 'fa-chevron-right', 'Next');
+      galleryContainer.append(arrowLeft, arrowRight);
 
       imageList.forEach((src, index) => {
-        // --- Ảnh DESKTOP ---
-        const imgDesktop = document.createElement('img');
-        imgDesktop.src = src;
-        imgDesktop.className = 'gallery-img';
-        imgDesktop.dataset.index = index;
-        imgDesktop.alt = `Workshop gallery image ${index + 1}`;
-
-        if (index === 0) {
-          galleryLeft.appendChild(imgDesktop);
-          mainImageDesktop = imgDesktop;
-        } else if (index === 1 || index === 2) {
-          galleryRight.appendChild(imgDesktop);
-        }
-
-        // --- Slide MOBILE ---
-        const slide = document.createElement('div');
-        slide.className = 'gallery-slide';
-
-        const imgMobile = document.createElement('img');
-        imgMobile.src = src;
-        imgMobile.className = 'gallery-img';
-        imgMobile.dataset.index = index;
-        imgMobile.alt = `Workshop gallery image ${index + 1}`;
-
-        slide.appendChild(imgMobile);
+        const img = document.createElement('img'); img.src = src; img.className = 'gallery-img'; img.dataset.index = index;
+        if (index === 0) { galleryLeft.appendChild(img); mainImageDesktop = img; }
+        else if (index === 1 || index === 2) galleryRight.appendChild(img);
+        
+        const slide = document.createElement('div'); slide.className = 'gallery-slide';
+        const imgM = img.cloneNode(true); slide.appendChild(imgM);
         track.appendChild(slide);
       });
 
-      // ---------- DOTS NAVIGATION ----------
       if (dotsContainer) {
         dotsContainer.innerHTML = '';
         imageList.forEach((_, index) => {
-          const dot = document.createElement('button');
-          dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
-          dot.dataset.index = index;
-
-          dot.addEventListener('click', () => {
-            currentIndex = index;
-            updateUI(false); // update preview + dots
-
-            // Scroll tới slide tương ứng (mobile)
-            if (track) {
-              const slideWidth = track.clientWidth;
-              track.scrollTo({
-                left: slideWidth * index,
-                behavior: 'smooth'
-              });
-            }
-          });
-
+          const dot = document.createElement('button'); dot.className = 'gallery-dot' + (index===0?' active':'');
+          dot.addEventListener('click', () => { currentIndex = index; updateUI(false); if(track) track.scrollTo({left: track.clientWidth*index, behavior:'smooth'}); });
           dotsContainer.appendChild(dot);
         });
       }
 
-      function updateDots() {
-        if (!dotsContainer) return;
-        const dots = dotsContainer.querySelectorAll('.gallery-dot');
-        dots.forEach(dot => {
-          const idx = Number(dot.dataset.index);
-          dot.classList.toggle('active', idx === currentIndex);
-        });
-      }
-
-      // ---------- LIGHTBOX SETUP ----------
       const lightboxImg = lightbox.querySelector('.lightbox-img');
-      const closeBtn    = lightbox.querySelector('.close');
-      const counter     = lightbox.querySelector('.counter');
-      const prevBtn     = lightbox.querySelector('.prev');
-      const nextBtn     = lightbox.querySelector('.next');
-
-      function updateUI(updateLightbox = true) {
-        const newSrc = imageList[currentIndex];
-
-        // Update lightbox
-        if (updateLightbox && lightboxImg) {
-          lightboxImg.src = newSrc;
-        }
-
-        // Update ảnh lớn desktop
-        if (mainImageDesktop) {
-          mainImageDesktop.src = newSrc;
-        }
-
-        // Counter
-        if (counter) {
-          counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
-        }
-
-        // Dots
-        updateDots();
+      const counter = lightbox.querySelector('.counter');
+      
+      function updateUI(updateLb = true) {
+        if (updateLb && lightboxImg) lightboxImg.src = imageList[currentIndex];
+        if (mainImageDesktop) mainImageDesktop.src = imageList[currentIndex];
+        if (counter) counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
+        if (dotsContainer) dotsContainer.querySelectorAll('.gallery-dot').forEach((d, i) => d.classList.toggle('active', i === currentIndex));
       }
 
-      // Sync lần đầu
-      updateUI(false);
-
-      // Click ảnh (desktop + mobile) -> mở lightbox
       galleryContainer.addEventListener('click', e => {
         const img = e.target.closest('.gallery-img');
-        if (!img) return;
-
-        const idx = parseInt(img.dataset.index, 10);
-        if (!Number.isNaN(idx)) {
-          currentIndex = idx;
-        }
-
-        updateUI(true);
-        lightbox.style.display = 'block';
+        if (img) { currentIndex = parseInt(img.dataset.index); updateUI(true); lightbox.style.display = 'block'; }
       });
 
-      // Đóng lightbox
-      closeBtn.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-      });
+      lightbox.querySelector('.close').addEventListener('click', () => lightbox.style.display = 'none');
+      lightbox.querySelector('.prev').addEventListener('click', () => { currentIndex = (currentIndex - 1 + imageList.length) % imageList.length; updateUI(true); });
+      lightbox.querySelector('.next').addEventListener('click', () => { currentIndex = (currentIndex + 1) % imageList.length; updateUI(true); });
 
-      lightbox.addEventListener('click', e => {
-        if (e.target === lightbox) {
-          lightbox.style.display = 'none';
-        }
-      });
-
-      // Mũi tên trong lightbox
-      prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
-        updateUI(true);
-      });
-
-      nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % imageList.length;
-        updateUI(true);
-      });
-
-      // ---------- SWIPE GESTURE CHO LIGHTBOX (MOBILE) ----------
-      let touchStartX = 0;
-      let touchEndX = 0;
-      const SWIPE_THRESHOLD = 50; // khoảng cách tối thiểu để nhận diện swipe
-
-      lightbox.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-
+      // Swipe Lightbox
+      let ts = 0;
+      lightbox.addEventListener('touchstart', e => ts = e.changedTouches[0].screenX, {passive:true});
       lightbox.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      }, { passive: true });
+        const diff = ts - e.changedTouches[0].screenX;
+        if (diff > 50) lightbox.querySelector('.next').click();
+        else if (diff < -50) lightbox.querySelector('.prev').click();
+      }, {passive:true});
 
-      function handleSwipe() {
-        const diff = touchStartX - touchEndX;
-        
-        // Swipe trái (vuốt sang trái) -> ảnh tiếp theo
-        if (diff > SWIPE_THRESHOLD) {
-          currentIndex = (currentIndex + 1) % imageList.length;
-          updateUI(true);
-        }
-        // Swipe phải (vuốt sang phải) -> ảnh trước
-        else if (diff < -SWIPE_THRESHOLD) {
-          currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
-          updateUI(true);
-        }
-      }
-
-      // Bàn phím
-      document.addEventListener('keydown', e => {
-        if (lightbox.style.display === 'block') {
-          if (e.key === 'ArrowLeft')  prevBtn.click();
-          if (e.key === 'ArrowRight') nextBtn.click();
-          if (e.key === 'Escape')     closeBtn.click();
-        }
+      // Track Arrows Logic (Mobile)
+      const updateGalArrows = () => {
+        if (!track) return;
+        const sl = track.scrollLeft;
+        const max = track.scrollWidth - track.clientWidth;
+        arrowLeft.classList.toggle('show', sl > 2);
+        arrowRight.classList.toggle('show', sl < max - 2);
+      };
+      arrowLeft.addEventListener('click', (e) => { e.stopPropagation(); track.scrollBy({left: -track.clientWidth, behavior:'smooth'}); });
+      arrowRight.addEventListener('click', (e) => { e.stopPropagation(); track.scrollBy({left: track.clientWidth, behavior:'smooth'}); });
+      track.addEventListener('scroll', () => {
+        requestAnimationFrame(() => {
+          currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+          updateUI(false); updateGalArrows();
+        });
       });
-
-      // ---------- SCROLL-SNAP SYNC (MOBILE) + GALLERY ARROWS ----------
-      if (track) {
-        let scrollTimeout = null;
-
-        // Function update visibility mũi tên
-        function updateGalleryArrows() {
-          if (!track || imageList.length <= 1) {
-            arrowLeft.classList.remove('show');
-            arrowRight.classList.remove('show');
-            return;
-          }
-
-          const maxScroll = track.scrollWidth - track.clientWidth;
-          const currentScroll = track.scrollLeft;
-
-          // Đầu list -> chỉ hiện mũi tên phải
-          if (currentScroll <= 2) {
-            arrowLeft.classList.remove('show');
-            arrowRight.classList.add('show');
-          }
-          // Cuối list -> chỉ hiện mũi tên trái
-          else if (currentScroll >= maxScroll - 2) {
-            arrowLeft.classList.add('show');
-            arrowRight.classList.remove('show');
-          }
-          // Giữa -> hiện cả 2
-          else {
-            arrowLeft.classList.add('show');
-            arrowRight.classList.add('show');
-          }
-        }
-
-        // Click mũi tên để scroll
-        arrowLeft.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const slideWidth = track.clientWidth;
-          track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-        });
-
-        arrowRight.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const slideWidth = track.clientWidth;
-          track.scrollBy({ left: slideWidth, behavior: 'smooth' });
-        });
-
-        // Update arrows khi scroll
-        track.addEventListener('scroll', () => {
-          if (scrollTimeout) {
-            window.cancelAnimationFrame(scrollTimeout);
-          }
-
-          scrollTimeout = window.requestAnimationFrame(() => {
-            const slideWidth = track.clientWidth || 1;
-            const rawIndex = track.scrollLeft / slideWidth;
-            const idx = Math.round(rawIndex);
-
-            const clampedIndex = Math.max(0, Math.min(idx, imageList.length - 1));
-
-            if (clampedIndex !== currentIndex) {
-              currentIndex = clampedIndex;
-              updateUI(false); // chỉ update preview + dots
-            }
-
-            // Update arrows visibility
-            updateGalleryArrows();
-          });
-        });
-
-        // Update arrows khi resize
-        window.addEventListener('resize', () => {
-          updateGalleryArrows();
-        });
-
-        // Gọi lần đầu để set state ban đầu
-        updateGalleryArrows();
-      }
-    })
-    .catch(err => console.error('Không thể tải gallery JSON:', err));
+      setTimeout(updateGalArrows, 500);
+  }).catch(e => console.error(e));
 }
 
-// ===================================================
-// OUR PEOPLE (Home) — A/2/i
-// - Hover/focus/click item -> swap image + update bio
-// - Bio panel is hidden unless active/hover (CSS uses .our-people.is-bio-open)
-// Markup:
-//   [data-our-people] inside section#our-people
-//   .our-people__item[data-person][data-name][data-role][data-bio]
-//   .our-people__img[data-person]
-// ===================================================
 function initOurPeopleHome() {
   const root = document.querySelector('[data-our-people]');
-  const section = document.querySelector('#our-people');
-  if (!root || !section) return;
-
-  const items = Array.from(root.querySelectorAll('.our-people__item[data-person]'));
-  const images = Array.from(root.querySelectorAll('.our-people__img[data-person]'));
-  if (!items.length || !images.length) return;
-
-  const nameEl = document.getElementById('ourPeopleName');
-  const roleEl = document.getElementById('ourPeopleRole');
-  const bioEl  = document.getElementById('ourPeopleBio');
-
-  function setActive(key) {
-    const activeBtn = items.find(b => b.dataset.person === key);
-    if (!activeBtn) return;
-
-    items.forEach(btn => {
-      const isActive = btn.dataset.person === key;
-      btn.classList.toggle('is-active', isActive);
-      btn.setAttribute('aria-selected', String(isActive));
+  if (!root) return;
+  const items = Array.from(root.querySelectorAll('.our-people__item'));
+  const images = Array.from(root.querySelectorAll('.our-people__img'));
+  
+  const setActive = (key) => {
+    items.forEach(b => { 
+      const active = b.dataset.person === key;
+      b.classList.toggle('is-active', active); 
+      if(active) {
+        document.getElementById('ourPeopleName').textContent = b.dataset.name;
+        document.getElementById('ourPeopleRole').textContent = b.dataset.role;
+        document.getElementById('ourPeopleBio').textContent = b.dataset.bio;
+        document.getElementById('our-people').classList.add('is-bio-open');
+      }
     });
-
     images.forEach(img => img.classList.toggle('is-active', img.dataset.person === key));
-
-    // Update bio panel content
-    if (nameEl) nameEl.textContent = activeBtn.dataset.name || '';
-    if (roleEl) roleEl.textContent = activeBtn.dataset.role || '';
-    if (bioEl)  bioEl.textContent  = activeBtn.dataset.bio  || '';
-
-    // Open bio panel
-    section.classList.add('is-bio-open');
-  }
-
-  // Default active (i): first .is-active else first item
-  const initialKey =
-    items.find(b => b.classList.contains('is-active'))?.dataset.person || items[0].dataset.person;
-
-  setActive(initialKey);
-
-  // Desktop: hover + focus preview
+  };
   items.forEach(btn => {
     btn.addEventListener('mouseenter', () => setActive(btn.dataset.person));
-    btn.addEventListener('focus', () => setActive(btn.dataset.person));
-  });
-
-  // Mobile/touch: click
-  items.forEach(btn => {
     btn.addEventListener('click', () => setActive(btn.dataset.person));
   });
 }
 
-// ===============================
-// Review Wall (Home) — lightbox
-// ===============================
 function initReviewWallLightbox() {
-  const wall = document.querySelector('.review-wall');
   const lb = document.getElementById('reviewLightbox');
-  if (!wall || !lb) return;
-
-  const lbImg = lb.querySelector('.review-lightbox__img');
-  const closeEls = lb.querySelectorAll('[data-review-close]');
-
-  function openLightbox(src, alt = '') {
-    lbImg.src = src;
-    lbImg.alt = alt || 'Guest review full view';
-    lb.classList.add('is-open');
-    lb.setAttribute('aria-hidden', 'false');
-    document.documentElement.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lb.classList.remove('is-open');
-    lb.setAttribute('aria-hidden', 'true');
-    document.documentElement.style.overflow = '';
-  }
-
-  wall.addEventListener('click', (e) => {
+  if (!lb) return;
+  document.querySelector('.review-wall')?.addEventListener('click', e => {
     const btn = e.target.closest('.review-shot');
     if (!btn) return;
-
     const img = btn.querySelector('img');
-    const src = btn.dataset.reviewSrc || (img ? img.currentSrc || img.src : '');
-    const alt = img ? img.alt : '';
-    if (!src) return;
-
-    openLightbox(src, alt);
+    lb.querySelector('.review-lightbox__img').src = btn.dataset.reviewSrc || img.src;
+    lb.classList.add('is-open');
   });
-
-  closeEls.forEach(el => el.addEventListener('click', closeLightbox));
-
-  document.addEventListener('keydown', (e) => {
-    if (!lb.classList.contains('is-open')) return;
-    if (e.key === 'Escape') closeLightbox();
-  });
+  lb.querySelectorAll('[data-review-close]').forEach(el => el.addEventListener('click', () => lb.classList.remove('is-open')));
 }
 
+// ===================================================
+// 7. PREMIUM UX: Sticky Bar & Accordion
+// ===================================================
+function initStickyFeatures() {
+  const stickyBar = document.getElementById('stickyBar');
+  const heroSection = document.querySelector('.about-this-activity'); 
+  const scrollTopBtn = document.getElementById('scrollToTop');
 
+  if (stickyBar && heroSection) {
+    window.addEventListener('scroll', () => {
+      const pastHero = heroSection.getBoundingClientRect().bottom < 0;
+      stickyBar.classList.toggle('visible', pastHero);
+      if(scrollTopBtn) scrollTopBtn.classList.toggle('lifted', pastHero);
+    });
+  }
+
+  document.querySelectorAll('.timeline-header').forEach(header => {
+    header.addEventListener('click', function() {
+      this.parentElement.classList.toggle('active');
+    });
+  });
+}

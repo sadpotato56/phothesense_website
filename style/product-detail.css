@@ -264,36 +264,56 @@ body {
 
 /* ---------- Highlights ---------- */
 .highlights {
-  background-color: #1C4278;
-  color: white;
+  background-color: #FFFCEE ;
+  color: #1C4278;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .highlights .highlight-card {
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 25px;
-  border-radius: 15px;
+  background: transparent ;
+  box-shadow: none !important;        
+  padding: 0 15px;  
+  text-align: center;
+  border: none;
   transition: all 0.3s ease;
   height: 100%;
 }
 
 .highlight-card i {
-  font-size: 40px;
-  color: #FBDC47;
-  margin-bottom: 15px;
+  font-size: 3rem;
+  color: var(--ph-primary); /* Vàng */
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
 
 .highlight-card h5 {
   font-family: 'Roboto Slab', serif;
-  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
 }
 
 .highlight-card p {
-  font-size: 14px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.85;
 }
 
-.highlight-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1);
+.highlight-card:hover i {
+  transform: translateY(-5px) scale(1.1);
+}
+
+/* Thêm đường kẻ chia cách giữa các cột trên Desktop (Optional) */
+@media (min-width: 768px) {
+  .highlight-card {
+    border-right: 1px solid rgba(28, 66, 120, 0.1);
+  }
+  .col-md-4:last-child .highlight-card {
+    border-right: none;
+  }
 }
 
 /* ---------- Reviews ---------- */
@@ -320,6 +340,145 @@ body {
   font-size: 14px;
   color: #666;
   margin-top: 8px;
+}
+
+
+/* --- 2. ITINERARY TIMELINE (Dòng thời gian dọc) --- */
+.itinerary-section {
+  padding: 60px 0;
+  background-color: #fff; /* Nền trắng để tách biệt */
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Đường kẻ dọc nối các điểm */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px; /* Vị trí đường kẻ */
+  width: 2px;
+  background: rgba(28, 66, 120, 0.1);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 0;
+  padding: 0 0 20px 60px; /* Chừa chỗ cho dấu chấm tròn */
+}
+
+/* Dấu chấm tròn */
+.timeline-dot {
+  position: absolute;
+  left: 11px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  background: #FFFCEE;
+  border: 4px solid var(--ph-primary);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.timeline-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-header h5 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 600;
+  color: #1C4278;
+}
+
+.timeline-toggle {
+  font-size: 1.2rem;
+  color: var(--ph-primary);
+  transition: transform 0.3s ease;
+}
+
+.timeline-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+  opacity: 0.8;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+
+.timeline-item.active .timeline-content {
+  max-height: 500px; /* Đủ lớn để hiện nội dung */
+  padding-top: 10px;
+}
+
+.timeline-item.active .timeline-toggle {
+  transform: rotate(45deg); /* Dấu cộng xoay thành dấu nhân */
+}
+
+/* --- 3. STICKY BOOKING BAR (Mobile Only) --- */
+.sticky-bar {
+  position: fixed;
+  bottom: -100px; /* Ẩn mặc định */
+  left: 0;
+  width: 100%;
+  background: #fff;
+  padding: 15px 20px;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: bottom 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.sticky-bar.visible {
+  bottom: 0; /* Hiện lên */
+}
+
+.sticky-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-price .price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1C4278;
+  line-height: 1;
+}
+
+.sticky-price .unit {
+  font-size: 0.75rem;
+  color: #777;
+}
+
+.sticky-btn {
+  background-color: var(--ph-primary);
+  color: #1C4278;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(251, 220, 71, 0.3);
+}
+
+/* Chỉ hiện Sticky Bar trên Mobile/Tablet */
+@media (min-width: 992px) {
+  .sticky-bar {
+    display: none !important;
+  }
 }
 
 /* ---------- Responsive ---------- */
@@ -502,4 +661,13 @@ body {
     text-align: center;
   }
 }
+
+
+
+
+
+
+
+
+
 
