@@ -20,8 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorkshopGallery();  
   initOurPeopleHome(); 
   initReviewWallLightbox(); 
+  initDetailedReviewLightbox();
   initScrollToTop(); 
   initStickyFeatures(); // Premium UX: Sticky Bar & Accordion
+  
 });
 
 
@@ -487,5 +489,47 @@ function initStickyFeatures() {
     header.addEventListener('click', function() {
       this.parentElement.classList.toggle('active');
     });
+  });
+}
+
+
+// ===================================================
+// 8. DETAILED REVIEW LIGHTBOX (Simple & Fast)
+// ===================================================
+function initDetailedReviewLightbox() {
+  const lb = document.getElementById('simpleReviewLightbox');
+  if (!lb) return;
+  
+  const lbImg = lb.querySelector('.custom-lightbox-img');
+  const closeBtn = lb.querySelector('.close-lb');
+  
+  // 1. Mở Lightbox
+  document.querySelectorAll('.review-lightbox-trigger').forEach(trigger => {
+    trigger.addEventListener('click', function() {
+      const src = this.getAttribute('data-src');
+      if (src) {
+        lbImg.src = src;
+        lb.classList.add('active');
+      }
+    });
+  });
+
+  // 2. Đóng Lightbox (khi bấm X hoặc bấm ra ngoài ảnh)
+  const closeLightbox = () => {
+    lb.classList.remove('active');
+    setTimeout(() => { lbImg.src = ''; }, 200); // Xóa src để lần sau load mới
+  };
+
+  closeBtn.addEventListener('click', closeLightbox);
+  
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) closeLightbox();
+  });
+
+  // Đóng bằng phím ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.classList.contains('active')) {
+      closeLightbox();
+    }
   });
 }
