@@ -431,31 +431,58 @@ function initWorkshopGallery() {
   }).catch(e => console.error(e));
 }
 
+
+// ===================================================
+// 6. OUR PEOPLE INTERACTIVE HOME SECTION
+// ===================================================
 function initOurPeopleHome() {
   const root = document.querySelector('[data-our-people]');
   if (!root) return;
+  
   const items = Array.from(root.querySelectorAll('.our-people__item'));
   const images = Array.from(root.querySelectorAll('.our-people__img'));
   
+  // Hàm xử lý active
   const setActive = (key) => {
     items.forEach(b => { 
       const active = b.dataset.person === key;
       b.classList.toggle('is-active', active); 
+      
       if(active) {
-        document.getElementById('ourPeopleName').textContent = b.dataset.name;
-        document.getElementById('ourPeopleRole').textContent = b.dataset.role;
-        document.getElementById('ourPeopleBio').textContent = b.dataset.bio;
-        document.getElementById('our-people').classList.add('is-bio-open');
+        // Cập nhật nội dung text
+        const nameEl = document.getElementById('ourPeopleName');
+        const roleEl = document.getElementById('ourPeopleRole');
+        const bioEl = document.getElementById('ourPeopleBio');
+        const container = document.getElementById('our-people');
+
+        // Kiểm tra an toàn để tránh lỗi nếu thiếu ID trong HTML
+        if (nameEl) nameEl.textContent = b.dataset.name;
+        if (roleEl) roleEl.textContent = b.dataset.role;
+        if (bioEl) bioEl.textContent = b.dataset.bio;
+        if (container) container.classList.add('is-bio-open');
       }
     });
     images.forEach(img => img.classList.toggle('is-active', img.dataset.person === key));
   };
+
+  // Gắn sự kiện (Giữ nguyên logic của bạn)
   items.forEach(btn => {
     btn.addEventListener('mouseenter', () => setActive(btn.dataset.person));
     btn.addEventListener('click', () => setActive(btn.dataset.person));
   });
+
+  // --- PHẦN SỬA LỖI: Kích hoạt trạng thái ban đầu ---
+  // Tự động chọn người đầu tiên trong danh sách khi load trang
+  if (items.length > 0) {
+    // Lấy key của người đầu tiên
+    const firstPersonKey = items[0].dataset.person;
+    setActive(firstPersonKey);
+  }
 }
 
+// ===================================================
+// 6. REVIEW WALL LIGHTBOX
+// ===================================================
 function initReviewWallLightbox() {
   const lb = document.getElementById('reviewLightbox');
   if (!lb) return;
