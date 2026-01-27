@@ -34,10 +34,17 @@ function initDynamicIncludes() {
   // ----- HEADER -----
   const headerContainer = document.getElementById('header-placeholder');
   if (headerContainer) {
+    // 1. Lấy đường dẫn gốc (nếu có), nếu không thì để rỗng
+    const basePath = headerContainer.getAttribute('data-base-path') || '';
+    
     const pageHeaderType = document.body.dataset.header || 'subpage';
-    const headerFile = pageHeaderType === 'hero' ? 'components/header-hero.html' : 'components/header-subpage.html';
+    // 2. Xác định tên file header
+    const headerFileName = pageHeaderType === 'hero' ? 'components/header-hero.html' : 'components/header-subpage.html';
+    
+    // 3. Nối đường dẫn gốc vào trước tên file
+    const fullHeaderPath = basePath + headerFileName;
 
-    fetch(headerFile)
+    fetch(fullHeaderPath)
       .then(res => res.text())
       .then(html => {
         headerContainer.innerHTML = html;
@@ -45,6 +52,12 @@ function initDynamicIncludes() {
         initMobileHeaderAutoHide();
         initHeroHeaderScroll();
         initCal(); 
+        
+        // Cập nhật lại đường dẫn logo và link trong header sau khi load xong
+        // (Bước này quan trọng để logo trong header hiển thị đúng khi ở trang con)
+        if(basePath) {
+            updateHeaderLinksForSubpage(headerContainer, basePath);
+        }
       })
       .catch(err => console.error('Lỗi load header:', err));
   }
@@ -52,14 +65,54 @@ function initDynamicIncludes() {
   // ----- FOOTER -----
   const footerContainer = document.getElementById('footer-placeholder');
   if (footerContainer) {
-    fetch('components/footer.html')
+    // 1. Lấy đường dẫn gốc
+    const basePath = footerContainer.getAttribute('data-base-path') || '';
+    
+    // 2. Nối vào đường dẫn footer
+    const fullFooterPath = basePath + 'components/footer.html';
+
+    fetch(fullFooterPath)
       .then(res => res.text())
       .then(html => {
         footerContainer.innerHTML = html;
         initCal();
+        
+        // Cập nhật link trong footer nếu cần
+        if(basePath) {
+            updateFooterLinksForSubpage(footerContainer, basePath);
+        }
       })
       .catch(err => console.error('Lỗi load footer:', err));
   }
+}
+
+// Hàm phụ trợ: Tự động sửa đường dẫn hình ảnh/link trong Header/Footer khi ở trang con
+function updateHeaderLinksForSubpage(container, basePath) {
+    // Sửa đường dẫn ảnh (ví dụ Logo)
+    const images = container.querySelectorAll('img');
+    images.forEach(img => {
+        const src = img.getAttribute('src');
+        if (src && !src.startsWith('http') && !src.startsWith('../')) {
+            img.setAttribute('src', basePath + src);
+        }
+    });
+
+    // Sửa đường dẫn link (Menu)
+    const links = container.querySelectorAll('a');
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        // Chỉ sửa link nội bộ, không sửa link web khác hoặc tel/mailto
+        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) { 
+             // Nếu link là index.html -> ../index.html
+             // Nếu link là contact.html -> ../contact.html
+             link.setAttribute('href', basePath + href);
+        }
+    });
+}
+
+// Hàm phụ trợ cho Footer (tương tự Header)
+function updateFooterLinksForSubpage(container, basePath) {
+    updateHeaderLinksForSubpage(container, basePath); // Dùng chung logic
 }
 
 // =========================================
