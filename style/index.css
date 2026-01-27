@@ -441,7 +441,7 @@ body {
 /* Show when panel has an active item (JS toggles .is-bio-open on root) */
 .our-people.is-bio-open .our-people__bioInner{
   opacity: 1;
-  max-height: 260px; /* enough for 2–3 lines bio + button */
+  max-height: 1000px; /* enough for 2–3 lines bio + button */
   transform: translateY(0);
 }
 
@@ -460,11 +460,16 @@ body {
   color: #1C4278;
 }
 
-.our-people__bioText{
-  margin: 0;
+.our-people__bioText {
+  /* Style cũ giữ nguyên */
+  margin: 0 0 20px 0; /* Thêm khoảng cách dưới để nút không dính vào chữ */
   color: rgba(28,66,120,0.9);
   line-height: 1.6;
   font-size: 14px;
+
+  /* --- CHỈ CẦN THÊM 2 DÒNG NÀY --- */
+  max-height: 130px; /* Giới hạn chiều cao cố định */
+  overflow-y: auto;  /* Tự động cuộn nếu chữ dài */
 }
 
 .our-people__cta{
