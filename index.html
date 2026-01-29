@@ -96,6 +96,10 @@
     <p>Explore Beyond - Discover Hanoi in every Sense</p>
     <a href="product.html" class="explore-btn">BEGIN YOUR JOURNEY</a>
     </div>
+    <div class="swipe-up-indicator">
+  <span>Swipe Up</span>
+  <div class="arrow"></div>
+</div>
   </section>
 
     <!-- =========================================================
@@ -229,7 +233,7 @@
          class="featured-card featured-card--small card--text-bottom">
 
         <div class="featured-media"
-             style="background-image:url('picture/knife_workshop/workshop.jpg');"
+             style="background-image:url('picture/knife_workshop/Hanoi_KnifeMaking_Workshop_12.jpg');"
              role="img"
              aria-label="Traditional knife forging workshop">
         </div>
@@ -253,7 +257,7 @@
          class="featured-card featured-card--small card--text-bottom">
 
         <div class="featured-media"
-             style="background-image:url('picture/bmi_tour/pexels-nhavantuonglai-32744907.jpg');"
+             style="background-image:url('picture/banhmi_tour/hanoi-banh-mi-tour-6.jpg');"
              role="img"
              aria-label="Rural village tour with local families">
         </div>
@@ -277,7 +281,8 @@
          class="featured-card featured-card--large card--text-bottom">
 
         <div class="featured-media"
-             style="background-image:url('picture/coffee_workshop/cf-20.jpg');"
+             style="background-image:url('picture/coffee_workshop/hidden-ha-noi-coffee-workshop-25.jpg');
+                    background-position: bottom;"
              role="img"
              aria-label="Vietnamese coffee workshop experience">
         </div>
@@ -318,6 +323,7 @@
 ========================================================= -->
 <section class="our-people" id="our-people">
   <div class="container">
+    
     <div class="text-center our-people__head">
       <h2 class="our-people__title">Meet Our People</h2>
       <p class="our-people__subtitle">
@@ -326,58 +332,91 @@
     </div>
 
     <div class="our-people__split" data-our-people>
-      <!-- Media (left) -->
+      
       <div class="our-people__media" aria-hidden="true">
-        <!-- Replace with real portraits -->
-        <img class="our-people__img is-active" data-person="p1" src="picture/Our_people/OPP_01.jpg" alt="Team member 1" loading="lazy">
-        <img class="our-people__img" data-person="p2" src="picture/Our_people/OPP_04.png" alt="Team member 2" loading="lazy">
-        <img class="our-people__img" data-person="p3" src="picture/Our_people/OPP_05.jpg" alt="Team member 3" loading="lazy">
-        <img class="our-people__img" data-person="p4" src="picture/Our_people/OPP_03.jpg" alt="Team member 4" loading="lazy">
+        <img class="our-people__img is-active" data-person="p1" src="picture/Our_people/OPP_01.jpg" alt="Ms. Tuyến" loading="lazy">
+        <img class="our-people__img" data-person="p2" src="picture/Our_people/OPP_04.png" alt="Mr. Chiến" loading="lazy">
+        <img class="our-people__img" data-person="p3" src="picture/Our_people/OPP_05.jpg" alt="Ms. Lý" loading="lazy">
+        <img class="our-people__img" data-person="p4" src="picture/Our_people/OPP_03.jpg" alt="Ms. Ngọc" loading="lazy">
       </div>
 
-      <!-- List + Bio (right) -->
-      <div class="our-people__panel" aria-label="Our People">
-        <div class="our-people__list" role="listbox" aria-label="Team list">
-          <!-- NOTE:
-               - data-person must match image data-person
-               - data-role and data-bio are used to render the bio panel below
-          -->
-          <button class="our-people__item is-active" type="button"
-                  data-person="p1"
-                  data-name="Đỗ Thị Tuyến"
-                  data-role="Craft Host • Workshops & makers"
-                  data-bio="Ms. Do Thi Tuyen began forging knives at 14, following a family tradition that shaped her life. Now in her 60s, she is the only female master blacksmith in her village, known for custom chef knives and her warm, hands-on guidance throughout every step of the workshop.">
-            <span class="our-people__name">Ms. Tuyến</span>
-            <span class="our-people__chev" aria-hidden="true">›</span>
-          </button>
+      <div class="our-people__panel">
+        
+        <div class="our-people__list">
 
-          <button class="our-people__item" type="button"
-              data-person="p2"
-              data-name="Đỗ Thanh Chiến"
-              data-role="Craft Designer • A Witness to History"
-              data-bio="Biological brother to Ms. Tuyen and a celebrated artisan in his own right. Mr. Chien is famous for 'dao bổ sắt'—a complex technique that fuses a razor-sharp high-carbon edge with a flexible soft steel spine. With exacting standards for export-quality blades, he is the master of precision you want by your side when forging a truly professional tool.">
+          <div class="our-people__group is-active" data-person="p1">
+            <button class="our-people__item" type="button">
+              <span class="our-people__name">Ms. Tuyến</span>
+              <span class="our-people__chev">›</span>
+            </button>
+            <div class="our-people__accordion-content">
+              <div class="bio-source">
+                <div class="bio-meta">Craft Host • Workshops & makers</div>
+                <h3 class="bio-name">Đỗ Thị Tuyến</h3>
+                <p class="bio-desc">Ms. Do Thi Tuyen began forging knives at 14, following a family tradition that shaped her life. Now in her 60s, she is the only female master blacksmith in her village, known for custom chef knives and her warm, hands-on guidance throughout every step of the workshop.</p>
+                <div class="bio-cta"><a href="product.html" class="explore-btn">Explore experiences</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="our-people__group" data-person="p2">
+            <button class="our-people__item" type="button">
               <span class="our-people__name">Mr. Chiến</span>
-              <span class="our-people__chev" aria-hidden="true">›</span>
-          </button>
+              <span class="our-people__chev">›</span>
+            </button>
+            <div class="our-people__accordion-content">
+              <div class="bio-source">
+                <div class="bio-meta">Craft Designer • A Witness to History</div>
+                <h3 class="bio-name">Đỗ Thanh Chiến</h3>
+                <p class="bio-desc">Biological brother to Ms. Tuyen and a celebrated artisan in his own right. Mr. Chien is famous for 'dao bổ sắt'—a complex technique that fuses a razor-sharp high-carbon edge with a flexible soft steel spine. With exacting standards for export-quality blades, he is the master of precision you want by your side when forging a truly professional tool.</p>
+                <div class="bio-cta"><a href="product.html" class="explore-btn">Explore experiences</a></div>
+              </div>
+            </div>
+          </div>
 
-          <button class="our-people__item" type="button"
-                  data-person="p3"
-                  data-name="Ngô Thị Hải Lý"
-                  data-role="Food Storyteller • Markets & street eats"
-                  data-bio="Lý specialty is food culture — not just what to eat, but why it matters. Markets, street stalls, and the stories behind each flavor.">
-            <span class="our-people__name">Ms. Lý</span>
-            <span class="our-people__chev" aria-hidden="true">›</span>
-          </button>
+          <div class="our-people__group" data-person="p3">
+            <button class="our-people__item" type="button">
+              <span class="our-people__name">Ms. Lý</span>
+              <span class="our-people__chev">›</span>
+            </button>
+            <div class="our-people__accordion-content">
+              <div class="bio-source">
+                <div class="bio-meta">Food Storyteller • Markets & street eats</div>
+                <h3 class="bio-name">Ngô Thị Hải Lý</h3>
+                <p class="bio-desc">Lý specialty is food culture — not just what to eat, but why it matters. Markets, street stalls, and the stories behind each flavor.</p>
+                <div class="bio-cta"><a href="product.html" class="explore-btn">Explore experiences</a></div>
+              </div>
+            </div>
+          </div>
 
-          <button class="our-people__item" type="button"
-                  data-person="p4"
-                  data-name="Phạm Minh Ngọc"
-                  data-role="Local Guide • Old Quarter stories"
-                  data-bio="Ngọc works with local artisans and workshops. Expect hands-on making, slow learning, and real conversations with people who keep traditions alive.">
-            <span class="our-people__name">Ms. Ngọc</span>
-            <span class="our-people__chev" aria-hidden="true">›</span>
-          </button>
+          <div class="our-people__group" data-person="p4">
+            <button class="our-people__item" type="button">
+              <span class="our-people__name">Ms. Ngọc</span>
+              <span class="our-people__chev">›</span>
+            </button>
+            <div class="our-people__accordion-content">
+              <div class="bio-source">
+                <div class="bio-meta">Local Guide • Old Quarter stories</div>
+                <h3 class="bio-name">Phạm Minh Ngọc</h3>
+                <p class="bio-desc">Ngọc works with local artisans and workshops. Expect hands-on making, slow learning, and real conversations with people who keep traditions alive.</p>
+                <div class="bio-cta"><a href="product.html" class="explore-btn">Explore experiences</a></div>
+              </div>
+            </div>
+          </div>
+
+        </div> <div class="our-people__bio" aria-live="polite" id="our-people-bio-panel">
+          <div class="our-people__bioInner">
+            <div class="our-people__bioMeta" id="ourPeopleRole"></div>
+            <h3 class="our-people__bioName" id="ourPeopleName"></h3>
+            <p class="our-people__bioText" id="ourPeopleBio"></p>
+
+            <div class="our-people__cta">
+              <a href="product.html" class="explore-btn our-people__btn">Explore experiences</a>
+            </div>
+          </div>
         </div>
+
+      </div> </div> </div> </section>
 
         <!-- Bio panel (hidden until active/hover) -->
         <div class="our-people__bio" aria-live="polite">

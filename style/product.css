@@ -300,9 +300,6 @@ body {
   transition: color 0.3s;
 }
 
-.card-title a:hover {
-  color: var(--ph-primary);
-}
 
 /* Footer Info (Duration & Price) */
 .card-footer-info {
@@ -338,6 +335,37 @@ body {
   font-weight: 700;
   color: var(--ph-navy);
 }
+
+
+/* Thiết lập thẻ cha là mốc giới hạn cho link */
+.product-item {
+  position: relative; 
+  transition: transform 0.3s ease;
+}
+
+/* Biến thẻ a thành một lớp phủ toàn bộ card */
+.main-link::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1; /* Phủ lên toàn bộ bề mặt */
+}
+
+/* Loại bỏ gạch chân mặc định của link cho đẹp */
+.main-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hiệu ứng khi di chuột vào bất kỳ đâu trong khối */
+.product-item:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
 
 
 /* ---------------- 4. Mobile Responsive (Gộp chung) ---------------- */

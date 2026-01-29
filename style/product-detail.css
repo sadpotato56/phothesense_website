@@ -16,6 +16,7 @@ body {
   display: flex;
   gap: 10px;
   margin: 20px 0;
+  height: 750px;
   position: relative; /* để mũi tên absolute */
 }
 
@@ -756,6 +757,7 @@ a.review-card:hover {
     overflow: hidden; 
     margin-bottom: 10px;
     position: relative; /* để mũi tên absolute */
+    height: auto;      /* chiều cao tự động theo ảnh */
   }
 
   /* Mũi tên điều hướng gallery (chỉ hiện trên mobile) */
@@ -868,8 +870,8 @@ a.review-card:hover {
   /* Lightbox trên mobile – cho ảnh to hơn 1 chút */
   .lightbox-img {
     max-width: 95%;
-    max-height: 70vh;
-    margin-top: 50px;
+    max-height: 100vh;
+    margin-top: 70px;
   }
 
   .top-counter {
@@ -893,10 +895,12 @@ a.review-card:hover {
   }
 
   .prev {
+    margin-top: 46%;
     left: 10px;
   }
 
   .next {
+    margin-top: 46%;
     right: 10px;
   }
 

@@ -470,10 +470,19 @@ function initWorkshopGallery() {
         const sl = track.scrollLeft;
         const max = track.scrollWidth - track.clientWidth;
         arrowLeft.classList.toggle('show', sl > 2);
-        arrowRight.classList.toggle('show', sl < max - 2);
+        arrowRight.classList.toggle('show',sl < max - 2 || sl > 2);
       };
       arrowLeft.addEventListener('click', (e) => { e.stopPropagation(); track.scrollBy({left: -track.clientWidth, behavior:'smooth'}); });
-      arrowRight.addEventListener('click', (e) => { e.stopPropagation(); track.scrollBy({left: track.clientWidth, behavior:'smooth'}); });
+      arrowRight.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (track.scrollLeft >= maxScroll - 10) {
+        // Nếu đang ở cuối, lướt về đầu
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+      }
+    });
       track.addEventListener('scroll', () => {
         requestAnimationFrame(() => {
           currentIndex = Math.round(track.scrollLeft / track.clientWidth);
@@ -484,52 +493,91 @@ function initWorkshopGallery() {
   }).catch(e => console.error(e));
 }
 
-
 // ===================================================
-// 6. OUR PEOPLE INTERACTIVE HOME SECTION
+// 5. OUR PEOPLE HOME INTERACTION
 // ===================================================
 function initOurPeopleHome() {
-  const root = document.querySelector('[data-our-people]');
+  const root = document.querySelector('.our-people__list');
   if (!root) return;
-  
-  const items = Array.from(root.querySelectorAll('.our-people__item'));
-  const images = Array.from(root.querySelectorAll('.our-people__img'));
-  
-  // Hàm xử lý active
-  const setActive = (key) => {
-    items.forEach(b => { 
-      const active = b.dataset.person === key;
-      b.classList.toggle('is-active', active); 
-      
-      if(active) {
-        // Cập nhật nội dung text
-        const nameEl = document.getElementById('ourPeopleName');
-        const roleEl = document.getElementById('ourPeopleRole');
-        const bioEl = document.getElementById('ourPeopleBio');
-        const container = document.getElementById('our-people');
 
-        // Kiểm tra an toàn để tránh lỗi nếu thiếu ID trong HTML
-        if (nameEl) nameEl.textContent = b.dataset.name;
-        if (roleEl) roleEl.textContent = b.dataset.role;
-        if (bioEl) bioEl.textContent = b.dataset.bio;
-        if (container) container.classList.add('is-bio-open');
-      }
-    });
-    images.forEach(img => img.classList.toggle('is-active', img.dataset.person === key));
+  const groups = Array.from(document.querySelectorAll('.our-people__group'));
+  const images = Array.from(document.querySelectorAll('.our-people__img'));
+
+  // Các phần tử hiển thị trên Desktop (Panel bên phải/dưới)
+  const desktopName = document.getElementById('ourPeopleName');
+  const desktopRole = document.getElementById('ourPeopleRole');
+  const desktopBio = document.getElementById('ourPeopleBio');
+  const desktopPanel = document.getElementById('our-people');
+
+  // Hàm cập nhật nội dung cho Desktop
+  const updateDesktopPanel = (group) => {
+    const meta = group.querySelector('.bio-meta')?.textContent;
+    const name = group.querySelector('.bio-name')?.textContent;
+    const desc = group.querySelector('.bio-desc')?.textContent;
+
+    if (desktopRole) desktopRole.textContent = meta || '';
+    if (desktopName) desktopName.textContent = name || '';
+    if (desktopBio) desktopBio.textContent = desc || '';
+    if (desktopPanel) desktopPanel.classList.add('is-bio-open');
   };
 
-  // Gắn sự kiện (Giữ nguyên logic của bạn)
-  items.forEach(btn => {
-    btn.addEventListener('mouseenter', () => setActive(btn.dataset.person));
-    btn.addEventListener('click', () => setActive(btn.dataset.person));
+  // Hàm xử lý khi click
+  const handleGroupClick = (clickedGroup) => {
+    const personId = clickedGroup.dataset.person;
+    
+    // 1. Kiểm tra xem mục vừa bấm có đang mở không?
+    const isAlreadyActive = clickedGroup.classList.contains('is-active');
+
+    // 2. Đóng TẤT CẢ các mục lại (Reset về trạng thái đóng)
+    groups.forEach(g => g.classList.remove('is-active'));
+    
+    // Lưu ý: Trên Desktop, ta có thể giữ nguyên ảnh của người cũ 
+    // để tránh bị "nháy" đen màn hình, nên không remove class is-active của ảnh ngay lập tức ở đây.
+
+    // 3. LOGIC MỚI: Chỉ mở lại nếu trước đó nó CHƯA mở
+    // (Nếu nó đang mở mà bấm lại -> bước 2 đã đóng nó rồi -> bước này bỏ qua -> kết quả là đóng hẳn)
+    if (!isAlreadyActive) {
+      clickedGroup.classList.add('is-active');
+
+      // Update ảnh (Desktop)
+      images.forEach(img => img.classList.remove('is-active'));
+      const targetImg = images.find(img => img.dataset.person === personId);
+      if (targetImg) targetImg.classList.add('is-active');
+
+      // Update thông tin (Desktop)
+      updateDesktopPanel(clickedGroup);
+    } 
+    // Nếu isAlreadyActive == true, thì code sẽ dừng ở bước 2 (đã đóng), 
+    // tạo hiệu ứng "Thu gọn".
+  };
+
+  // Gắn sự kiện click
+  groups.forEach(group => {
+    const btn = group.querySelector('.our-people__item');
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleGroupClick(group);
+      });
+    }
   });
 
-  // --- PHẦN SỬA LỖI: Kích hoạt trạng thái ban đầu ---
-  // Tự động chọn người đầu tiên trong danh sách khi load trang
-  if (items.length > 0) {
-    // Lấy key của người đầu tiên
-    const firstPersonKey = items[0].dataset.person;
-    setActive(firstPersonKey);
+  // Mặc định khi vào trang:
+  // Nếu bạn muốn người đầu tiên luôn mở sẵn thì giữ dòng này.
+  // Nếu muốn vào trang là đóng hết thì XÓA dòng này đi.
+  if (groups.length > 0) {
+     // handleGroupClick(groups[0]); // <-- Bỏ comment nếu muốn mở sẵn người số 1
+     
+     // Tuy nhiên, để đồng bộ hiển thị Desktop (cần có ảnh nền ban đầu),
+     // ta chỉ kích hoạt hiển thị dữ liệu người số 1 nhưng không thêm class 'is-active' để nó xổ xuống trên mobile
+     const firstGroup = groups[0];
+     updateDesktopPanel(firstGroup);
+     const firstImg = images.find(img => img.dataset.person === firstGroup.dataset.person);
+     if (firstImg) firstImg.classList.add('is-active');
+     
+     // Trên Mobile, nếu muốn nó đóng sẵn thì không làm gì thêm.
+     // Nếu muốn Mobile cũng mở sẵn người đầu tiên thì uncomment dòng dưới:
+     // firstGroup.classList.add('is-active');
   }
 }
 

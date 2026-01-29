@@ -85,6 +85,51 @@ body {
   background-color: #c62828;
 }
 
+/* Ẩn chỉ dẫn trên máy tính/màn hình lớn */
+.swipe-up-indicator {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .swipe-up-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 50px; /* Cách đáy màn hình 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    opacity: 0.8;
+  }
+
+  .arrow {
+    width: 15px;
+    height: 15px;
+    border-right: 2.5px solid white;
+    border-bottom: 2.5px solid white;
+    transform: rotate(-135deg); /* Quay mũi tên hướng lên */
+    margin-top: 10px;
+    animation: bounce 2s infinite;
+  }
+}
+
+/* Hiệu ứng nhấp nhô cho mũi tên */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) rotate(-135deg);
+  }
+  40% {
+    transform: translateY(-10px) rotate(-135deg);
+  }
+  60% {
+    transform: translateY(-5px) rotate(-135deg);
+  }
+}
+
 /* =========================================
    Trust section – white background
 ========================================= */
@@ -280,116 +325,85 @@ body {
   background: rgba(0,0,0,0.18);
 }
 
-/* =========================================
-   OUR PEOPLE (A/2/i)
-   A: media height scales with viewport (vh)
-   2: list fits content (no scroll)
-   i: default active person; bio hidden unless active/hover
-========================================= */
+/* =======================================================
+   OUR PEOPLE SECTION - HYBRID LAYOUT
+   Mobile: Accordion (Expandable list)
+   Desktop: Tabs + Preview Panel
+======================================================= */
 
-.our-people{
+/* --- 1. GLOBAL STYLES (Dùng chung) --- */
+.our-people {
   background: #FFFCEE;
   color: #1C4278;
-  padding: clamp(56px, 6vw, 92px) 0; /* more “breathing room” */
+  padding: clamp(56px, 6vw, 92px) 0;
 }
 
-.our-people__head{ margin-bottom: 28px; }
+.our-people__head { margin-bottom: 28px; }
 
-.our-people__title{
+.our-people__title {
   margin: 0;
   font-family: 'Roboto Slab', serif;
   font-weight: 700;
 }
 
-.our-people__subtitle{
+.our-people__subtitle {
   margin: 10px auto 0;
   max-width: 760px;
-  color: rgba(28,66,120,0.85);
+  color: rgba(28, 66, 120, 0.85);
 }
 
-.our-people__split{
+/* Container chính */
+.our-people__split {
   margin-top: 22px;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
+  gap: 24px;
   align-items: stretch;
 }
 
-/* MEDIA (A): scale with viewport */
-.our-people__media{
+/* Khu vực ảnh (Media) */
+.our-people__media {
   position: relative;
   border-radius: 18px;
   overflow: hidden;
-  background: rgba(28,66,120,0.06);
-  height: clamp(320px, 65vh, 780px); /* key change vs 750px fixed */
+  background: rgba(28, 66, 120, 0.06);
+  /* Chiều cao mặc định */
+  height: clamp(320px, 50vh, 600px); 
 }
 
-.our-people__img{
+.our-people__img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.02);
-  transition: opacity 260ms ease, transform 600ms ease;
+  transform: scale(1.05);
+  transition: opacity 0.4s ease, transform 0.6s ease;
   pointer-events: none;
 }
 
-.our-people__img.is-active{
+.our-people__img.is-active {
   opacity: 1;
   transform: scale(1);
 }
 
-/* PANEL */
-.our-people__panel{
-  background: #ffffff;
-  border: 1px solid rgba(28,66,120,0.14);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.10);
-  display: flex;
-  flex-direction: column;
-}
-
-/* LIST (2): fit content */
-.our-people__list{
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  gap: 10px;
-}
-
-.our-people__item{
+/* Nút bấm (Item Header) */
+.our-people__item {
   appearance: none;
-  border: 1px solid rgba(28,66,120,0.12);
-  background: transparent;
   width: 100%;
   text-align: left;
-
-  padding: 14px 14px;
-  border-radius: 14px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-
   cursor: pointer;
-  transition: background 180ms ease, border-color 180ms ease;
+  background: transparent;
+  transition: all 0.2s ease;
+  border: none;
+  padding: 18px 14px;
 }
 
-.our-people__item:hover{
-  background: rgba(28,66,120,0.05);
-  border-color: rgba(28,66,120,0.18);
-}
-
-.our-people__item.is-active{
-  background: rgba(28,66,120,0.10);
-  border-color: rgba(28,66,120,0.22);
-}
-
-.our-people__name{
+.our-people__name {
   margin: 0;
   font-family: 'Roboto Slab', serif;
   font-size: 18px;
@@ -397,109 +411,194 @@ body {
   color: #1C4278;
 }
 
-/* chevron */
-.our-people__chev{
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
+/* Mũi tên Chevron */
+.our-people__chev {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   background: #FFFCEE;
-  border: 1px solid rgba(28,66,120,0.18);
+  border: 1px solid rgba(28, 66, 120, 0.18);
   display: grid;
   place-items: center;
-  flex: 0 0 auto;
+  flex-shrink: 0;
   color: #1C4278;
-  font-size: 22px;
-  line-height: 1;
-  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+  font-size: 20px;
+  transition: all 0.3s ease;
 }
 
-.our-people__item.is-active .our-people__chev{
-  background: #1C4278;
-  color: #FFFCEE;
-  border-color: rgba(28,66,120,0.35);
-}
-
-/* BIO (i): hidden unless active/hover */
-.our-people__bio{
-  padding: 0 10px 12px;
-}
-
-.our-people__bioInner{
-  border-radius: 14px;
-  border: 1px solid rgba(28,66,120,0.12);
-  background: rgba(28,66,120,0.04);
-  padding: 16px 16px 14px;
-
-  /* hidden state */
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transform: translateY(-4px);
-  transition: opacity 220ms ease, max-height 260ms ease, transform 260ms ease;
-}
-
-/* Show when panel has an active item (JS toggles .is-bio-open on root) */
-.our-people.is-bio-open .our-people__bioInner{
-  opacity: 1;
-  max-height: 1000px; /* enough for 2–3 lines bio + button */
-  transform: translateY(0);
-}
-
-.our-people__bioMeta{
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(28,66,120,0.75);
-  margin-bottom: 6px;
-}
-
-.our-people__bioName{
-  margin: 0 0 6px;
-  font-family: 'Roboto Slab', serif;
-  font-weight: 800;
-  color: #1C4278;
-}
-
-.our-people__bioText {
-  /* Style cũ giữ nguyên */
-  margin: 0 0 20px 0; /* Thêm khoảng cách dưới để nút không dính vào chữ */
-  color: rgba(28,66,120,0.9);
-  line-height: 1.6;
-  font-size: 14px;
-
-  /* --- CHỈ CẦN THÊM 2 DÒNG NÀY --- */
-  max-height: 130px; /* Giới hạn chiều cao cố định */
-  overflow-y: auto;  /* Tự động cuộn nếu chữ dài */
-}
-
-.our-people__cta{
-  margin-top: 12px;
-}
-
-.our-people__btn{
-  width: 100%;
-  text-align: center;
-}
-
-/* Desktop split */
-@media (min-width: 1200px){
-  .our-people__split{
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 24px;
+/* --- 2. MOBILE & TABLET LAYOUT (< 992px) --- 
+   Sử dụng Accordion (Xổ xuống)
+*/
+@media (max-width: 991.98px) {
+  .our-people {
+    padding-top: 50px;
+    padding-bottom: 0px;
+  }
+  .our-people__split {
+    grid-template-columns: 1fr; /* 1 cột duy nhất */
   }
 
+  /* Ẩn ảnh nếu muốn gọn, hoặc giữ lại tùy ý. 
+     Ở đây ta giữ lại nhưng cho thấp hơn */
+  .our-people__media {
+    height: 300px;
+    margin-bottom: 10px;
+  }
+
+  /* Ẩn Panel Desktop cũ */
+  .our-people__bio {
+    display: none !important;
+  }
+
+  /* Style cho Group (bao gồm nút + nội dung) */
+  .our-people__group {
+    border-bottom: 1px solid rgba(28, 66, 120, 0.1);
+    background: #fff;
+  }
+  .our-people__group:first-child { border-top-left-radius: 16px; border-top-right-radius: 16px; }
+  .our-people__group:last-child { border-bottom: none; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; }
+
+  /* Accordion Content (Animation trượt) */
+  .our-people__accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+    background-color: #fafbfd;
+  }
+
+  .our-people__group.is-active .our-people__accordion-content {
+    grid-template-rows: 1fr;
+  }
+
+  .bio-source {
+    overflow: hidden;
+    padding: 0 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Khi mở ra thì hiện nội dung */
+  .our-people__group.is-active .bio-source {
+    opacity: 1;
+    padding-bottom: 24px;
+    padding-top: 5px;
+    background: #eef3f8;
+  }
+
+  /* Xoay mũi tên và đổi màu khi Active */
+  .our-people__group.is-active .our-people__chev {
+    transform: rotate(90deg); /* Xoay xuống */
+    background: #1C4278;
+    color: #FFFCEE;
+    border-color: #1C4278;
+  }
+
+  .our-people__group.is-active .our-people__name {
+    color: #c8102e; /* Highlight tên khi mở (Option) */
+  }
+
+  /* Typography cho nội dung bên trong Accordion */
+  .bio-meta { font-size: 11px; text-transform: uppercase; color: #666; margin-bottom: 8px; font-weight: 600; letter-spacing: 0.5px;}
+  .bio-name { font-family: 'Roboto Slab', serif; font-size: 22px; color: #1C4278; margin-bottom: 10px; }
+  .bio-desc { font-size: 15px; line-height: 1.6; color: #444; margin-bottom: 16px; }
+  .bio-cta .explore-btn { padding: 8px 24px; font-size: 13px; }
+}
+
+/* --- 3. DESKTOP LAYOUT (≥ 992px) --- 
+   Sử dụng Tabs + Panel (Như cũ)
+*/
+@media (min-width: 992px) {
+  /* Layout chia cột: Ảnh | Danh sách */
+  .our-people__split {
+    grid-template-columns: 1fr 1fr; /* 50% - 50% */
+    align-items: start;
+  }
   
-}
-
-/* Small screens */
-@media (max-width: 576px){
-  .our-people__media{
-    height: clamp(260px, 40vh, 360px);
+  /* Ảnh cao theo viewport */
+  .our-people__media {
+    height: clamp(500px, 70vh, 750px);
   }
 
-  .our-people.is-bio-open .our-people__bioInner{
-    max-height: 360px; /* tăng thêm để chắc chắn CTA không bị cắt */
+  /* Ẩn Accordion content của mobile */
+  .our-people__accordion-content {
+    display: none !important;
   }
+
+  /* Panel chứa danh sách */
+  .our-people__list {
+    background: #ffffff;
+    border: 1px solid rgba(28, 66, 120, 0.14);
+    border-radius: 18px;
+    padding: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Style nút bấm dạng thẻ */
+  .our-people__item {
+    border: 1px solid rgba(28, 66, 120, 0.1);
+    border-radius: 14px;
+    margin-bottom: 8px; /* Khoảng cách giữa các nút */
+  }
+  
+  .our-people__item:hover {
+    background: rgba(28, 66, 120, 0.03);
+    border-color: rgba(28, 66, 120, 0.2);
+  }
+
+  /* Trạng thái Active trên Desktop */
+  .our-people__group.is-active .our-people__item {
+    background: rgba(28, 66, 120, 0.08);
+    border-color: #1C4278;
+  }
+
+  .our-people__group.is-active .our-people__chev {
+    background: #1C4278;
+    color: #FFFCEE;
+    /* Mũi tên vẫn hướng sang phải trên desktop */
+    transform: rotate(0deg); 
+  }
+
+  /* --- BIO PANEL RIÊNG BIỆT (Góc dưới danh sách) --- */
+  /* Đây là phần container nhận dữ liệu từ JS */
+  .our-people__bio {
+    padding: 10px 10px 0;
+  }
+
+  .our-people__bioInner {
+    border-radius: 14px;
+    background: rgba(28, 66, 120, 0.04);
+    border: 1px solid rgba(28, 66, 120, 0.1);
+    padding: 20px;
+    
+    /* Animation hiện ra */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+  }
+
+  .our-people.is-bio-open .our-people__bioInner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Text styles cho Desktop Panel */
+  .our-people__bioMeta { font-size: 12px; text-transform: uppercase; color: #666; margin-bottom: 5px; font-weight: 600; }
+  .our-people__bioName { font-size: 24px; color: #1C4278; margin-bottom: 12px; font-weight: 700; }
+  
+  .our-people__bioText {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+    /* Giữ thanh cuộn nếu nội dung quá dài trên desktop */
+    max-height: 160px; 
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+
+  /* Custom thanh cuộn nhỏ đẹp hơn */
+  .our-people__bioText::-webkit-scrollbar { width: 4px; }
+  .our-people__bioText::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
 }
 
 /* =========================
