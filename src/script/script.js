@@ -79,14 +79,47 @@ document.addEventListener("click", (e) => {
 // =========================================
 // 2. NAVBAR ACTIVE LINK
 // =========================================
+/**
+ * Tối ưu cho: https://phothesense.com/
+ * Xử lý chính xác các trang: /, /experience/, /blog/
+ */
 function setActiveNavLink() {
-  const path = window.location.pathname.toLowerCase();
-  const links = document.querySelectorAll('.navbar-nav .nav-link[href]');
-  links.forEach(link => {
-    const href = link.getAttribute('href').toLowerCase();
-    link.classList.remove('active');
-    if (href === 'index.html' && (path.endsWith('/') || path.endsWith('index.html'))) link.classList.add('active');
-    else if (href !== 'index.html' && path.endsWith(href)) link.classList.add('active');
+  // 1. Lấy đường dẫn hiện tại, thêm / vào cuối nếu thiếu để so sánh đồng nhất
+  let path = window.location.pathname.toLowerCase();
+  if (!path.endsWith('/')) path += '/';
+
+  // 2. Tìm tất cả các link (ép kiểu để tránh lỗi TypeScript trong Astro)
+  const links = document.querySelectorAll('.navbar-nav .nav-link');
+
+  links.forEach((link) => {
+    const anchor = link;
+    let href = anchor.getAttribute('href')?.toLowerCase() || "";
+
+    // Xóa class active cũ
+    anchor.classList.remove('active');
+
+    // 3. Chuẩn hóa href để so sánh
+    // Bỏ qua các link rỗng hoặc link neo (#)
+    if (!href || href.startsWith('#')) return;
+
+    // Thêm / vào cuối href nếu thiếu (trừ khi là link file cụ thể)
+    let cleanHref = href;
+    if (!cleanHref.endsWith('/') && !cleanHref.includes('.')) {
+      cleanHref += '/';
+    }
+
+    // 4. So sánh logic
+    // Trường hợp trang chủ
+    const isHome = cleanHref === '/' || cleanHref.includes('index');
+    const isAtHome = path === '/' || path.includes('index');
+
+    if (isHome && isAtHome) {
+      anchor.classList.add('active');
+    } 
+    // Trường hợp các trang /experience/ hoặc /blog/
+    else if (!isHome && path.includes(cleanHref)) {
+      anchor.classList.add('active');
+    }
   });
 }
 
