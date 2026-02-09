@@ -17,14 +17,28 @@ if (document.readyState === 'loading') {
 // =========================================
 // 1. NAVBAR ACTIVE LINK
 // =========================================
+// =========================================
+// 1. NAVBAR ACTIVE LINK (FIXED FOR GITHUB PAGES)
+// =========================================
 function setActiveNavLink() {
-  const path = window.location.pathname.toLowerCase();
-  const links = document.querySelectorAll('.navbar-nav .nav-link[href]');
+  // 1. Lấy đường dẫn hiện tại và XÓA dấu / ở cuối (nếu có) để chuẩn hóa
+  // Ví dụ: ".../knife-workshop/" thành ".../knife-workshop"
+  const currentPath = window.location.pathname.replace(/\/$/, "").toLowerCase();
+
+  const links = document.querySelectorAll('.navbar-nav .nav-link');
+
   links.forEach(link => {
-    const href = link.getAttribute('href').toLowerCase();
     link.classList.remove('active');
-    if (href === 'index.astro' && (path.endsWith('/') || path.endsWith('index.astro'))) link.classList.add('active');
-    else if (href !== 'index.astro' && path.endsWith(href)) link.classList.add('active');
+
+    // 2. Lấy đường dẫn thực tế của link và cũng XÓA dấu / ở cuối
+    // new URL(link.href).pathname sẽ tự động xử lý các link dạng "index.astro", "./", v.v. thành đường dẫn đầy đủ
+    const linkPath = new URL(link.href).pathname.replace(/\/$/, "").toLowerCase();
+
+    // 3. So sánh chính xác
+    // Nếu link trỏ về trang chủ (thường rỗng hoặc chỉ có tên repo), ta cần check kỹ hơn chút
+    if (currentPath === linkPath) {
+       link.classList.add('active');
+    }
   });
 }
 

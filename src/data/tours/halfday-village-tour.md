@@ -7,7 +7,7 @@ badge: "Signature"  # Nhãn dán trên ảnh
 productTitle: "Legends & Layers: The Incense & Conical Hat Journey"
 productSubtitle: "Travel from the ancient legends of Thang Long to the vibrant countryside. Craft your own palm leaf hat and stand amidst the mesmerizing red incense fields of Quang Phu Cau."
 price: "₫900,000"
-galleryJsonPath: "../picture/village_tour/gallery.json"
+galleryJsonPath: "/picture/village_tour/gallery.json"
 calLink: "phothesense/craft-village-tour"
 calNamespace: "craft-village-tour"
 ctaButtonText: "Join the Craft Journey"

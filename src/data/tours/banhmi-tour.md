@@ -7,7 +7,7 @@ badge: "Must-Try"  # Nhãn dán trên ảnh
 productTitle: "Hanoi Banh Mi Tour: The 5-Flavor Sensory"
 productSubtitle: "A culinary journey through time and taste. Hunt down the 'Ghost Cart' only open for 3 hours, savor the French legacy, and finish with a sunset view over the Hoan Kiem lake."
 price: "₫750,000"
-galleryJsonPath: "../picture/banhmi_tour/gallery.json"
+galleryJsonPath: "/picture/banhmi_tour/gallery.json"
 calLink: "#" 
 calNamespace: ""
 ctaButtonText: "Book Your Tasting Now"

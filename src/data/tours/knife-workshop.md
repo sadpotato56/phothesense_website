@@ -8,7 +8,7 @@ badge: "Best Seller"  # Nhãn dán trên ảnh
 productTitle: "Forge in Fire – Knife Making Workshop in Da Sy Village"
 productSubtitle: "Step into a centuries-old blacksmith village on Hanoi’s outskirts and forge your own knife with Vietnam’s only female master artisan of Da Sy."
 price: "₫1,100,000"
-galleryJsonPath: "../picture/knife_workshop/gallery.json"
+galleryJsonPath: "/picture/knife_workshop/gallery.json"
 calLink: "phothesense/knife-making-workshop"
 calNamespace: "knife-making-workshop"
 ctaButtonText: "Forge Your Own Knife"

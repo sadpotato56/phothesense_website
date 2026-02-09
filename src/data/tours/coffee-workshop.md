@@ -7,7 +7,7 @@ badge: "Best Seller"  # Nhãn dán trên ảnh
 productTitle: "Hanoi Coffee Workshop – Master Vietnamese Brewing"
 productSubtitle: "Brew Vietnam’s most iconic coffees while soaking in local stories, culture, and insider tips in a cozy Hanoi hideaway."
 price: "₫585,000"
-galleryJsonPath: "../picture/coffee_workshop/gallery.json"
+galleryJsonPath: "/picture/coffee_workshop/gallery.json"
 calLink: "phothesense/coffeeworkshop"
 calNamespace: "coffeeworkshop"
 ctaButtonText: "Book Your Coffee Workshop"
