@@ -536,5 +536,130 @@ import '../styles/index.css';
       <i class="fa-solid fa-chevron-up"></i>
     </button>
 
-<script src="../script/script.js"></script>
+<script>
+  // Hàm tổng hợp khởi tạo
+  function initAll() {
+    initHeroHeaderScroll();
+    initOurPeopleHome();
+    initReviewWallLightbox();
+  }
+
+  // 1. UI EFFECTS (Scroll, Hide Header)
+  function initHeroHeaderScroll(): void {
+    const heroHeader = document.querySelector('.hero-header') as HTMLElement | null;
+    if (!heroHeader) return;
+    
+    const THRESHOLD = 60;
+    window.addEventListener('scroll', () => {
+      heroHeader.classList.toggle('scrolled', window.scrollY > THRESHOLD);
+    }, { passive: true });
+  }
+
+  // 2. OUR PEOPLE HOME INTERACTION
+  function initOurPeopleHome(): void {
+    const root = document.querySelector('.our-people__list');
+    if (!root) return;
+
+    // Ép kiểu về HTMLElement để sử dụng được .dataset
+    const groups = Array.from(document.querySelectorAll('.our-people__group')) as HTMLElement[];
+    const images = Array.from(document.querySelectorAll('.our-people__img')) as HTMLElement[];
+
+    const desktopName = document.getElementById('ourPeopleName');
+    const desktopRole = document.getElementById('ourPeopleRole');
+    const desktopBio = document.getElementById('ourPeopleBio');
+    const desktopPanel = document.getElementById('our-people');
+
+    const updateDesktopPanel = (group: HTMLElement) => {
+      const meta = group.querySelector('.bio-meta')?.textContent;
+      const name = group.querySelector('.bio-name')?.textContent;
+      const desc = group.querySelector('.bio-desc')?.textContent;
+
+      if (desktopRole) desktopRole.textContent = meta || '';
+      if (desktopName) desktopName.textContent = name || '';
+      if (desktopBio) desktopBio.textContent = desc || '';
+      if (desktopPanel) desktopPanel.classList.add('is-bio-open');
+    };
+
+    const handleGroupClick = (clickedGroup: HTMLElement) => {
+      const personId = clickedGroup.dataset.person;
+      const isAlreadyActive = clickedGroup.classList.contains('is-active');
+
+      // Đóng tất cả các mục
+      groups.forEach(g => g.classList.remove('is-active'));
+
+      if (!isAlreadyActive) {
+        clickedGroup.classList.add('is-active');
+
+        // Cập nhật ảnh tương ứng
+        images.forEach(img => img.classList.remove('is-active'));
+        const targetImg = images.find(img => img.dataset.person === personId);
+        if (targetImg) targetImg.classList.add('is-active');
+
+        updateDesktopPanel(clickedGroup);
+      }
+    };
+
+    groups.forEach(group => {
+      const btn = group.querySelector('.our-people__item');
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          handleGroupClick(group);
+        });
+      }
+    });
+
+    // Khởi tạo trạng thái ban đầu cho người thứ nhất
+    if (groups.length > 0) {
+      const firstGroup = groups[0];
+      updateDesktopPanel(firstGroup);
+      const firstImg = images.find(img => img.dataset.person === firstGroup.dataset.person);
+      if (firstImg) firstImg.classList.add('is-active');
+    }
+  }
+
+  // 3. REVIEW WALL LIGHTBOX
+  function initReviewWallLightbox(): void {
+    const lb = document.getElementById('reviewLightbox');
+    const wall = document.querySelector('.review-wall');
+    if (!lb || !wall) return;
+
+    const lbImg = lb.querySelector('.review-lightbox__img') as HTMLImageElement | null;
+
+    wall.addEventListener('click', (e: Event) => {
+      // Sửa lỗi e.target.closest
+      const target = e.target as HTMLElement;
+      const btn = target.closest('.review-shot') as HTMLElement | null;
+      
+      if (!btn || !lbImg) return;
+
+      const img = btn.querySelector('img') as HTMLImageElement | null;
+      if (img) {
+        // Ưu tiên data-review-src, nếu không có thì lấy src của ảnh con
+        lbImg.src = btn.dataset.reviewSrc || img.src;
+        lb.classList.add('is-open');
+        lb.setAttribute('aria-hidden', 'false');
+      }
+    });
+
+    // Đóng Lightbox
+    lb.querySelectorAll('[data-review-close]').forEach(el => {
+      el.addEventListener('click', () => {
+        lb.classList.remove('is-open');
+        lb.setAttribute('aria-hidden', 'true');
+      });
+    });
+  }
+
+  // Lắng nghe sự kiện tải trang của Astro
+  document.addEventListener('astro:page-load', initAll);
+
+  // Chạy lần đầu nếu không dùng ViewTransitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+</script>
+
 </Layout>
