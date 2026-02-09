@@ -1,0 +1,166 @@
+/* --- Root & Container Settings --- */
+:root {
+    --primary-color: #007bff;
+    --text-main: #2d3436;
+    --text-muted: #636e72;
+    --bg-light: #f9f9f9;
+    --border-radius: 12px;
+}
+
+body {
+    padding-top: 80px; /* chừa chỗ cho fixed header */
+}
+
+.blog-post-container {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text-main);
+}
+
+/* --- Post Header & Meta --- */
+.post-header .breadcrumb {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.post-header .category {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.post-title {
+    line-height: 1.2;
+    margin-top: 10px;
+    color: #1a1a1a;
+}
+
+.post-meta i {
+    margin-right: 5px;
+}
+
+/* --- Content Styling (Markdown Body) --- */
+.markdown-body {
+    font-size: 1.15rem;
+    line-height: 1.85;
+}
+
+/* Heading chuẩn SEO & Visual Hierarchy */
+.markdown-body h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+    color: #111;
+}
+
+.markdown-body h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: #333;
+}
+
+.markdown-body p {
+    margin-bottom: 1.5rem;
+}
+
+.markdown-body strong {
+    color: #000;
+}
+
+/* Hình ảnh trong bài viết */
+.markdown-body img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 2.5rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Blockquotes & Lists */
+.markdown-body blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 2rem;
+    background: var(--bg-light);
+    font-style: italic;
+    margin: 2rem 0;
+}
+
+.markdown-body ul, .markdown-body ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.markdown-body li {
+    margin-bottom: 0.5rem;
+}
+
+/* --- Topic Clusters Box --- */
+.related-posts-section {
+    background: var(--bg-light);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+}
+
+.related-post-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    border: 1px solid #eee;
+}
+
+.related-post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* --- CTA Box (Kế thừa từ Product Layout) --- */
+.cta-box {
+    margin-top: 4rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.cta-box h2 {
+    font-size: 1.75rem;
+}
+
+.cta-box .form-control {
+    border-radius: 30px;
+    padding: 0.75rem 1.5rem;
+}
+
+.cta-box .btn-primary {
+    border-radius: 30px;
+    font-weight: 600;
+    background-color: var(--primary-color);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+/* --- Scroll To Top (Kế thừa style gốc) --- */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background: var(--text-main);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: none; /* Sẽ được hiện bởi script.js */
+    z-index: 1000;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+    .post-title {
+        font-size: 2rem;
+    }
+    .markdown-body {
+        font-size: 1.05rem;
+    }
+}

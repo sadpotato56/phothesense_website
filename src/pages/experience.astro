@@ -1,0 +1,406 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/product.css';
+
+// 1. LẤY DỮ LIỆU TỰ ĐỘNG TỪ KHO
+// Astro sẽ tìm tất cả file .md trong thư mục data/tours
+const allTours = Object.values(import.meta.glob('../data/tours/*.md', { eager: true }));
+
+// Hàm hỗ trợ tạo slug (đường dẫn) từ tên file
+// Ví dụ: file "knife-workshop.md" -> slug "knife-workshop"
+// Tìm đoạn này ở phần đầu file product.astro
+function getSlug(file: string) {
+  return (file.split('/').pop() || '').replace('.md', '');
+}
+---
+
+<Layout headerType="subpage" title="Our Experiences - PhotheSense" description="Explore our curated local experiences in Vietnam.">
+  
+  <style>
+    :root {
+      min-width: none;
+      --max-width: 2000px;
+    }
+  </style>
+  
+  <body data-header="subpage">
+    
+    <section class="filter-bar">
+      <button class="filter-arrow filter-arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+
+      <div class="filter-scroll-container">
+        <div class="filter-group">
+          <span class="filter-label">Location</span>
+          <div class="filter-buttons-desktop">
+              <button class="filter-chip filter-location active" data-location="">All</button>
+              <button class="filter-chip filter-location" data-location="hanoi">Hanoi</button>
+              <button class="filter-chip filter-location" data-location="ninh-binh">Ninh Binh</button>
+              <button class="filter-chip filter-location" data-location="sapa">Sapa</button>
+          </div>
+          <div class="sort-dropdown mobile-filter-dropdown">
+              <select id="mobileLocationSelect" class="sort-select">
+                  <option value="">All Locations</option>
+                  <option value="hanoi">Hanoi</option>
+                  <option value="ninh-binh">Ninh Binh</option>
+                  <option value="sapa">Sapa</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Experience</span>
+          <div class="filter-buttons-desktop">
+              <button class="filter-chip filter-type active" data-type="">All</button>
+              <button class="filter-chip filter-type" data-type="workshop">Workshop</button>
+              <button class="filter-chip filter-type" data-type="city-tour">City Tour</button>
+              <button class="filter-chip filter-type" data-type="walking-tour">Walking Tour</button>
+          </div>
+          <div class="sort-dropdown mobile-filter-dropdown">
+              <select id="mobileTypeSelect" class="sort-select">
+                  <option value="">All Experiences</option>
+                  <option value="workshop">Workshop</option>
+                  <option value="city-tour">City Tour</option>
+                  <option value="walking-tour">Walking Tour</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="sort-dropdown sort-in-bar">
+          <label for="sortSelect" class="sort-label">Sort by</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="recommended">Recommended</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+
+        <button class="filter-chip with-icon" data-cal-link="phothesense/quick-chat" data-cal-namespace="quick-chat" data-cal-config='{"layout":"month_view"}'>
+          <i class="fas fa-calendar-alt"></i><span>Dates</span>
+        </button>
+      </div>
+
+      <button class="filter-arrow filter-arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+    </section>
+
+    <main class="product-archive">
+      <div class="container">
+        <div class="row">
+          <section class="main-content">
+            <div class="location-header">
+              <h1>Vietnam</h1> <h2>Unique Experience</h2>
+            </div>
+
+            <div class="row">
+              {allTours.map((tour: any) => {
+                const fm = tour.frontmatter; // Lấy dữ liệu trong file MD
+                const slug = getSlug(tour.file); // Tạo link từ tên file
+                
+                // 4. Tạo đường dẫn ảnh hoàn chỉnh
+                // import.meta.env.BASE_URL sẽ tự điền "/phothesense_website/" vào trước
+                const imagePath = import.meta.env.BASE_URL + fm.thumbnail;
+
+                // Chuẩn hóa dữ liệu cho bộ lọc (Filter)
+                // Cần đảm bảo trong file MD bạn có dòng: location: "hanoi" và type: "workshop"
+
+                // 2. XỬ LÝ FILTER (Fix lỗi bộ lọc)
+                // Lấy trực tiếp từ file MD, nếu quên điền thì để trống
+                const filterLocation = fm.location || ""; 
+                const filterType = fm.type || "";
+                // Logic badge (tùy chọn: nếu giá cao thì là Signature, rẻ thì Best Seller...)
+                // Tốt nhất là thêm dòng "badge: Best Seller" vào file MD sau này.
+                const badge = fm.badge || "Signature"; 
+
+                return (
+                  <div class="col-md-4 mb-4 product-item" data-location={filterLocation} data-type={filterType}> 
+                  {/* Lưu ý: data-type đang tạm để cứng là workshop, bạn nên thêm field 'type' vào file MD để lọc chuẩn hơn */}
+
+                    <article class="product-card premium-card">
+                      <div class="card-img-wrapper">
+                        <span class="badge-tag">{badge}</span>
+                        {/* Lấy ảnh đầu tiên trong galleryJson hoặc ảnh đại diện nếu bạn thêm field image */}
+                        <img src={imagePath} 
+                             alt={fm.title} 
+                             loading="lazy" 
+                             style="object-fit: cover;"
+                             />
+                             {/* CHÚ Ý: Bạn cần thêm field 'image' vào file MD để ảnh hiển thị đúng */}
+                      </div>
+
+                      <div class="card-body">
+                        <div class="meta-info">
+                          <span class="location">
+                            <i class="fa-solid fa-location-dot"></i> 
+                            {fm.meta_list ? fm.meta_list.find((i:any) => i.icon.includes('location'))?.text.replace('Location: ', '') : 'Vietnam'}
+                          </span>
+                          <span class="rating"><i class="fa-solid fa-star"></i> 5.0 (New)</span>
+                        </div>
+
+                        <h3 class="card-title">
+                          <a 
+                            href={import.meta.env.BASE_URL + `/experience/${slug}`} 
+                            class="main-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {fm.productTitle || fm.title}
+                          </a>
+                        </h3>
+
+                        <div class="card-footer-info">
+                          <span class="duration">
+                            <i class="fa-regular fa-clock"></i> 
+                            {fm.meta_list ? fm.meta_list.find((i:any) => i.icon.includes('clock'))?.text.replace('Duration: ', '') : ''}
+                          </span>
+                          <div class="price-block">
+                            <span class="label">From</span>
+                            <span class="amount">{fm.price}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+    <script>
+  // Hàm khởi tạo bộ lọc
+  function initProductFilters() {
+    const productContainer = document.querySelector('.main-content .row');
+    
+    // Nếu không tìm thấy container sản phẩm (tức là không phải trang này) thì thoát luôn
+    if (!productContainer) return;
+
+    // Lấy danh sách sản phẩm & lưu vị trí gốc
+    const items = Array.from(productContainer.querySelectorAll('.product-item'));
+    items.forEach((item, index) => {
+      if (item instanceof HTMLElement) {
+        item.dataset.originalIndex = index.toString(); // Convert to string for dataset
+      }
+    });
+
+    // Các nút điều khiển
+    const locationChips = document.querySelectorAll('.filter-chip.filter-location');
+    const typeChips = document.querySelectorAll('.filter-chip.filter-type');
+    const mobileLocationSelect = document.getElementById('mobileLocationSelect');
+    const mobileTypeSelect = document.getElementById('mobileTypeSelect');
+    const sortSelect = document.getElementById('sortSelect');
+    
+    // Tiêu đề động
+    const locationTitle = document.querySelector('.location-header h1');
+    const originalTitle = locationTitle ? locationTitle.textContent : 'Vietnam';
+
+    // Trạng thái hiện tại
+    let currentState = { location: '', type: '', sortBy: 'recommended' };
+
+    // --- HÀM 1: CẬP NHẬT HIỂN THỊ (Soft Filter) ---
+    function updateDisplay() {
+      // LUÔN HIỆN TẤT CẢ (Không dùng display: none)
+      items.forEach(item => {
+          if (item instanceof HTMLElement) {
+              item.style.display = '';
+          }
+      });
+
+      // SẮP XẾP LẠI THỨ TỰ
+      const sortedItems = items.sort((a, b) => {
+        if (!(a instanceof HTMLElement) || !(b instanceof HTMLElement)) return 0;
+
+        // A. Tính điểm phù hợp (+100 điểm nếu khớp bộ lọc)
+        const scoreA = calculateMatchScore(a);
+        const scoreB = calculateMatchScore(b);
+
+        // Ưu tiên 1: Điểm cao lên trước
+        if (scoreA !== scoreB) return scoreB - scoreA;
+
+        // Ưu tiên 2: Xét đến Sort By
+        const priceA = parsePrice(a);
+        const priceB = parsePrice(b);
+        const ratingA = parseRating(a);
+        const ratingB = parseRating(b);
+        const badgeA = getBadge(a);
+        const badgeB = getBadge(b);
+
+        switch (currentState.sortBy) {
+          case 'price-asc': return priceA - priceB;
+          case 'price-desc': return priceB - priceA;
+          case 'rating': return ratingB - ratingA;
+          
+          case 'recommended': 
+          default:
+            // Logic Recommend: Signature lên đầu, Best Seller thứ nhì...
+            if (badgeA === 'Best Seller' && badgeB !== 'Best Seller') return -1;
+            if (badgeB === 'Best Seller' && badgeA !== 'Best Seller') return 1;
+            // Cuối cùng về thứ tự gốc
+            return parseInt(a.dataset.originalIndex || '0') - parseInt(b.dataset.originalIndex || '0');
+        }
+      });
+
+      // Render lại ra màn hình
+      sortedItems.forEach(item => productContainer?.appendChild(item));
+      updateUI();
+    }
+
+    // --- HÀM 2: TÍNH ĐIỂM ---
+    function calculateMatchScore(item: HTMLElement) {
+      if (!(item instanceof HTMLElement)) return 0;
+      let score = 0;
+      const itemLoc = (item.dataset.location || '').toLowerCase();
+      const itemType = (item.dataset.type || '').toLowerCase();
+
+      // Logic: Chọn gì thì cái đó được cộng điểm
+      if (currentState.location && itemLoc === currentState.location) score += 100;
+      if (currentState.type && itemType === currentState.type) score += 100;
+
+      return score;
+    }
+
+    // --- CÁC HÀM BỔ TRỢ ---
+    function parsePrice(item: HTMLElement) {
+      const el = item.querySelector('.price-block .amount');
+      if (!el) return 0;
+      // Chỉ lấy số (xóa đ, k, dấu chấm phẩy...)
+      const rawNumber = el.textContent?.replace(/\D/g, '') || '0'; 
+      return parseInt(rawNumber) || 0;
+    }
+
+    function parseRating(item: HTMLElement) {
+      const el = item.querySelector('.rating');
+      // Lấy số đầu tiên (ví dụ "5.0 (New)" -> 5.0)
+      return el ? (parseFloat(el.textContent || '0') || 0) : 0;
+    }
+
+    function getBadge(item: HTMLElement) {
+      const el = item.querySelector('.badge-tag');
+      return el ? el.textContent?.trim() || '' : '';
+    }
+
+    function updateUI() {
+      // Đổi tiêu đề
+      if (locationTitle) {
+        if (currentState.location === 'hanoi') locationTitle.textContent = 'Hanoi';
+        else if (currentState.location === 'ninh-binh') locationTitle.textContent = 'Ninh Binh';
+        else if (currentState.location === 'sapa') locationTitle.textContent = 'Sapa';
+        else locationTitle.textContent = originalTitle;
+      }
+
+      // Đổi màu nút bấm
+      const setAct = (list: NodeListOf<Element>, val: string, key: string) => list.forEach(b => {
+        if (b instanceof HTMLElement) {
+             const btnVal = b.dataset[key] || '';
+             if (btnVal === val) b.classList.add('active');
+             else b.classList.remove('active');
+        }
+      });
+      setAct(locationChips, currentState.location, 'location');
+      setAct(typeChips, currentState.type, 'type');
+
+      // Sync dropdown mobile
+      if (mobileLocationSelect instanceof HTMLSelectElement) mobileLocationSelect.value = currentState.location;
+      if (mobileTypeSelect instanceof HTMLSelectElement) mobileTypeSelect.value = currentState.type;
+    }
+
+    // --- SỰ KIỆN ---
+    // 1. Click Chip
+    const bindChip = (list: NodeListOf<Element>, key: keyof typeof currentState) => list.forEach(b => b.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (b instanceof HTMLElement) {
+        const val = b.dataset[key as string] || '';
+        currentState[key] = (currentState[key] === val) ? '' : val; // Toggle
+        updateDisplay();
+      }
+    }));
+    bindChip(locationChips, 'location');
+    bindChip(typeChips, 'type');
+
+    // 2. Change Select Mobile
+    mobileLocationSelect?.addEventListener('change', (e) => { 
+        if(e.target instanceof HTMLSelectElement) {
+            currentState.location = e.target.value; updateDisplay(); 
+        }
+    });
+    mobileTypeSelect?.addEventListener('change', (e) => { 
+        if(e.target instanceof HTMLSelectElement) {
+            currentState.type = e.target.value; updateDisplay(); 
+        }
+    });
+
+    // 3. Change Sort
+    sortSelect?.addEventListener('change', (e) => { 
+        if(e.target instanceof HTMLSelectElement) {
+            currentState.sortBy = e.target.value; updateDisplay(); 
+        }
+    });
+
+    // Chạy lần đầu
+    updateDisplay();
+  }
+  
+  // ===================================================
+// 5. FILTER SCROLL ARROWS (UPDATED & ROBUST)
+// ===================================================
+function initFilterScrollArrows() {
+  const scroller = document.querySelector('.filter-scroll-container');
+  const leftBtn = document.querySelector('.filter-arrow-left');
+  const rightBtn = document.querySelector('.filter-arrow-right');
+
+  // Kiểm tra element tồn tại
+  if (!scroller || !leftBtn || !rightBtn) return;
+
+  function updateArrows() {
+    if (!scroller || !leftBtn || !rightBtn) return;
+    const scrollLeft = Math.ceil(scroller.scrollLeft);
+    const scrollWidth = Math.ceil(scroller.scrollWidth);
+    const clientWidth = Math.ceil(scroller.clientWidth);
+    const maxScroll = scrollWidth - clientWidth;
+
+    // Nếu không đủ dài để cuộn -> ẩn cả 2
+    if (maxScroll <= 2) { 
+      leftBtn.classList.add('hidden');
+      rightBtn.classList.add('hidden');
+      return;
+    }
+
+    // Ẩn/Hiện trái
+    leftBtn.classList.toggle('hidden', scrollLeft <= 5);
+    // Ẩn/Hiện phải
+    rightBtn.classList.toggle('hidden', scrollLeft >= maxScroll - 5);
+  }
+
+  function scrollByStep(direction: number) {
+    if (!scroller) return;
+    const step = 200; // Khoảng cách cuộn cố định để đảm bảo hoạt động
+    const current = scroller.scrollLeft;
+    scroller.scrollTo({
+      left: current + (direction * step),
+      behavior: 'smooth'
+    });
+  }
+
+  // Click arrow
+  leftBtn.addEventListener('click', (e) => { e.preventDefault(); scrollByStep(-1); });
+  rightBtn.addEventListener('click', (e) => { e.preventDefault(); scrollByStep(1); });
+
+  // Update logic
+  scroller.addEventListener('scroll', () => window.requestAnimationFrame(updateArrows));
+  window.addEventListener('resize', () => { setTimeout(updateArrows, 100); });
+  
+  // Chạy lần đầu
+  updateArrows();
+}
+
+  // Kích hoạt khi trang load xong
+  // (Dùng event này để đảm bảo chạy đúng cả khi bạn dùng Astro View Transitions sau này)
+  document.addEventListener('DOMContentLoaded', () => {
+    initProductFilters();
+    initFilterScrollArrows();
+  });
+    
+</script>
+  </body>
+</Layout>

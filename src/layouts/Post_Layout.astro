@@ -1,0 +1,116 @@
+---
+import Layout from './Layout.astro';
+import '../styles/post-detail.css'; // File CSS riêng cho blog
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    thumbnail: string;
+    category: string;
+    date: string;
+    // Dùng cho chiến lược Topic Cluster
+    relatedPosts?: string[]; 
+  };
+}
+
+const { frontmatter } = Astro.props;
+const { title, description, thumbnail, category, date } = frontmatter;
+---
+
+<Layout title={title} headerType="subpage">
+  <div id="header-placeholder" data-base-path="../"></div>
+
+  <article class="container py-5 blog-post-container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <header class="post-header mb-5">
+          <nav class="breadcrumb mb-2">
+            <a href="/blog">Blog</a> / <span class="category">{category}</span>
+          </nav>
+          <h1 class="post-title display-4 fw-bold">{title}</h1>
+          <div class="post-meta text-muted">
+            <span class="date"><i class="fa-regular fa-calendar"></i> {date}</span>
+          </div>
+        </header>
+
+        <div class="post-thumbnail mb-5">
+          <img 
+            src={thumbnail} 
+            alt={title} 
+            class="img-fluid rounded-4 shadow-sm" 
+            loading="lazy" 
+          />
+        </div>
+
+        <section class="post-content mb-5">
+          <div class="introduction lead mb-4">
+            {description}
+          </div>
+          
+          <div class="markdown-body">
+            <slot />
+          </div>
+        </section>
+
+        <hr class="my-5" />
+
+        <section class="related-posts-section mb-5">
+          <h3 class="section-title h4 mb-4">Cùng chủ đề: {category}</h3>
+          <div class="row g-3">
+             <slot name="related-links" />
+          </div>
+        </section>
+
+        <section class="cta-box p-4 p-md-5 rounded-4 text-center bg-dark text-white">
+  <h2 class="mb-3">Ready to Explore Vietnam with Phothesense?</h2>
+  
+  <p class="mb-4 text-white-50">
+    Join our travel community for exclusive tour packages, hidden gem guides, and 10% off your first booking.
+  </p>
+  
+  <form action="#" method="POST" class="d-flex flex-column flex-md-row justify-content-center gap-2">
+    <input 
+      type="email" 
+      class="form-control w-auto" 
+      placeholder="Enter your email address..." 
+      aria-label="Email address"
+      required 
+    />
+    <button type="submit" class="btn btn-primary px-4 text-nowrap">
+      Subscribe Now
+    </button>
+  </form>
+</section>
+      </div>
+    </div>
+  </article>
+
+  <div id="footer-placeholder" data-base-path="../"></div>
+  
+  <button id="scrollToTop" class="scroll-to-top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="../script/base_script.js"></script>
+</Layout>
+
+<style>
+  /* Styling đặc thù cho Markdown Content */
+  .markdown-body :global(h2) {
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    color: #1a1a1a;
+  }
+  .markdown-body :global(p) {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  .markdown-body :global(img) {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 2rem 0;
+  }
+</style>

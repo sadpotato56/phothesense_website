@@ -1,0 +1,155 @@
+---
+// Import Layout và Components
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/Blog_post_card.astro';
+import YellowCard from '../../components/Yellow_Blog_post_card.astro';
+
+// Dữ liệu mẫu (Bạn có thể thay thế bằng dữ liệu thật từ CMS/Markdown sau này)
+const posts = [
+  {
+    title: "A Guide to Hoi An, Vietnam",
+    date: "Jan 28, 2026",
+    readTime: "12 Min Read",
+    location: "Hoi An",
+    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=600",
+    url: "#"
+  },
+  {
+    title: "The Best Time to Visit Vietnam",
+    date: "Dec 14, 2025",
+    readTime: "6 Min Read",
+    location: "Vietnam Guide",
+    image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600",
+    url: "#"
+  },
+  {
+    title: "What to Eat and Drink in Vietnam",
+    date: "Nov 27, 2025",
+    readTime: "11 Min Read",
+    location: "Food Guide",
+    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=600", // Thay ảnh khác nếu cần
+    url: "#"
+  },
+  {
+    title: "Best Ways to Travel Around",
+    date: "Nov 16, 2025",
+    readTime: "10 Min Read",
+    location: "Transport",
+    image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600", // Thay ảnh khác nếu cần
+    url: "#"
+  },
+  // ... Thêm nhiều bài viết nữa để test grid ...
+];
+---
+
+<Layout title="All Stories - PHOTHESENSE" headerType="subpage">
+    
+    <div class="intro-container">
+        <h1>Explore stories from Vietnam</h1>
+        <p>Go with a plan. Come back with a story. Discover iconic recommendations, insights and experiences curated by Local Experts.</p>
+    </div>
+
+    <div class="archive-container">
+        
+        <div class="posts-grid">
+            
+            <div class="grid-item">
+                <YellowCard />
+            </div>
+
+            {posts.map((post) => (
+                <div class="grid-item">
+                    <BlogCard 
+                        title={post.title}
+                        date={post.date}
+                        readTime={post.readTime}
+                        location={post.location}
+                        image={post.image}
+                        url={post.url}
+                    />
+                </div>
+            ))}
+
+            {/* Copy thêm dữ liệu nếu muốn test full lưới 5 cột */}
+            {posts.map((post) => (
+                <div class="grid-item">
+                    <BlogCard {...post} />
+                </div>
+            ))}
+
+        </div>
+    </div>
+</Layout>
+
+<style>
+    /* --- Styles cho trang chính --- */
+    
+    /* Intro */
+    .intro-container {
+        max-width: 1540px;
+        margin: 120px auto 60px; /* Căn giữa, cách top 120px */
+        padding: 0 20px;
+    }
+
+    .intro-container h1 {
+        font-family: 'Inter', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
+        color: #1a1a1a;
+    }
+
+    .intro-container p {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.2rem;
+        color: #555;
+        max-width: 800px;
+        line-height: 1.6;
+    }
+
+    /* Archive Grid */
+    .archive-container {
+        max-width: 1540px;
+        margin: 0 auto;
+        padding: 0 20px 100px; /* Padding bottom lớn để thoáng chân trang */
+    }
+
+    .posts-grid {
+        display: grid;
+        /* Desktop: 4 cột đều nhau */
+        grid-template-columns: repeat(4, 1fr); 
+        
+        /* Khoảng cách: Dọc 60px (thoáng), Ngang 24px */
+        gap: 60px 24px; 
+    }
+
+    /* RESPONSIVE */
+    
+    /* Tablet lớn: 3 cột */
+    @media (max-width: 1200px) {
+        .posts-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* Tablet nhỏ: 2 cột */
+    @media (max-width: 768px) {
+        .intro-container h1 { font-size: 2.5rem; }
+        .posts-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 16px;
+        }
+    }
+
+    /* Mobile: 1 cột */
+    @media (max-width: 480px) {
+        .posts-grid {
+            grid-template-columns: 1fr;
+        }
+        /* Trên mobile, thẻ vàng có thể cần chỉnh lại chiều cao */
+        .grid-item:first-child {
+            min-height: 300px;
+        }
+    }
+</style>

@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "author": "Emily",
+    "origin": "United Kingdom",
+    "date": "", 
+    "rating": 5,
+    "content": "This workshop made Vietnamese coffee finally ‘click’ for me. We brewed six different styles, heard beautiful stories behind each one, and I left with recipes, photos, and a deeper love for Hanoi.",
+    "tripadvisor_link": "",
+    "images": {
+      "main": "../picture/coffee_workshop/default_review.jpg", 
+      "gallery": []
+    }
+  },
+  {
+    "id": 2,
+    "author": "Marco",
+    "origin": "Italy",
+    "date": "",
+    "rating": 5,
+    "content": "Beyond the coffee, it felt like spending an afternoon with local friends. The seasonal snack, the travel tips, and the warm welcome from the elders made this my favorite experience in Hanoi.",
+    "tripadvisor_link": "",
+    "images": {
+      "main": "../picture/coffee_workshop/default_review.jpg",
+      "gallery": []
+    }
+  }
+]

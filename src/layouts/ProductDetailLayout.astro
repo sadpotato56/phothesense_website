@@ -1,0 +1,447 @@
+---
+import Layout from './Layout.astro';
+import '../styles/product-detail.css';
+
+interface Props {
+  // --- SEO & Header ---
+  title: string;
+  
+  // --- Gallery ---
+  galleryJsonPath: string; // Ví dụ: "../picture/coffee_workshop/gallery.json"
+  
+  // --- Hero Info ---
+  productTitle: string;
+  productSubtitle: string;
+  
+  // --- Booking / Pricing ---
+  price: string;       // Ví dụ: "₫585,000"
+  calLink: string;     // Ví dụ: "phothesense/coffeeworkshop"
+  calNamespace: string; // Ví dụ: "coffeeworkshop"
+  ctaButtonText?: string; // Mặc định là "Check availability" hoặc "Book..."
+  ctaButtonTextMobile?: string; // Nút trên thanh sticky (mobile)
+}
+
+const { 
+  title, 
+  galleryJsonPath, 
+  productTitle, 
+  productSubtitle, 
+  price, 
+  calLink, 
+  calNamespace,
+  ctaButtonText = "Check Availability",
+  ctaButtonTextMobile = "Check Availability",
+} = Astro.props;
+
+const calConfig = '{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}';
+---
+
+<Layout title={title} headerType="subpage">
+  <div id="header-placeholder" data-base-path="../"></div>
+
+  <section class="container py-1 about">
+    <div class="row"> <div class="col-md-6">
+        <div id="auto-gallery" 
+            class="photo-gallery"
+            data-gallery-json={galleryJsonPath}>
+            <slot name="gallery-extra" />
+        </div>
+        <div id="gallery-dots" class="gallery-dots"></div>
+
+        <div id="lightbox" class="lightbox">
+          <span class="close">&times;</span>
+          <div class="counter top-counter"></div>
+          <img class="lightbox-img" src="" alt={productTitle}>
+          
+          <a 
+            href="#"
+            class="lightbox-btn"
+            data-cal-link={calLink}
+            data-cal-namespace={calNamespace}
+            data-cal-config={calConfig}>
+            {ctaButtonTextMobile}
+          </a>
+          <a class="prev">&#10094;</a>
+          <a class="next">&#10095;</a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mini-hero mb-4">
+          <h1 class="title">{productTitle}</h1>
+          <p class="subtitle">{productSubtitle}</p>
+        </div>
+
+        <section class="about-this-activity">
+          <h2 class="section-title">About this activity</h2>
+          
+          <ul class="list-unstyled">
+            <slot name="about-list" />
+          </ul>
+
+          <slot name="description" />
+
+          <div class="price-box">
+            <span class="price">{price}</span> <span class="per">per person</span>
+          </div>
+
+          <a
+            href="javascript:void(0)"
+            role="button"
+            class="book-btn mt-3"
+            data-cal-link={calLink}
+            data-cal-namespace={calNamespace}
+            data-cal-config={calConfig}>
+            {ctaButtonText}
+          </a>
+
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights py-5 text-center">
+    <div class="container">
+      <h2 class="section-title mb-4">Highlights</h2>
+      <div class="row g-3">
+        <slot name="highlights" />
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews py-5">
+    <div class="container">
+      <h2 class="section-title text-center mb-4">What guests are saying</h2>
+      <slot name="reviews" />
+    </div>
+  </section>
+
+  <div id="simpleReviewLightbox" class="custom-lightbox">
+    <span class="close-lb">&times;</span>
+    <img class="custom-lightbox-img" src="" alt="Review Large Image">
+  </div>
+
+  <section class="itinerary-section">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">The Journey</h2>
+      <div class="timeline">
+        <slot name="itinerary" />
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder" data-base-path="../"></div>
+  
+  <button id="scrollToTop" class="scroll-to-top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <div id="stickyBar" class="sticky-bar">
+    <div class="sticky-price">
+      <span class="price">{price}</span>
+      <span class="unit">per person</span>
+    </div>
+    <a href="#" 
+       class="sticky-btn"
+       data-cal-link={calLink}
+       data-cal-namespace={calNamespace}
+       data-cal-config={calConfig}>
+       {ctaButtonTextMobile}
+    </a>
+  </div>
+
+  <script src="../script/base_script.js"></script>
+  
+  <script>
+    // ===================================================
+    // 6. GALLERY & REVIEW LIGHTBOX (Optimized Inline)
+    // ===================================================
+    function initWorkshopGallery() {
+      const galleryContainer = document.getElementById('auto-gallery');
+      const lightbox = document.getElementById('lightbox');
+      const dotsContainer = document.getElementById('gallery-dots');
+
+      // Kiểm tra container tồn tại
+      if (!galleryContainer || !lightbox) return;
+
+      const jsonPath = galleryContainer.dataset.galleryJson;
+      if (!jsonPath) return;
+
+      fetch(jsonPath)
+        .then(res => res.json())
+        .then(data => {
+          const imageList = data.images || [];
+          if (!imageList.length) return;
+
+          let currentIndex = 0;
+          let mainImageDesktop: HTMLImageElement | null = null; // Bỏ type :HTMLImageElement để tương thích JS thuần
+          let track = null;
+
+          // Tạo layout Gallery Grid
+          const galleryLeft = document.createElement('div');
+          galleryLeft.className = 'gallery-left';
+          const galleryRight = document.createElement('div');
+          galleryRight.className = 'gallery-right';
+          galleryContainer.append(galleryLeft, galleryRight);
+
+          // Tạo Track (Slider cho mobile/desktop)
+          track = document.createElement('div');
+          track.className = 'gallery-track';
+          galleryContainer.appendChild(track);
+
+          // Tạo nút điều hướng (Arrows)
+          const createArrow = (cls: string, icon: string, label: string) => {
+            const btn = document.createElement('button');
+            btn.className = `gallery-arrow ${cls}`;
+            btn.innerHTML = `<i class="fa-solid ${icon}"></i>`;
+            btn.setAttribute('aria-label', label);
+            return btn;
+          };
+          const arrowLeft = createArrow('gallery-arrow-left', 'fa-chevron-left', 'Previous');
+          const arrowRight = createArrow('gallery-arrow-right', 'fa-chevron-right', 'Next');
+          galleryContainer.append(arrowLeft, arrowRight);
+
+          // Render ảnh vào DOM
+          imageList.forEach((src: string, index: number) => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'gallery-img';
+            img.dataset.index = index.toString();
+
+            // Logic chia ảnh vào lưới Left/Right
+            if (index === 0) {
+              galleryLeft.appendChild(img);
+              mainImageDesktop = img;
+            } else if (index === 1 || index === 2) {
+              galleryRight.appendChild(img);
+            }
+
+            // Clone ảnh đưa vào slider track
+            const slide = document.createElement('div');
+            slide.className = 'gallery-slide';
+            const imgM = img.cloneNode(true);
+            slide.appendChild(imgM);
+            track.appendChild(slide);
+          });
+
+          // Render Dots
+          if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            imageList.forEach((_: any, index: number) => {
+              const dot = document.createElement('button');
+              dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
+              dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateUI(false);
+                if (track) track.scrollTo({
+                  left: track.clientWidth * index,
+                  behavior: 'smooth'
+                });
+              });
+              dotsContainer.appendChild(dot);
+            });
+          }
+
+          // Lightbox Elements
+          const lightboxImg = lightbox.querySelector('.lightbox-img') as HTMLImageElement;
+          const counter = lightbox.querySelector('.counter');
+          const lbClose = lightbox.querySelector('.close');
+          const lbPrev = lightbox.querySelector('.prev');
+          const lbNext = lightbox.querySelector('.next');
+
+          // Hàm cập nhật giao diện
+          function updateUI(updateLb = true) {
+            if (updateLb && lightboxImg) lightboxImg.src = imageList[currentIndex];
+            if (mainImageDesktop) mainImageDesktop.src = imageList[currentIndex];
+            
+            if (counter) counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
+            
+            if (dotsContainer) {
+              dotsContainer.querySelectorAll('.gallery-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === currentIndex);
+              });
+            }
+          }
+
+          // Event: Click vào ảnh trong Gallery để mở Lightbox
+          galleryContainer.addEventListener('click', e => {
+            // Ensure e.target is an Element before using closest
+            if (!(e.target instanceof Element)) return;
+
+            const img = e.target.closest('.gallery-img');
+            if (img) {
+              // Cast img to HTMLElement to access dataset property
+              currentIndex = parseInt((img as HTMLElement).dataset.index || '0');
+              updateUI(true);
+              lightbox.style.display = 'block';
+            }
+          });
+
+          // Events: Lightbox Controls (Kiểm tra tồn tại trước khi add event)
+          if (lbClose) lbClose.addEventListener('click', () => lightbox.style.display = 'none');
+          
+          if (lbPrev) {
+            lbPrev.addEventListener('click', () => {
+              currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+              updateUI(true);
+            });
+          }
+          
+          if (lbNext) {
+            lbNext.addEventListener('click', () => {
+              currentIndex = (currentIndex + 1) % imageList.length;
+              updateUI(true);
+            });
+          }
+
+          // Swipe Lightbox Logic
+          let ts = 0;
+          lightbox.addEventListener('touchstart', e => ts = e.changedTouches[0].screenX, { passive: true });
+          lightbox.addEventListener('touchend', e => {
+            const diff = ts - e.changedTouches[0].screenX;
+            if (diff > 50 && lbNext) (lbNext as HTMLElement).click();
+            else if (diff < -50 && lbPrev) (lbPrev as HTMLElement).click();
+          }, { passive: true });
+
+          // Logic ẩn hiện mũi tên trên slider (Mobile/Track)
+          const updateGalArrows = () => {
+            if (!track) return;
+            const sl = track.scrollLeft;
+            const max = track.scrollWidth - track.clientWidth;
+            arrowLeft.classList.toggle('show', sl > 2);
+            arrowRight.classList.toggle('show', sl < max - 2 || sl > 2);
+          };
+
+          arrowLeft.addEventListener('click', (e) => {
+            e.stopPropagation();
+            track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+          });
+
+          arrowRight.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            if (track.scrollLeft >= maxScroll - 10) {
+              track.scrollTo({ left: 0, behavior: 'smooth' }); // Loop về đầu
+            } else {
+              track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+            }
+          });
+
+          track.addEventListener('scroll', () => {
+            requestAnimationFrame(() => {
+              currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+              updateUI(false);
+              updateGalArrows();
+            });
+          });
+
+          setTimeout(updateGalArrows, 500);
+        })
+        .catch(e => console.error("Gallery Error:", e));
+    }
+//--------------------------------------------------
+    // 7. STICKY FEATURES & check availability BUTTONS
+    //--------------------------------------------------
+function initStickyFeatures() {
+  const stickyBar = document.getElementById('stickyBar');
+  const heroSection = document.querySelector('.about-this-activity'); 
+  const scrollTopBtn = document.getElementById('scrollToTop');
+
+  // 1. Xử lý Sticky Bar
+  // Kiểm tra tồn tại trước khi thêm sự kiện scroll
+  if (stickyBar && heroSection) {
+    window.addEventListener('scroll', () => {
+      // TypeScript hiểu heroSection không null ở đây nhờ lệnh if bên trên
+      const pastHero = heroSection.getBoundingClientRect().bottom < 0;
+      
+      stickyBar.classList.toggle('visible', pastHero);
+      
+      if (scrollTopBtn) {
+        scrollTopBtn.classList.toggle('lifted', pastHero);
+      }
+    });
+  }
+
+  // 2. Xử lý Accordion (Timeline Header)
+  const headers = document.querySelectorAll('.timeline-header');
+
+  headers.forEach((header) => {
+    // Sửa lỗi 'this': Dùng arrow function (e) => {} thay vì function() {}
+    header.addEventListener('click', (e) => {
+      // Ép kiểu currentTarget thành HTMLElement để truy cập parentElement
+      const target = e.currentTarget as HTMLElement;
+      
+      // Dấu hỏi chấm (?) dùng để kiểm tra: nếu có parentElement thì mới toggle
+      target.parentElement?.classList.toggle('active');
+    });
+  });
+}
+
+    //--------------------------------------------------
+    // 8. DETAILED REVIEW LIGHTBOX
+    //--------------------------------------------------
+  function initDetailedReviewLightbox() {
+  const lb = document.getElementById('simpleReviewLightbox');
+  
+  // Kiểm tra nếu lightbox không tồn tại thì dừng luôn
+  if (!lb) return;
+  
+  // Lỗi: Property 'src' does not exist...
+  // Sửa: Ép kiểu (Type Assertion) để TypeScript biết đây là thẻ <img>
+  const lbImg = lb.querySelector('.custom-lightbox-img') as HTMLImageElement | null;
+  
+  // Lỗi: 'closeBtn' is possibly 'null'
+  // Sửa: Lấy thẻ và kiểm tra
+  const closeBtn = lb.querySelector('.close-lb') as HTMLElement | null;
+  
+  // Guard Clause: Nếu thiếu ảnh hoặc thiếu nút đóng thì không chạy tiếp để tránh lỗi
+  if (!lbImg || !closeBtn) return;
+
+  // 1. Mở Lightbox
+  const triggers = document.querySelectorAll('.review-lightbox-trigger');
+  
+  triggers.forEach((trigger) => {
+    // Sửa lỗi 'this' implicitly has type 'any':
+    // Thay vì dùng 'function()', ta dùng arrow function và 'e.currentTarget'
+    trigger.addEventListener('click', (e) => {
+      // Ép kiểu target về HTMLElement để dùng getAttribute
+      const target = e.currentTarget as HTMLElement; 
+      const src = target.getAttribute('data-src');
+      
+      if (src) {
+        lbImg.src = src; // Lúc này TypeScript đã OK vì lbImg là HTMLImageElement
+        lb.classList.add('active');
+      }
+    });
+  });
+
+  // 2. Đóng Lightbox
+  const closeLightbox = () => {
+    lb.classList.remove('active');
+    setTimeout(() => { 
+      if (lbImg) lbImg.src = ''; 
+    }, 200);
+  };
+
+  closeBtn.addEventListener('click', closeLightbox);
+  
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) closeLightbox();
+  });
+
+  // Đóng bằng phím ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+}
+
+    // Khởi chạy khi DOM sẵn sàng
+    document.addEventListener('DOMContentLoaded', () => {
+      initWorkshopGallery();
+      initDetailedReviewLightbox();
+      initStickyFeatures();
+    });
+  </script>
+</Layout>

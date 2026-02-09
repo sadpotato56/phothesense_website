@@ -1,0 +1,1323 @@
+/* ================================================
+   PHOTHESENSE MAIN STYLE (Bootstrap Enhanced)
+================================================ */
+
+/* ---------- HOME PAGE SPECIFIC ---------- */
+body {
+  height: 100%;
+  background-color: #1C4278; /* nền xanh đậm riêng cho home */
+  color: #fff;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+
+.hero-header-main {
+  height: 100vh;
+  width: 100%;
+  /* Thêm dấu / vào phía trước tên folder dự án */
+  background: url('/phothesense_website/picture/PTS_logo/background.jpg') center/cover no-repeat fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+  padding-top: var(--header-offset, 110px);
+  min-height: 100svh;
+  z-index: 1;
+}
+
+.hero-header-main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.25)
+  );
+  z-index: 0;
+}
+
+/* Make sure content stays above overlay */
+.hero-header-main > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  max-width: 92%;
+  margin: 0 auto;
+}
+
+
+.hero-content h1 {
+  font-size: clamp(40px, 8vw, 90px);
+  font-weight: 500;
+  color: #FBDC47;
+  letter-spacing: 8px;
+}
+
+.hero-content p {
+  font-size: clamp(18px, 3vw, 40px);
+  color: #feda00;
+  margin-top: 15px;
+  letter-spacing: 5px;
+}
+
+.explore-btn {
+  display: inline-block;
+  background-color: #e63946;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 14px 40px;
+  border-radius: 40px;
+  transition: 0.3s ease;
+}
+
+.explore-btn:hover {
+  background-color: #c62828;
+}
+
+/* Ẩn chỉ dẫn trên máy tính/màn hình lớn */
+.swipe-up-indicator {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .swipe-up-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 85px; /* Cách đáy màn hình 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    opacity: 0.8;
+  }
+
+  .arrow {
+    width: 15px;
+    height: 15px;
+    border-right: 2.5px solid white;
+    border-bottom: 2.5px solid white;
+    transform: rotate(-135deg); /* Quay mũi tên hướng lên */
+    margin-top: 10px;
+    animation: bounce 2s infinite;
+  }
+}
+
+/* Hiệu ứng nhấp nhô cho mũi tên */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) rotate(-135deg);
+  }
+  40% {
+    transform: translateY(-10px) rotate(-135deg);
+  }
+  60% {
+    transform: translateY(-5px) rotate(-135deg);
+  }
+}
+
+/* =========================================
+   Trust section – white background
+========================================= */
+
+.trust-section {
+  background: #FFFCEE;
+  padding: 40px 0 100px;
+  position: relative;
+}
+
+/* =========================================
+   Confidence bar (Laptop-first)
+========================================= */
+
+.confidence-bar {
+  margin: 18px auto 0;
+  max-width: 1100px;
+  padding: 0 12px;
+}
+
+.confidence-inner {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  background: #FFFCEE; /* brand cream */
+  border: 1px solid rgba(28, 66, 120, 0.15);
+  border-radius: 999px;
+  padding: 18px 26px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+.confidence-left {
+  flex: 0 0 auto;
+  padding-right: 18px;
+  border-right: 1px solid rgba(28, 66, 120, 0.18);
+}
+
+.confidence-title {
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #1C4278;
+}
+
+.confidence-right {
+  flex: 1;
+}
+
+.confidence-text {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #1C4278;
+}
+
+.confidence-link {
+  color: #EF3C32;            /* đỏ giống vibe ảnh */
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-left: 6px;
+}
+
+/* =========================================
+   FEATURED IN (single source of truth)
+========================================= */
+
+.featured-in {
+  max-width: 1400px;
+  margin: 20px auto 20px;
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  /* works on light background */
+  color: rgba(28, 66, 120, 0.75);
+}
+
+.featured-in-label {
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.featured-in-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: nowrap; /* desktop: keep in one row */
+}
+
+.featured-in-logos img {
+  height: 250px;          /* chỉnh size ở đây */
+  width: auto;
+  max-width: 200px;      /* tránh logo quá dài */
+  object-fit: contain;
+
+  opacity: 0.85;
+  filter: grayscale(100%);
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+.featured-in-logos img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* Responsive fallback */
+@media (max-width: 992px) {
+  .featured-in {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .featured-in-logos {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+
+  .featured-in-logos img {
+    height: 120px;
+    max-width: 100px;
+  }
+}
+
+
+/* =========================================
+   3-Value Pill (floating, white background)
+========================================= */
+
+.value-pill {
+  max-width: 1100px;
+  margin: 0px auto 0;
+  padding: 0 12px;
+  position: relative;
+  z-index: 5;
+}
+
+.value-pill-inner {
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 22px 30px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.value-item {
+  text-align: center;
+  padding: 6px 10px;
+}
+
+.value-title {
+  margin: 0 0 8px;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #111;
+}
+
+.value-text {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.value-link {
+  color: #1C4278;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.value-divider {
+  width: 1px;
+  height: 54px;
+  background: rgba(0,0,0,0.18);
+}
+
+/* =======================================================
+   OUR PEOPLE SECTION - HYBRID LAYOUT
+   Mobile: Accordion (Expandable list)
+   Desktop: Tabs + Preview Panel
+======================================================= */
+
+/* --- 1. GLOBAL STYLES (Dùng chung) --- */
+.our-people {
+  background: #FFFCEE;
+  color: #1C4278;
+  padding: clamp(56px, 6vw, 92px) 0;
+}
+
+.our-people__head { margin-bottom: 28px; }
+
+.our-people__title {
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+}
+
+.our-people__subtitle {
+  margin: 10px auto 0;
+  max-width: 760px;
+  color: rgba(28, 66, 120, 0.85);
+}
+
+/* Container chính */
+.our-people__split {
+  margin-top: 22px;
+  display: grid;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Khu vực ảnh (Media) */
+.our-people__media {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(28, 66, 120, 0.06);
+  /* Chiều cao mặc định */
+  height: clamp(320px, 50vh, 600px); 
+}
+
+.our-people__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.4s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.our-people__img.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Nút bấm (Item Header) */
+.our-people__item {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s ease;
+  border: none;
+  padding: 18px 14px;
+}
+
+.our-people__name {
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1C4278;
+}
+
+/* Mũi tên Chevron */
+.our-people__chev {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFFCEE;
+  border: 1px solid rgba(28, 66, 120, 0.18);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: #1C4278;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+/* --- 2. MOBILE & TABLET LAYOUT (< 992px) --- 
+   Sử dụng Accordion (Xổ xuống)
+*/
+@media (max-width: 991.98px) {
+  .our-people {
+    padding-top: 50px;
+    padding-bottom: 0px;
+  }
+  .our-people__split {
+    grid-template-columns: 1fr; /* 1 cột duy nhất */
+  }
+
+  /* Ẩn ảnh nếu muốn gọn, hoặc giữ lại tùy ý. 
+     Ở đây ta giữ lại nhưng cho thấp hơn */
+  .our-people__media {
+    height: 300px;
+    margin-bottom: 10px;
+  }
+
+  /* Ẩn Panel Desktop cũ */
+  .our-people__bio {
+    display: none !important;
+  }
+
+  /* Style cho Group (bao gồm nút + nội dung) */
+  .our-people__group {
+    border-bottom: 1px solid rgba(28, 66, 120, 0.1);
+    background: #fff;
+  }
+  .our-people__group:first-child { border-top-left-radius: 16px; border-top-right-radius: 16px; }
+  .our-people__group:last-child { border-bottom: none; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; }
+
+  /* Accordion Content (Animation trượt) */
+  .our-people__accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+    background-color: #fafbfd;
+  }
+
+  .our-people__group.is-active .our-people__accordion-content {
+    grid-template-rows: 1fr;
+  }
+
+  .bio-source {
+    overflow: hidden;
+    padding: 0 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Khi mở ra thì hiện nội dung */
+  .our-people__group.is-active .bio-source {
+    opacity: 1;
+    padding-bottom: 24px;
+    padding-top: 5px;
+    background: #eef3f8;
+  }
+
+  /* Xoay mũi tên và đổi màu khi Active */
+  .our-people__group.is-active .our-people__chev {
+    transform: rotate(90deg); /* Xoay xuống */
+    background: #1C4278;
+    color: #FFFCEE;
+    border-color: #1C4278;
+  }
+
+  .our-people__group.is-active .our-people__name {
+    color: #c8102e; /* Highlight tên khi mở (Option) */
+  }
+
+  /* Typography cho nội dung bên trong Accordion */
+  .bio-meta { font-size: 11px; text-transform: uppercase; color: #666; margin-bottom: 8px; font-weight: 600; letter-spacing: 0.5px;}
+  .bio-name { font-family: 'Roboto Slab', serif; font-size: 22px; color: #1C4278; margin-bottom: 10px; }
+  .bio-desc { font-size: 15px; line-height: 1.6; color: #444; margin-bottom: 16px; }
+  .bio-cta .explore-btn { padding: 8px 24px; font-size: 13px; }
+}
+
+/* --- 3. DESKTOP LAYOUT (≥ 992px) --- 
+   Sử dụng Tabs + Panel (Như cũ)
+*/
+@media (min-width: 992px) {
+  /* Layout chia cột: Ảnh | Danh sách */
+  .our-people__split {
+    grid-template-columns: 1fr 1fr; /* 50% - 50% */
+    align-items: start;
+  }
+  
+  /* Ảnh cao theo viewport */
+  .our-people__media {
+    height: clamp(500px, 70vh, 750px);
+  }
+
+  /* Ẩn Accordion content của mobile */
+  .our-people__accordion-content {
+    display: none !important;
+  }
+
+  /* Panel chứa danh sách */
+  .our-people__list {
+    background: #ffffff;
+    border: 1px solid rgba(28, 66, 120, 0.14);
+    border-radius: 18px;
+    padding: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Style nút bấm dạng thẻ */
+  .our-people__item {
+    border: 1px solid rgba(28, 66, 120, 0.1);
+    border-radius: 14px;
+    margin-bottom: 8px; /* Khoảng cách giữa các nút */
+  }
+  
+  .our-people__item:hover {
+    background: rgba(28, 66, 120, 0.03);
+    border-color: rgba(28, 66, 120, 0.2);
+  }
+
+  /* Trạng thái Active trên Desktop */
+  .our-people__group.is-active .our-people__item {
+    background: rgba(28, 66, 120, 0.08);
+    border-color: #1C4278;
+  }
+
+  .our-people__group.is-active .our-people__chev {
+    background: #1C4278;
+    color: #FFFCEE;
+    /* Mũi tên vẫn hướng sang phải trên desktop */
+    transform: rotate(0deg); 
+  }
+
+  /* --- BIO PANEL RIÊNG BIỆT (Góc dưới danh sách) --- */
+  /* Đây là phần container nhận dữ liệu từ JS */
+  .our-people__bio {
+    padding: 10px 10px 0;
+  }
+
+  .our-people__bioInner {
+    border-radius: 14px;
+    background: rgba(28, 66, 120, 0.04);
+    border: 1px solid rgba(28, 66, 120, 0.1);
+    padding: 20px;
+    
+    /* Animation hiện ra */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+  }
+
+  .our-people.is-bio-open .our-people__bioInner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Text styles cho Desktop Panel */
+  .our-people__bioMeta { font-size: 12px; text-transform: uppercase; color: #666; margin-bottom: 5px; font-weight: 600; }
+  .our-people__bioName { font-size: 24px; color: #1C4278; margin-bottom: 12px; font-weight: 700; }
+  
+  .our-people__bioText {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+    /* Giữ thanh cuộn nếu nội dung quá dài trên desktop */
+    max-height: 160px; 
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+
+  /* Custom thanh cuộn nhỏ đẹp hơn */
+  .our-people__bioText::-webkit-scrollbar { width: 4px; }
+  .our-people__bioText::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+}
+
+/* =========================
+   REVIEW WALL (Home)
+   ========================= */
+.review-proof{
+  padding: 56px 0;
+  background: #1C4278;
+  color: #FFFCEE;
+}
+
+.review-proof__title{
+  font-family: "Roboto Slab", serif;
+  font-weight: 700;
+  color: #FBDC47;
+  margin: 0 0 10px;
+}
+
+.review-proof__sub{
+  max-width: 760px;
+  margin: 0 auto;
+  opacity: .9;
+}
+
+.review-proof__foot{
+  margin-top: 14px;
+  opacity: .85;
+  font-size: 14px;
+}
+
+.review-wall{
+  margin-top: 28px;
+}
+
+/* Desktop masonry using CSS columns (nhẹ, không cần JS) */
+@media (min-width: 992px){
+  .review-wall{
+    column-count: 4;
+    column-gap: 16px;
+  }
+}
+
+/* Màn lớn hơn chút: 5 cột (tuỳ bạn) */
+@media (min-width: 1400px){
+  .review-wall{
+    column-count: 5;
+  }
+}
+
+.review-shot{
+  display: inline-block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0 0 16px;
+  background: transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  break-inside: avoid;
+  cursor: zoom-in;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.review-shot img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.review-shot:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.25);
+}
+
+/* Mobile = swipe ngang (scroll-snap) */
+@media (max-width: 991.98px){
+  .review-wall{
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .review-shot{
+    flex: 0 0 auto;
+    width: 72%;
+    max-width: 320px;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+
+  .review-wall::-webkit-scrollbar{
+    height: 8px;
+  }
+}
+
+/* Lightbox */
+.review-lightbox{
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 9999;
+}
+
+.review-lightbox.is-open{
+  display: block;
+}
+
+.review-lightbox__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+}
+
+.review-lightbox__panel{
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 720px);
+  max-height: 86vh;
+  margin: 6vh auto 0;
+  background: rgba(19,44,79,.92);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+
+.review-lightbox__img{
+  width: 100%;
+  height: auto;
+  max-height: calc(86vh - 56px);
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+}
+
+.review-lightbox__close{
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  color: #FFFCEE;
+  font-size: 22px;
+  line-height: 38px;
+  cursor: pointer;
+}
+.review-lightbox__close:hover{
+  background: rgba(255,255,255,.18);
+}
+
+/* ===== Review proof badges ===== */
+.review-proof__badges{
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.review-badge{
+  font-size: 13px;
+  line-height: 1;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #FFFCEE;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(251,220,71,0.35); /* gold hint */
+  backdrop-filter: blur(2px);
+  letter-spacing: .2px;
+}
+
+/* subtle hover – desktop only */
+@media (hover:hover){
+  .review-badge:hover{
+    background: rgba(251,220,71,0.18);
+    border-color: rgba(251,220,71,0.6);
+    color: #bed9ff;
+  }
+}
+
+/* ---------- THREE COLUMNS (Use Bootstrap Grid) ---------- */
+.three-columns {
+  background-color: #1C4278;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  padding-top: 50px !important;
+}
+
+/* =========================================
+   Featured Experiences (Mosaic: 1 large + 2 small)
+   Laptop-first
+========================================= */
+
+.featured-section {
+  margin-top: -67.5px;
+  padding: 140px 0;
+  background: #1C4278; /* giữ tone hiện tại của home */
+}
+
+.featured-section .container {
+  max-width: 1500px;
+}
+
+
+.featured-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px; 
+  align-items: stretch;
+  padding-bottom: 30px;
+}
+
+/* default spans */
+.featured-card--large { grid-column: span 2; }
+.featured-card--small { grid-column: span 1; }
+
+/* ---- placement pattern (6 items = 2 rows) ---- */
+/* Row 1: [1]=large left (col 1-2), [2]=small col3, [3]=small col4 */
+.featured-mosaic > .featured-card:nth-child(6n + 1) { grid-column: 1 / span 2; }
+.featured-mosaic > .featured-card:nth-child(6n + 2) { grid-column: 3; }
+.featured-mosaic > .featured-card:nth-child(6n + 3) { grid-column: 4; }
+
+/* Row 2: [4]=small col1, [5]=small col2, [6]=large right (col 3-4) */
+.featured-mosaic > .featured-card:nth-child(6n + 4) { grid-column: 1; }
+.featured-mosaic > .featured-card:nth-child(6n + 5) { grid-column: 2; }
+.featured-mosaic > .featured-card:nth-child(6n)     { grid-column: 3 / span 2; } /* 6,12,18... */
+
+
+
+/* Card Base & Hover Animation */
+.featured-card {
+  display: block;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-media {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s ease; 
+}
+
+.featured-card:hover .featured-media {
+  transform: scale(1.06); /* Zoom nhẹ khi hover */
+}
+
+/* Kích thước card */
+.featured-card--large { grid-column: span 2; }
+.featured-card--small { grid-column: span 1; }
+
+.featured-card--large .featured-media {
+  min-height: 580px; /* Giảm chút cho đỡ bị dài quá trên laptop nhỏ */
+  aspect-ratio: 16 / 9;
+}
+
+.featured-card--small .featured-media {
+  min-height: 560px;
+  aspect-ratio: 3 / 4;
+}
+
+/* Overlay */
+.featured-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* default: text at bottom */
+}
+
+.featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;              /* FIX cramp */
+  justify-content: space-between;/* pill/price tách ra khi hẹp */
+}
+
+.featured-price {
+  white-space: nowrap;          /* tránh "from $1" bị xuống dòng/cắt */
+}
+
+.featured-title {
+  margin: 0 0 8px;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 26px; /* To hơn chút cho rõ */
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Title scales for small cards */
+.featured-card--small .featured-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.featured-subtitle {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.9;
+  font-weight: 300;
+  max-width: 90%; /* Không để chữ tràn hết chiều ngang */
+}
+
+.featured-section .explore-btn {
+  display: inline-block;
+  background-color: #1C4278;
+  color: white;
+  border: 1px solid white;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 14px 40px;
+  border-radius: 40px;
+  transition: 0.3s ease;
+}
+
+/* ================================
+   TEXT POSITION CONTROL
+================================ */
+
+.card--text-bottom .featured-overlay {
+  justify-content: flex-end;
+}
+
+.card--text-top .featured-overlay {
+  justify-content: flex-start;
+}
+
+/* ================================
+   DIRECTIONAL OVERLAY (blue tint)
+================================ */
+
+.featured-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Text bottom → gradient from bottom */
+.card--text-bottom .featured-overlay::before {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Text top → gradient from top */
+.card--text-top .featured-overlay::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.35) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.featured-content {
+  width: 100%;
+  padding: 5px;
+  position: relative;
+  z-index: 2;
+}
+
+
+.featured-pill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.featured-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+
+/* Giá tiền */
+.featured-price {
+  font-family: 'Roboto Slab', serif;
+  font-size: 18px;
+  color: var(--ph-primary); /* Màu vàng brand */
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* ===== Tablet landscape / iPad fix: show all items (avoid mosaic placement gaps) ===== */
+@media (max-width: 1280px) and (min-width: 993px) {
+  .featured-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  /* Reset mosaic placement pattern so items auto-flow (prevents “missing” card) */
+  .featured-mosaic > .featured-card {
+    grid-column: auto !important;
+  }
+
+  /* Make all cards same size on iPad landscape for consistency */
+  .featured-card--large,
+  .featured-card--small {
+    grid-column: auto !important;
+  }
+
+  .featured-card--large .featured-media,
+  .featured-card--small .featured-media {
+    /* min-height: 520px; */
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ===== Tablet portrait / small screens: stack cards vertically ===== */
+@media (max-width: 992px) {
+  .featured-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* CHỐT: 2 cột */
+    gap: 14px;
+  }
+
+  /* reset mosaic placements để auto-flow đúng */
+  .featured-mosaic > .featured-card,
+  .featured-card--large,
+  .featured-card--small {
+    grid-column: auto !important;
+  }
+
+  /* Card rõ hơn: giảm overlay dày + chữ vừa */
+  .featured-overlay { padding: 14px; }
+
+  .featured-title {
+    font-size: 16px;
+    margin: 8px 0 6px;
+    line-height: 1.08;
+  }
+
+  .featured-subtitle {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* 2 cột thì ảnh không nên quá cao */
+  .featured-card--large .featured-media,
+  .featured-card--small .featured-media {
+    min-height: 360px;
+    aspect-ratio: 3 / 4; /* hợp 2 cột, nhìn “đứng” và rõ */
+  }
+}
+
+
+
+@media (max-width: 576px) {
+  .featured-section {
+    margin-top: -135.5px;
+    padding: 200px 0 30px;
+  }
+
+  .featured-card:active {
+    transform: translateY(1px);
+  }
+
+  /* MOBILE: chuyển mosaic thành carousel ngang để card không bị bó hẹp */
+  .featured-mosaic {
+    display: flex;                 /* EDIT: từ grid -> flex */
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 14px 10px;          /* tạo “khung thở” 2 bên */
+  }
+
+  /* Ẩn scrollbar (nhẹ nhàng hơn trên mobile) */
+  .featured-mosaic::-webkit-scrollbar {
+    height: 0;
+  }
+
+  /* Mỗi card chiếm ~82% màn hình: nhìn rõ, không cramped */
+  .featured-mosaic > .featured-card {
+    flex: 0 0 82%;
+    max-width: 82%;
+    scroll-snap-align: start;
+  }
+
+  /* Nếu muốn card thứ 2 ló ra 1 chút (cảm giác “còn nữa”) */
+  @supports (width: 1dvw) {
+    .featured-mosaic > .featured-card {
+      flex-basis: 84dvw;
+      max-width: 84dvw;
+    }
+  }
+
+  /* Giảm “độ dày” chữ trên mobile */
+  .featured-overlay {
+    padding: 14px;
+  }
+
+  .featured-content {
+    padding: 0;                    /* EDIT: bỏ padding 5px gây bí */
+  }
+
+  .featured-title {
+    font-size: 16px;
+    margin: 8px 0 6px;
+    line-height: 1.08;
+  }
+
+  .featured-subtitle {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  /* Mobile: media gọn, ít dài */
+  .featured-card--large .featured-media,
+  .featured-card--small .featured-media {
+    /* min-height: 240px; */
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Meta không bị cắt/chật */
+  .featured-meta {
+    gap: 8px;
+  }
+
+  .featured-pill {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .featured-price {
+    font-size: 12px;
+  }
+}
+
+
+/* ===== IMAGE OVERLAY LOCATION CARDS ===== */
+
+.overlay-card {
+  position: relative;
+  display: block;
+  height: 540px;
+  border-radius: 18px;
+  overflow: hidden;
+  color: #FFFCEE;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.overlay-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+}
+
+/* Background image */
+.overlay-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
+}
+
+.overlay-card:hover .overlay-card-bg {
+  transform: scale(1.08);
+}
+
+/* Gradient overlay */
+.overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.75),
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0)
+  );
+}
+
+/* Content */
+.overlay-content {
+  position: absolute;
+  bottom: 0;
+  padding: 28px;
+  z-index: 2;
+}
+
+.overlay-title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.overlay-text {
+  font-size: 15px;
+  max-width: 42ch;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  opacity: 0.95;
+}
+
+/* Button */
+.overlay-btn {
+  display: inline-block;
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 1.5px solid #FFFCEE;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.overlay-card:hover .overlay-btn {
+  background: #FFFCEE;
+  color: #1C4278;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .overlay-card {
+    height: 320px;
+  }
+
+  .overlay-title {
+    font-size: 22px;
+  }
+
+  .overlay-text {
+    font-size: 14px;
+  }
+}
+
+
+
+/* ---------- RESPONSIVE ---------- */
+
+/* ---------- IPAD / TABLET ---------- */
+@media  (max-width: 992px) {
+
+  .hero-header-main{
+    background-attachment: scroll;
+    transform: translateZ(0);
+  }
+ 
+  .hero-content h1 {
+    font-size: clamp(30px, 8vw, 60px);
+    letter-spacing: 4px;
+  }
+
+  .hero-content p {
+    font-size: clamp(18px, 4vw, 30px);
+    letter-spacing: 2px;
+  }
+  .explore-btn {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content {
+    margin-bottom: 80px;
+  }
+  .hero-content h1 {
+    letter-spacing: 2px;
+  }
+  .hero-content p {
+    letter-spacing: 1px;
+  }
+
+  .confidence-inner{
+    flex-wrap: wrap;
+    border-radius: 16px;
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .confidence-left{
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .value-pill-inner{
+    grid-template-columns: 1fr;
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .value-divider{
+    width: 100%;
+    height: 1px;
+  }
+}

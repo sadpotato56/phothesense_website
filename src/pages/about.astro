@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "About Me";
+
+const identity = {
+  firstName: "Sarah",
+  country: "Canada",
+  occupation: "Technical Writer",
+  hobbies: ["photography", "birdwatching", "baseball"],
+};
+
+const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+---
+<style> 
+
+
+</style>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <style>
+      h1 {
+        color: purple;
+        font-size: 4rem;
+      }
+
+      .skill {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 1.2rem;
+        color: rgb(255, 0, 0);
+      }
+    </style>
+  </head>
+
+<Layout title ="About PhotoThesense – Your Journey into Photography" headerType="hero">
+  <!-- Header -->
+  <!-- <body data-header="subpage">
+    <div id="header-placeholder" data-base-path="../"></div> -->
+
+
+
+    <p>Here are a few facts about me:</p>
+<ul>
+  <li>My name is {identity.firstName}.</li>
+  <li>I live in {identity.country} and I work as a {identity.occupation}.</li>
+  {identity.hobbies.length >= 2 &&
+    <li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
+  }
+</ul>
+<p>My skills are:</p>
+<ul>
+  {skills.map((skill) => <li class ="skill">{skill}</li>)}
+</ul>
+
+{happy && <p>I am happy to be learning Astro!</p>}
+
+{finished && <p>I finished this tutorial!</p>}
+
+{goal === 3 ? <p>My goal is to finish in 3 days.</p> : <p>My goal is not 3 days.</p>}
+
+  <!-- Main Content -->
+  <section class="container py-5 about">
+    <div class="row align-items-center">
+      <!-- Gallery -->
+      <div class="col-md-6">
+        <div id="auto-gallery" 
+            class="photo-gallery"
+            data-gallery-json="../picture/about/gallery.json">
+          </div>
+          <div id="gallery-dots" class="gallery-dots"></div>
+
+        <!-- Lightbox overlay -->
+        <div id="lightbox" class="lightbox">
+          <span class="close">&times;</span>
+          <!-- Counter -->
+          <div class="counter top-counter"></div>
+          <img class="lightbox-img" src="" alt="About PhotoThesense">
+          <a class="prev">&#10094;</a>
+          <a class="next">&#10095;</a>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="col-md-6">
+        <div class="mini-hero mb-4">
+          <h1 class="title">About PhotoThesense</h1>
+          <p class="subtitle">
+            Your Journey into Photography Excellence
+          </p>
+        </div>
+
+        <section class="about-photothesense">
+          <h2 class="section-title">Who We Are</h2>
+          <p>
+            At PhotoThesense, we are passionate about photography and dedicated to helping you capture the world through your lens. Our mission is to provide exceptional photography workshops and experiences that inspire creativity and enhance your skills.
+          </p>
+
+          <h2 class="section-title">What We Offer</h2>
+          <ul class="list-unstyled">
+            <li><i class="fa-solid fa-camera"></i> Expert-led photography workshops</li>
+            <li><i class="fa-solid fa-globe"></i> Unique locations and cultural experiences</li>
+            <li><i class="fa-solid fa-users"></i> Small group sizes for personalized attention</li>
+          </ul>
+
+          <h2 class="section-title">Our Commitment</h2>
+          <p>
+            We are committed to providing a supportive and engaging learning environment. Whether you're a beginner or an experienced photographer, our workshops are designed to help you grow and achieve your photography goals.
+            </p>
+        </section>
+        </div>
+    </div>
+    </section>
+</Layout>

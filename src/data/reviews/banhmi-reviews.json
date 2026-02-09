@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "author": "David L",
+    "origin": "United States",
+    "date": "January 3, 2026",
+    "rating": 5,
+    "content": "I thought I knew Banh Mi, but this tour changed everything. The 'Ghost Cart' was worth the walk alone—the pate was incredibly rich. Our guide knew every alleyway and told us stories about the food that we would never have found on Google. The rooftop ending was the perfect way to digest all that amazing food.",
+    "tripadvisor_link": "#",
+    "images": {
+      "main": "../picture/banhmi_tour/hanoi-banh-mi-tour-11.jpg",
+      "gallery": [
+        "../picture/banhmi_tour/rv_1.jpg",
+        "../picture/banhmi_tour/rv_2.jpg"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "author": "James H",
+    "origin": "Australia",
+    "date": "January 2, 2026",
+    "rating": 5,
+    "content": "A total sensory explosion! I loved how the tour wasn't just about eating, but about the history of Hanoi. Going from the noisy market to the quiet French shop felt like time travel. The sweet Banh Mi was a surprise highlight. Highly recommend arriving hungry because you WILL be full!",
+    "tripadvisor_link": "#",
+    "images": {
+      "main": "../picture/review_pic/banhmi_rv2.jpg",
+      "gallery": [
+        "../picture/review_pic/banhmi_rv2_1.jpg",
+        "../picture/review_pic/banhmi_rv2_2.jpg",
+        "../picture/review_pic/banhmi_rv2_2.jpg"
+      ]
+    }
+  }
+]

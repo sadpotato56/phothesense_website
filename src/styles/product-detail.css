@@ -1,0 +1,941 @@
+/* ============================================
+   PRODUCT DETAIL PAGE - PHOTHESENSE BRAND STYLE
+   Dùng chung cho tất cả trang product (Coffee Workshop, Knife Workshop, v.v.)
+============================================ */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #1C4278;
+  background-color: #FFFCEE;
+  line-height: 1.6;
+  padding-top: 120px; /* chừa chỗ cho fixed header */
+}
+
+/* ---------- Photo Gallery ---------- */
+.photo-gallery {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  height: 750px;
+  position: relative; /* để mũi tên absolute */
+}
+
+.gallery-left {
+  flex: 2;
+}
+
+.gallery-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .gallery-img:hover {
+    transform: scale(1.03);
+  }
+}
+
+.gallery-track {
+  display: none;
+}
+
+/* Mũi tên gallery - ẩn trên desktop */
+.gallery-arrow {
+  display: none;
+}
+
+/* ============= GALLERY DOTS ============= */
+
+.gallery-dots {
+  display: none;              /* Desktop ẩn, mobile mới hiện */
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.gallery-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(28, 66, 120, 0.25);   /* ph-navy nhạt */
+  cursor: pointer;
+  padding: 0;
+}
+
+.gallery-dot.active {
+  width: 8px;
+  height: 8px;
+  background: var(--ph-primary);          /* vàng brand */
+}
+
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  text-align: center;
+  overflow: hidden;
+}
+
+.lightbox-img {
+  max-width: 85%;
+  max-height: 80vh;
+  margin-top: 0;
+  margin: 30px auto;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: pan-y; /* Cho phép swipe dọc nhưng vẫn swipe ngang được */
+}
+
+.top-counter {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 18px;
+  background: rgba(0,0,0,0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.lightbox-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 30px;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  color: #fff;
+  background: transparent;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  width: fit-content;
+  transition: 0.3s ease;
+}
+
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 15px 20px;
+  color: #fff;
+  font-size: 40px;
+  user-select: none;
+  transition: all 0.3s ease;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+.prev:hover, .next:hover {
+  color: #FBDC47;
+  background: rgba(0, 0, 0, 0.5);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close:hover {
+  background: rgba(0, 0, 0, 0.5);
+  color: #FBDC47;
+  transform: scale(1.1);
+}
+
+/* ---------- BOOK Buttons ---------- */
+.book-btn {
+  display: inline-block;
+  background-color: #FBDC47;
+  color: #1C4278;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 12px 30px;
+  border-radius: 40px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #1C4278;
+  color: #FBDC47;
+}
+
+/* ---------- About / Text ---------- */
+
+/* Tiêu đề chính */
+.mini-hero .title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 40px);
+  color: #1C4278;
+  margin-bottom: 10px;
+}
+
+/* Phụ đề mô tả */
+.mini-hero .subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: clamp(15px, 2vw, 18px);
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* Tiêu đề phần "About this activity" */
+.about-this-activity .section-title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+  font-size: clamp(20px, 2.5vw, 28px);
+  color: #1C4278;
+  margin-bottom: 15px;
+}
+
+.about ul li {
+  margin-bottom: 10px;
+}
+
+.about i {
+  color: #EF3C32;
+  margin-right: 8px;
+}
+
+.price-box {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1C4278;
+  margin-top: 10px;
+}
+
+.price-box .per {
+  font-size: 14px;
+  color: #777;
+  margin-left: 4px;
+}
+
+/* ---------- Highlights ---------- */
+.highlights {
+  background-color: #FFFCEE ;
+  color: #1C4278;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.highlights .highlight-card {
+  background: transparent ;
+  box-shadow: none !important;        
+  padding: 0 15px;  
+  text-align: center;
+  border: none;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.highlight-card i {
+  font-size: 3rem;
+  color: var(--ph-primary); /* Vàng */
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.highlight-card h5 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.highlight-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+.highlight-card:hover i {
+  transform: translateY(-5px) scale(1.1);
+}
+
+/* Thêm đường kẻ chia cách giữa các cột trên Desktop (Optional) */
+@media (min-width: 768px) {
+  .highlight-card {
+    border-right: 1px solid rgba(28, 66, 120, 0.1);
+  }
+  .col-md-4:last-child .highlight-card {
+    border-right: none;
+  }
+}
+
+/* ---------- Reviews (Updated with Image) ---------- */
+.reviews {
+  background-color: #FFFCEE;
+  color: #1C4278;
+}
+
+.review-card {
+  background: white;
+  border-radius: 12px; /* Bo góc tổng thể */
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(28, 66, 120, 0.08); /* Shadow mềm hơn */
+  transition: transform 0.3s ease;
+  overflow: hidden; /* Quan trọng: Cắt ảnh thừa ra khỏi góc bo */
+}
+
+.review-card:hover {
+  transform: translateY(-5px); /* Nhấc nhẹ lên khi hover */
+}
+
+/* Ảnh Review */
+.review-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh full khung không bị méo */
+  min-height: 250px; /* Chiều cao tối thiểu cho ảnh trên Mobile */
+}
+
+/* Phần chữ */
+.review-body {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+  height: 100%;
+}
+
+.review-text {
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Tác giả */
+.review-author {
+  margin-top: auto; /* Đẩy xuống dưới cùng nếu card cao */
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.review-author strong {
+  display: block;
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.1rem;
+  color: #1C4278;
+}
+
+.review-author span {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 400;
+}
+
+/* Biến thẻ a.review-card hoạt động như một khối hộp */
+a.review-card {
+  display: block; /* Giúp thẻ a chứa được các div bên trong */
+  text-decoration: none; /* Bỏ gạch chân */
+  color: inherit; /* Giữ nguyên màu chữ gốc, không bị biến thành màu xanh của link */
+  cursor: pointer; /* Hiển thị bàn tay khi di chuột vào */
+}
+
+/* Đảm bảo khi hover vào thì màu chữ vẫn đẹp, không bị đổi màu lạ */
+a.review-card:hover {
+  color: inherit; 
+  /* Bạn có thể thêm hiệu ứng khác nếu muốn, ví dụ border */
+}
+
+
+/* --- REVIEW GALLERY LAYOUT --- */
+/* =========================================
+   REVIEW GALLERY STYLES (CLEANED)
+   ========================================= */
+
+.review-card-gallery {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  border: 1px solid rgba(0,0,0,0.05);
+  overflow: hidden; /* Đảm bảo nội dung không tràn khỏi card */
+}
+
+/* --- CỘT TRÁI: KHU VỰC ẢNH --- */
+
+/* Khung chứa ảnh chính (Main Image Box) */
+.review-image-box {
+  width: 100%;
+  height: 240px; /* Chiều cao cố định cho ảnh chính để layout đều nhau */
+  position: relative;
+  cursor: pointer;
+  background: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden; /* Để bo góc ảnh bên trong */
+  margin-bottom: 10px; /* Khoảng cách với hàng thumbnail bên dưới */
+}
+
+/* Ảnh chính bên trong */
+.review-img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+/* Hiệu ứng zoom nhẹ khi hover */
+.review-image-box:hover .review-img-cover {
+  transform: scale(1.03);
+}
+
+/* Lớp phủ đen + Icon khi hover */
+.zoom-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.zoom-overlay i {
+  color: #fff;
+  font-size: 2rem;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.review-image-box:hover .zoom-overlay {
+  opacity: 1;
+}
+
+/* --- HÀNG ẢNH NHỎ (THUMBNAILS) --- */
+.review-thumbs-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 4px; /* Chừa chút lề nếu cần */
+}
+
+.review-thumb {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  border: 1px solid #ddd;
+  background: #f0f0f0;
+
+  position: relative; 
+  z-index: 2;
+}
+
+.review-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.review-thumb:hover {
+  opacity: 1;
+  border-color: #1C4278;
+  transform: translateY(-2px); /* Nhấc nhẹ thumbnail lên */
+}
+
+/* --- CỘT PHẢI: NỘI DUNG TEXT --- */
+.review-body {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+  height: 100%;
+}
+
+.reviewer-name {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #1C4278;
+  margin-bottom: 2px;
+}
+
+.reviewer-origin {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: 400;
+}
+
+.review-meta {
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.review-meta .meta-dot {
+  margin: 0 8px;
+  font-weight: bold;
+}
+
+.review-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 0;
+}
+
+/* --- LIGHTBOX (POPUP) --- */
+.custom-lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease; 
+}
+
+.custom-lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+.custom-lightbox-img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.custom-lightbox.active .custom-lightbox-img {
+  transform: scale(1);
+}
+
+.close-lb {
+  position: absolute;
+  top: 20px; right: 30px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10000;
+  transition: transform 0.2s;
+}
+
+.close-lb:hover {
+  color: #FBDC47;
+  transform: scale(1.1);
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 767px) {
+  /* Fix chiều cao ảnh chính trên mobile */
+  .review-image-box {
+    height: 220px; 
+    margin-bottom: 8px;
+  }
+
+  .review-body {
+    padding: 20px;
+  }
+  
+  /* Ẩn bớt padding thừa của cột chứa ảnh trên mobile */
+  .col-md-4.d-flex.flex-column.p-3 {
+     padding: 15px !important; 
+     padding-bottom: 0 !important;
+  }
+}
+
+
+/* --- 2. ITINERARY TIMELINE (Dòng thời gian dọc) --- */
+.itinerary-section {
+  padding: 60px 0;
+  background-color: #fff; /* Nền trắng để tách biệt */
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Đường kẻ dọc nối các điểm */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px; /* Vị trí đường kẻ */
+  width: 2px;
+  background: rgba(28, 66, 120, 0.1);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 0;
+  padding: 0 0 20px 60px; /* Chừa chỗ cho dấu chấm tròn */
+}
+
+/* Dấu chấm tròn */
+.timeline-dot {
+  position: absolute;
+  left: 11px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  background: #FFFCEE;
+  border: 4px solid var(--ph-primary);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.timeline-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-header h5 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 600;
+  color: #1C4278;
+}
+
+.timeline-toggle {
+  font-size: 1.2rem;
+  color: var(--ph-primary);
+  transition: transform 0.3s ease;
+}
+
+.timeline-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+  opacity: 0.8;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+
+.timeline-item.active .timeline-content {
+  max-height: 500px; /* Đủ lớn để hiện nội dung */
+  padding-top: 10px;
+}
+
+.timeline-item.active .timeline-toggle {
+  transform: rotate(45deg); /* Dấu cộng xoay thành dấu nhân */
+}
+
+/* --- 3. STICKY BOOKING BAR (Mobile Only) --- */
+.sticky-bar {
+  position: fixed;
+  bottom: -100px; /* Ẩn mặc định */
+  left: 0;
+  width: 100%;
+  background: #fff;
+  padding: 15px 20px;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: bottom 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.sticky-bar.visible {
+  bottom: 0; /* Hiện lên */
+}
+
+.sticky-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-price .price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1C4278;
+  line-height: 1;
+}
+
+.sticky-price .unit {
+  font-size: 0.75rem;
+  color: #777;
+}
+
+.sticky-btn {
+  background-color: var(--ph-primary);
+  color: #1C4278;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(251, 220, 71, 0.3);
+}
+
+/* Chỉ hiện Sticky Bar trên Mobile/Tablet */
+@media (min-width: 992px) {
+  .sticky-bar {
+    display: none !important;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+
+  .gallery-left,
+  .gallery-right {
+    display: none;
+  }
+
+  .photo-gallery {
+    /* bọc track, không cần flex nữa */
+    overflow: hidden; 
+    margin-bottom: 10px;
+    position: relative; /* để mũi tên absolute */
+    height: auto;      /* chiều cao tự động theo ảnh */
+  }
+
+  /* Mũi tên điều hướng gallery (chỉ hiện trên mobile) */
+  .gallery-arrow {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    background: rgba(28, 66, 120, 0.8);
+    color: #FBDC47; /* Màu vàng brand */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .gallery-arrow i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #FBDC47; /* Màu vàng brand cho icon */
+    margin: 0 !important; /* Xóa margin để icon căn giữa hoàn hảo */
+  }
+
+  .gallery-arrow.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .gallery-arrow:hover {
+    background: rgba(28, 66, 120, 1);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .gallery-arrow-left {
+    left: 10px;
+  }
+
+  .gallery-arrow-right {
+    right: 10px;
+  }
+
+  /* Track cho slider ngang */
+  .gallery-track {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;          /* tí space cho đẹp */
+  }
+
+  .gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mỗi slide = full chiều rộng màn hình */
+  .gallery-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+  }
+
+  .gallery-slide .gallery-img {
+    width: 100%;
+    height: 480px;               /* bạn có thể tăng lên 300–320 nếu muốn to hơn */
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .gallery-img {
+    height: 430px;           /* cho vừa màn mobile */
+    border-radius: 12px;
+  }
+
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .gallery-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(28, 66, 120, 0.25);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .gallery-dot.active {
+    width: 8px;
+    height: 8px;
+    background: var(--ph-primary, #FBDC47);
+  }
+
+  /* Lightbox trên mobile – cho ảnh to hơn 1 chút */
+  .lightbox-img {
+    max-width: 95%;
+    max-height: 100vh;
+    margin-top: 70px;
+  }
+
+  .top-counter {
+    top: 10px;
+    font-size: 14px;
+    padding: 4px 10px;
+  }
+
+  .lightbox-btn {
+    margin-top: 15px;
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  .prev,
+  .next {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+  }
+
+  .prev {
+    margin-top: 46%;
+    left: 10px;
+  }
+
+  .next {
+    margin-top: 46%;
+    right: 10px;
+  }
+
+  .close {
+    font-size: 32px;
+    top: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .mini-hero .title {
+    font-size: 24px;
+  }
+
+  .highlight-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+
+
+
+
+
+
+
+

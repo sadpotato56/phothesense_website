@@ -1,0 +1,195 @@
+---
+import '../styles/header.css';
+// import { getPath } from '../utils/path'; // Import hàm chuẩn hóa đường dẫn
+---
+<style>
+
+/* ==================== 2️⃣ HEADER TRANG PHỤ ==================== */
+.subpage-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #FFFCEE !important;
+   transition: transform 0.3s ease; /* hiệu ứng trượt mượt */
+}
+
+/* Link style cho trang phụ */
+
+/* màu chữ header */
+.subpage-header .navbar-nav .nav-link {
+  color: #1C4278 !important;
+}
+
+.subpage-header .navbar-nav .nav-link:hover {
+  color: #FBDC47 !important;
+  font-weight: 600;
+  transform: scale(1.05);
+}
+
+/* Hiệu ứng nền xanh khi hover */
+.subpage-header .navbar-nav .nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  right: 3px;
+  height: 40px;
+  background-color: #1C4278;
+  border-radius: 4px;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.subpage-header .navbar-nav .nav-link.active {
+  background-color: #1C4278;
+  color: #FBDC47 !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+
+
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 992px) {
+.navbar-brand img {
+    height: 80px;
+}
+
+.navbar-collapse {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+
+  width: 75%;          /* hoặc 80–100% nếu bạn muốn full-screen */
+  height: 100vh;       /* luôn kín chiều cao màn hình */
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 80px;
+  transition: all 0.3s ease;
+}
+
+
+.navbar-collapse.show {
+  transform: translateX(0);
+ /* slide vào màn hình */
+}
+
+.subpage-header .navbar-collapse.show{
+   background: #FFFCEE; 
+}
+
+.subpage-header .navbar-nav .nav-link {
+    color: #1C4278 !important;
+  }
+
+.hero-header .navbar-collapse.show{
+  background: rgba(28, 66, 120, 0.97); 
+}
+
+.navbar-nav {
+  margin-top: 50px;
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+  display: block;
+  margin: 10px 0;
+}
+
+
+
+
+/* ====================== HAMBURGER CHO SUBPAGE ====================== */
+
+.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background: none !important;
+}
+
+.subpage-header .navbar-toggler-icon,
+.subpage-header .navbar-toggler-icon::before,
+.subpage-header .navbar-toggler-icon::after {
+  background-color: #1C4278 !important; /* xanh đậm */
+}
+
+/* Khi mở menu trên subpage (chuyển sang X) */
+.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
+.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+  background-color: #1C4278 !important;
+}
+
+}
+
+/* ==================== MOBILE SAFARI BAR (AUTO-HIDE HEADER) ==================== */
+@media (max-width: 768px) {
+  .subpage-header {
+    will-change: transform;
+    transition: transform 0.25s ease;
+  }
+
+  
+  .subpage-header.is-hidden {
+    transform: translateY(-110%);
+  }
+}
+  
+</style>
+<header class="subpage-header">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      
+      <a class="navbar-brand" href="/phothesense_website">
+        <img src="/phothesense_website/picture/Logo_orangeColor.png" alt="PhotheSense Logo" loading="lazy">
+      </a>
+
+      <button class="navbar-toggler" type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#subNav" 
+        aria-controls="subNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="subNav">
+        <ul class="navbar-nav ms-auto align-items-center gap-3">
+
+          <li class="nav-item">
+            <a class="nav-link" href="/phothesense_website">HOME</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/phothesense_website/blog">BLOG</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link " href="/phothesense_website/experience">EXPERIENCE</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)"
+               data-cal-link="phothesense/quick-chat"
+               data-cal-namespace="quick-chat"
+               data-cal-config='{"layout":"month_view"}'>
+               CONTACT
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="#">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

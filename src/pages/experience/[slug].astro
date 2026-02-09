@@ -1,0 +1,130 @@
+---
+import ProductDetailLayout from '../../layouts/ProductDetailLayout.astro';
+
+// 1. Lấy tất cả các file markdown tours
+export async function getStaticPaths() {
+  const allTours = Object.values(import.meta.glob('../../data/tours/*.md', { eager: true }));
+  
+  return allTours.map((tour: any) => {
+    // Lấy tên file làm slug (ví dụ: knife-workshop.md -> slug: knife-workshop)
+    const slug = tour.file.split('/').pop().replace('.md', '');
+    return {
+      params: { slug },
+      props: { tour }
+    };
+  });
+}
+
+// 2. Nhận dữ liệu từ getStaticPaths
+const { tour } = Astro.props;
+const { Content, frontmatter } = tour;
+
+// 3. Tải file JSON Review tương ứng (Logic nâng cao)
+// Chúng ta load tất cả file JSON trong thư mục reviews
+const allReviews = import.meta.glob('../../data/reviews/*.json', { eager: true });
+// Tìm file JSON có tên trùng với reviewId trong frontmatter
+let reviewsData = [];
+const reviewPath = `../../data/reviews/${frontmatter.reviewId}.json`;
+
+if (frontmatter.reviewId && allReviews[reviewPath]) {
+  reviewsData = (allReviews[reviewPath] as any).default || allReviews[reviewPath];
+}
+---
+
+<ProductDetailLayout
+  title={frontmatter.title}
+  productTitle={frontmatter.productTitle}
+  productSubtitle={frontmatter.productSubtitle}
+  galleryJsonPath={frontmatter.galleryJsonPath}
+  price={frontmatter.price}
+  calLink={frontmatter.calLink}
+  calNamespace={frontmatter.calNamespace}
+  ctaButtonText={frontmatter.ctaButtonText}
+>
+
+  <div slot="about-list">
+    {frontmatter.meta_list.map((item: any) => (
+      <li><i class={item.icon}></i> {item.text}</li>
+    ))}
+  </div>
+
+  <div slot="description">
+    <Content />
+  </div>
+
+  <Fragment slot="highlights">
+    {frontmatter.highlights.map((highlight: any) => (
+      <div class="col-md-4">
+        <div class="highlight-card">
+          <i class={highlight.icon}></i>
+          <h5>{highlight.title}</h5>
+          <p>{highlight.desc}</p>
+        </div>
+      </div>
+    ))}
+  </Fragment>
+
+  <div slot="reviews">
+    {reviewsData.map((review: any) => (
+      <div class="review-card-gallery position-relative mt-4">
+        <div class="row g-0 h-100">
+          
+          <div class="col-md-4 d-flex flex-column p-3">
+            <div class="review-image-box review-lightbox-trigger mb-2" 
+                 data-src={review.images.main} style="height: 220px;">
+              <img src={review.images.main} alt="Main review image" class="review-img-cover rounded" />
+              <div class="zoom-overlay rounded"><i class="fa-solid fa-expand"></i></div>
+            </div>
+            
+            <div class="review-thumbs-row">
+              {review.images.gallery.map((img: string) => (
+                <div class="review-thumb review-lightbox-trigger" data-src={img}>
+                  <img src={img} alt="Review shot" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="review-body">
+              <h5 class="reviewer-name">{review.author}</h5>
+              <div class="reviewer-origin">{review.origin}</div>
+              
+              <div class="review-meta mt-2 mb-3">
+                <span class="stars text-warning">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </span>
+                <span class="meta-dot">•</span>
+                <span class="review-date">{review.date}</span>
+              </div>
+              
+              <div class="review-content">
+                <p>“{review.content}”</p>
+                {review.tripadvisor_link && (
+                  <a href={review.tripadvisor_link} target="_blank" class="stretched-link"></a>
+                )}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div slot="itinerary">
+    {frontmatter.itinerary.map((item: any, index: number) => (
+      <div class={`timeline-item ${index === 0 ? 'active' : ''}`}>
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <h5>{item.title}</h5>
+          <i class="fa-solid fa-plus timeline-toggle"></i>
+        </div>
+        <div class="timeline-content">
+          <p>{item.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+</ProductDetailLayout>

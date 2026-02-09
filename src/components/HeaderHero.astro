@@ -1,0 +1,189 @@
+---
+import '../styles/header.css';
+// import { getPath } from '../utils/path'; 
+---
+<style>
+  
+/* ==================== 1️⃣ HEADER TRANG CHÍNH ==================== */
+.hero-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: transparent;
+  /* chiều cao cố định, không phụ thuộc padding */
+  height: 110px;
+  display: flex;
+  align-items: center;
+
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.3s ease;
+}
+
+
+.hero-header .navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: transparent !important;
+  z-index: 100;
+}
+
+/* Khi header được thêm class .scrolled */
+/* KHI SCROLL */
+.hero-header.scrolled {
+  background-color: #1C4278;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(0); /* chỉ transform, không đổi height/padding */
+}
+
+/* Logo thu nhỏ mượt mà khi scroll */
+.hero-header .navbar-brand img {
+  height: 100px;
+  transition: transform 0.3s ease;
+}
+
+.hero-header.scrolled .navbar-brand img {
+  transform: scale(0.85);
+}
+
+/* màu chữ header */
+.hero-header .navbar-nav .nav-link {
+  color: #fff !important;
+}
+/* SCROLLED */
+.hero-header.scrolled .navbar-nav .nav-link {
+  color: #fff !important;
+}
+
+
+/* Màu chữ khi hover */
+.hero-header .navbar-nav .nav-link:hover {
+  color: #FFD700 !important;
+  transform: scale(1.05);
+}
+/* SCROLLED */
+.hero-header.scrolled .navbar-nav .nav-link:hover {
+  color: #1C4278 !important;
+  transform: scale(1.05);
+}
+
+/* Hiệu ứng nền xanh khi hover */
+.hero-header .navbar-nav .nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  right: 3px;
+  height: 40px;
+  background-color: #1C4278;
+  border-radius: 4px;
+  z-index: -1;
+  transition: all 0.3s ease; 
+}
+/* SCROLLED */
+.hero-header.scrolled  .navbar-nav .nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  right: 3px;
+  height: 40px;
+  background-color: #FBDC47;
+  border-radius: 4px;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+/* Ô Active: hiện đang ở trang này */
+.hero-header .navbar-nav .nav-link.active {
+  background-color: #1C4278;
+  color: #FBDC47 !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+/* SCROLLED */
+.hero-header.scrolled  .navbar-nav .nav-link.active {
+  background-color: #FBDC47;
+  color: #1C4278 !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+@media (max-width: 992px) {
+  .hero-header .navbar-nav .nav-link.active {
+  background-color: #FBDC47;
+  color: #1C4278 !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+  }
+
+</style>
+
+<header class="hero-header" id="main-header">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="/phothesense_website">
+        <img src="phothesense_website/picture/logo.png"  alt="PHOTHESENSE Logo">
+      </a>
+
+      <!-- Hamburger (Bootstrap toggler) -->
+      <button class="navbar-toggler" type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#mainNav" 
+        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Menu links -->
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-center gap-3">
+
+          <li class="nav-item">
+            <a href="/phothesense_website" class="nav-link active">HOME</a>
+          </li>
+
+          <!-- ABOUT (Cal trigger) -->
+          <li class="nav-item">
+            <a 
+              class="nav-link"
+              href="/phothesense_website/blog"
+            >
+              BLOG
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/phothesense_website/experience" class="nav-link">EXPERIENCE</a>
+          </li>
+
+          <!-- CONTACT (Cal trigger) -->
+          <li class="nav-item">
+            <a 
+              class="nav-link"
+              href="javascript:void(0)"
+              data-cal-link="phothesense/quick-chat"
+              data-cal-namespace="quick-chat"
+              data-cal-config='{"layout":"month_view"}'
+            >
+              CONTACT
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="#">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark cart-count"></span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

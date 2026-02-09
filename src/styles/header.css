@@ -1,0 +1,213 @@
+/* ==================== HEADER CƠ BẢN ==================== */
+.navbar {
+  padding: 0.8rem 2rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar-brand img {
+  height: 80px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand img:hover {
+  transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+  /* color: #ffffff !important; */
+  font-size: 1rem;
+  letter-spacing: 2px;
+  padding: 8px 12px !important;
+  margin: 0 6px;
+   display: inline-block;
+  position: relative;
+  transition: all 0.3s ease;
+  transform-origin: center center;
+}
+
+
+/* Hamburger */
+.navbar-toggler {
+  border: none;
+  background: none;
+  position: relative;
+  z-index: 5000 !important;
+}
+
+
+.navbar-toggler-icon {
+  background-image: none !important;
+  width: 24px;
+  height: 2px;
+  background-color: #ffffff;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background-color: #ffffff;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler-icon::before {
+  top: -8px;
+}
+
+.navbar-toggler-icon::after {
+  top: 8px;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background: none;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+  background-color: #ffffff; /* màu X */
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+
+
+
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 992px) {
+.navbar-brand img {
+    height: 80px;
+}
+
+.navbar-collapse {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+
+  width: 75%;          /* hoặc 80–100% nếu bạn muốn full-screen */
+  height: 100vh;       /* luôn kín chiều cao màn hình */
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 80px;
+  transition: all 0.3s ease;
+}
+
+
+.navbar-collapse.show {
+  transform: translateX(0);
+ /* slide vào màn hình */
+}
+
+.subpage-header .navbar-collapse.show{
+   background: #FFFCEE; 
+}
+
+.subpage-header .navbar-nav .nav-link {
+    color: #1C4278 !important;
+  }
+
+.hero-header .navbar-collapse.show{
+  background: rgba(28, 66, 120, 0.97); 
+}
+
+.navbar-nav {
+  margin-top: 50px;
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+  display: block;
+  margin: 10px 0;
+}
+
+/* Haven't SCROLLED */
+
+  /* Trang Active */
+.hero-header .navbar-nav .nav-link.active {
+  background-color: #FBDC47;
+  color: #1C4278 !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Hiệu ứng nền vàng khi hover */
+.hero-header .navbar-nav .nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  right: 3px;
+  height: 40px;
+  background-color: #FBDC47;
+  border-radius: 4px;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+/* Màu chữ khi hover */
+.hero-header .navbar-nav .nav-link:hover {
+  color: #1C4278 !important;
+  transform: scale(1.05);
+}
+
+
+
+/* ====================== HAMBURGER CHO SUBPAGE ====================== */
+
+.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background: none !important;
+}
+
+.subpage-header .navbar-toggler-icon,
+.subpage-header .navbar-toggler-icon::before,
+.subpage-header .navbar-toggler-icon::after {
+  background-color: #1C4278 !important; /* xanh đậm */
+}
+
+/* Khi mở menu trên subpage (chuyển sang X) */
+.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
+.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+  background-color: #1C4278 !important;
+}
+
+}
+
+/* ==================== MOBILE SAFARI BAR (AUTO-HIDE HEADER) ==================== */
+@media (max-width: 768px) {
+  .hero-header,
+  .subpage-header {
+    will-change: transform;
+    transition: transform 0.25s ease;
+  }
+
+  .hero-header.is-hidden,
+  .subpage-header.is-hidden {
+    transform: translateY(-110%);
+  }
+}
