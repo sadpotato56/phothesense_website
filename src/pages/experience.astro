@@ -95,13 +95,7 @@ function getSlug(file: string) {
               {allTours.map((tour: any) => {
                 const fm = tour.frontmatter; // Lấy dữ liệu trong file MD
                 const slug = getSlug(tour.file); // Tạo link từ tên file
-                
-                // 4. Tạo đường dẫn ảnh hoàn chỉnh
-                // import.meta.env.BASE_URL sẽ tự điền "/phothesense_website/" vào trước
-                const imagePath = import.meta.env.BASE_URL + fm.thumbnail;
-
-                // Chuẩn hóa dữ liệu cho bộ lọc (Filter)
-                // Cần đảm bảo trong file MD bạn có dòng: location: "hanoi" và type: "workshop"
+              
 
                 // 2. XỬ LÝ FILTER (Fix lỗi bộ lọc)
                 // Lấy trực tiếp từ file MD, nếu quên điền thì để trống
@@ -119,7 +113,7 @@ function getSlug(file: string) {
                       <div class="card-img-wrapper">
                         <span class="badge-tag">{badge}</span>
                         {/* Lấy ảnh đầu tiên trong galleryJson hoặc ảnh đại diện nếu bạn thêm field image */}
-                        <img src={imagePath} 
+                        <img src={fm.thumbnail} 
                              alt={fm.title} 
                              loading="lazy" 
                              style="object-fit: cover;"
@@ -138,7 +132,7 @@ function getSlug(file: string) {
 
                         <h3 class="card-title">
                           <a 
-                            href={import.meta.env.BASE_URL + `/experience/${slug}`} 
+                            href={import.meta.env.BASE_URL + `experience/${slug}`} 
                             class="main-link"
                             target="_blank"
                             rel="noopener noreferrer"

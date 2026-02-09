@@ -7,5 +7,5 @@ export default defineConfig({
   site: 'https://phothesense.com/', 
   
   // 2. Tên repository (Ví dụ: /ten-repo). Bắt buộc nếu không phải repo chính.
-  base: '/phothesense_website', 
+  base: '/', 
 });

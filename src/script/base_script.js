@@ -1,5 +1,7 @@
 // Hàm khởi chạy
 function init() {
+  setActiveNavLink();
+  initMobileHeaderAutoHide();
     initCal();
     initScrollToTop();
    
@@ -10,6 +12,20 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
     init(); // Nếu đã load xong rồi thì chạy luôn
+}
+
+// =========================================
+// 1. NAVBAR ACTIVE LINK
+// =========================================
+function setActiveNavLink() {
+  const path = window.location.pathname.toLowerCase();
+  const links = document.querySelectorAll('.navbar-nav .nav-link[href]');
+  links.forEach(link => {
+    const href = link.getAttribute('href').toLowerCase();
+    link.classList.remove('active');
+    if (href === 'index.astro' && (path.endsWith('/') || path.endsWith('index.astro'))) link.classList.add('active');
+    else if (href !== 'index.astro' && path.endsWith(href)) link.classList.add('active');
+  });
 }
 
 // =========================================
@@ -83,3 +99,25 @@ function initScrollToTop() {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
+function initMobileHeaderAutoHide() {
+  const header = document.querySelector('.hero-header, .subpage-header');
+  if (!header) return;
+  const mq = window.matchMedia('(max-width: 768px)');
+  let lastY = 0;
+  
+  if (header.dataset.autoHideBound === '1') return;
+  header.dataset.autoHideBound = '1';
+
+  const onScroll = () => {
+    if (!mq.matches) { header.classList.remove('is-hidden'); return; }
+    const y = window.scrollY || 0;
+    const isMenuOpen = !!(header.querySelector('.show') || header.querySelector('[aria-expanded="true"]'));
+    
+    if (isMenuOpen || y <= 16) { header.classList.remove('is-hidden'); lastY = y; return; }
+    if (y > lastY + 8 && y > 40) header.classList.add('is-hidden');
+    else if (y < lastY - 8) header.classList.remove('is-hidden');
+    lastY = y;
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+}

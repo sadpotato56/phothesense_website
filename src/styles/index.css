@@ -16,7 +16,7 @@ body {
   height: 100vh;
   width: 100%;
   /* Thêm dấu / vào phía trước tên folder dự án */
-  background: url('/phothesense_website/picture/PTS_logo/background.jpg') center/cover no-repeat fixed;
+  background: url('/picture/PTS_logo/background.jpg') center/cover no-repeat fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -208,6 +208,6 @@
 
   .hero-header.is-hidden,
   .subpage-header.is-hidden {
-    transform: translateY(-110%);
+    transform: translateY(-100%) !important;
   }
 }

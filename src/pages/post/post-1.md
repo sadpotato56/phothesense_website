@@ -2,7 +2,7 @@
 layout: ../../layouts/Post_Layout.astro
 title: "The Ultimate Guide to Staying Connected in Vietnam (2026): eSIMs, Wi-Fi & Mobile Networks"
 description: "Everything travelers need to know about getting online in Vietnam. We compare Viettel vs. Mobifone, review the best eSIMs, and share essential apps for your 2026 trip."
-thumbnail: "/phothesense_website/picture/Blog_post/What is SSID for WiFi_ Explained.jpg"
+thumbnail: "/picture/Blog_post/What is SSID for WiFi_ Explained.jpg"
 category: "Travel Tips & Tech"
 date: "08/02/2026"
 ---
