@@ -12,4 +12,7 @@ export default defineConfig({
   integrations: [
     icon(),
   ],
+  build: {
+    inlineStylesheets: 'always', // Tùy chọn: 'always', 'auto', hoặc 'never' | Đặt thành 'always' để luôn nhúng CSS vào HTML, giúp giảm số lượng yêu cầu HTTP và cải thiện hiệu suất tải trang.
+  },
 });
