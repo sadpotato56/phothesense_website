@@ -14,6 +14,11 @@
 
 /* Brand tokens dùng chung */
 :root {
+  --ph-yellow:         #feda00; /* Vàng thương hiệu */
+  --ph-red:            #EF3C32; /* Đỏ */
+  --ph-blue:           #1f4278; /* Xanh Navy */
+  --ph-orange:         #f26230; /* Cam */
+  
   --ph-primary:        #FBDC47;
   --ph-navy:           #1C4278;
   --ph-bg-soft:        #FFFCEE;
