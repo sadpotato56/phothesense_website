@@ -1,6 +1,7 @@
 ---
 import ProductDetailLayout from '../../layouts/ProductDetailLayout.astro';
-
+// [BƯỚC 1] Import component Icon
+import { Icon } from 'astro-icon/components';
 // 1. Lấy tất cả các file markdown tours
 export async function getStaticPaths() {
   const allTours = Object.values(import.meta.glob('../../data/tours/*.md', { eager: true }));
@@ -42,9 +43,12 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
   ctaButtonText={frontmatter.ctaButtonText}
 >
 
-  <div slot="about-list">
+<div slot="about-list">
     {frontmatter.meta_list.map((item: any) => (
-      <li><i class={item.icon}></i> {item.text}</li>
+      <li class="d-flex align-items-center mb-2">
+        <Icon name={item.icon} class="me-2 text-danger" width="20" height="20" />
+        <span>{item.text}</span>
+      </li>
     ))}
   </div>
 
@@ -55,8 +59,10 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
   <Fragment slot="highlights">
     {frontmatter.highlights.map((highlight: any) => (
       <div class="col-md-4">
-        <div class="highlight-card">
-          <i class={highlight.icon}></i>
+        <div class="highlight-card text-center p-3">
+          <div class="mb-3 d-flex justify-content-center">
+            <Icon name={highlight.icon} class="text-warning" width="40" height="40" />
+          </div>
           <h5>{highlight.title}</h5>
           <p>{highlight.desc}</p>
         </div>
@@ -73,7 +79,7 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
             <div class="review-image-box review-lightbox-trigger mb-2" 
                  data-src={review.images.main} style="height: 220px;">
               <img src={review.images.main} alt="Main review image" class="review-img-cover rounded" />
-              <div class="zoom-overlay rounded"><i class="fa-solid fa-expand"></i></div>
+              <div class="zoom-overlay rounded"><Icon name="fa6-solid:expand" width="20" height="20" color="white" /></div>
             </div>
             
             <div class="review-thumbs-row">
@@ -92,7 +98,7 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
               
               <div class="review-meta mt-2 mb-3">
                 <span class="stars text-warning">
-                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <Icon name="fa6-solid:star" /><Icon name="fa6-solid:star" /><Icon name="fa6-solid:star" /><Icon name="fa6-solid:star" /><Icon name="fa6-solid:star" />
                 </span>
                 <span class="meta-dot">•</span>
                 <span class="review-date">{review.date}</span>
@@ -118,7 +124,7 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
         <div class="timeline-dot"></div>
         <div class="timeline-header">
           <h5>{item.title}</h5>
-          <i class="fa-solid fa-plus timeline-toggle"></i>
+          <i class="fa6-solid fa-plus timeline-toggle"></i>
         </div>
         <div class="timeline-content">
           <p>{item.desc}</p>

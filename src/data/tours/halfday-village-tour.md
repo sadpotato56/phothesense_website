@@ -17,31 +17,31 @@ reviewId: "village-reviews"
 
 # Danh sách thông tin (slot="about-list")
 meta_list:
-  - icon: "fa-solid fa-clock"
+  - icon: "fa6-solid:clock"
     text: "Duration: 6 hours"
-  - icon: "fa-solid fa-location-dot"
+  - icon: "fa6-solid:location-dot"
     text: "Location: Hanoi Countryside"
-  - icon: "fa-solid fa-camera"
+  - icon: "fa6-solid:camera"
     text: "Highlights: World-famous Incense Drying Field & Ancient Hat Village"
-  - icon: "fa-solid fa-hand-sparkles"
+  - icon: "fa6-solid:hand-sparkles"
     text: "Hands-on: Make your own Incense & Design a Conical Hat"
-  - icon: "fa-solid fa-book-open"
+  - icon: "fa6-solid:book-open"
     text: "Culture: Learn the legend of the Dragon (Thang Long & Ha Long)"
-  - icon: "fa-solid fa-car"
+  - icon: "fa6-solid:car"
     text: "Includes: Limousin Car, Artisan Workshop Fees, Local Guide"
-  - icon: "fa-solid fa-rotate-left"
+  - icon: "fa6-solid:rotate-left"
     text: "Free cancellation up to 24 hours in advance"
 
 # Danh sách nổi bật (slot="highlights")
 highlights:
   - title: "The Viral Incense Field"
-    icon: "fa-solid fa-camera-retro"
+    icon: "fa6-solid:camera-retro"
     desc: "Capture the iconic photo amidst thousands of red incense bundles drying in the sun—a visual masterpiece of Vietnam."
   - title: "16 Rings of Perfection"
-    icon: "fa-solid fa-hat-cowboy"
+    icon: "fa6-solid:hat-cowboy"
     desc: "Discover the 13-hour process of making a 'Non La'. Iron the palm leaves yourself and learn why this hat is 100% waterproof."
   - title: "Tales of the Dragon"
-    icon: "fa-solid fa-dragon"
+    icon: "fa6-solid:dragon"
     desc: "Understand the connection between Thang Long (Rising Dragon) and Ha Long (Descending Dragon) and how geography shaped the Old Quarter's 36 streets."
 
 # Lịch trình (slot="itinerary")

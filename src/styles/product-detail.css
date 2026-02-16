@@ -247,7 +247,7 @@ body {
   margin-bottom: 10px;
 }
 
-.about i {
+.about svg {
   color: #EF3C32;
   margin-right: 8px;
 }
@@ -283,7 +283,7 @@ body {
   height: 100%;
 }
 
-.highlight-card i {
+.highlight-card svg {
   font-size: 3rem;
   color: var(--ph-primary); /* Vàng */
   margin-bottom: 20px;
@@ -305,7 +305,7 @@ body {
   opacity: 0.85;
 }
 
-.highlight-card:hover i {
+.highlight-card:hover svg {
   transform: translateY(-5px) scale(1.1);
 }
 
@@ -453,7 +453,7 @@ a.review-card:hover {
   z-index: 2;
 }
 
-.zoom-overlay i {
+.zoom-overlay svg {
   color: #fff;
   font-size: 2rem;
   text-shadow: 0 2px 5px rgba(0,0,0,0.5);
@@ -785,12 +785,12 @@ a.review-card:hover {
     visibility: hidden;
   }
 
-  .gallery-arrow i {
+  .gallery-arrow svg {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: 50%;
     color: #FBDC47; /* Màu vàng brand cho icon */
     margin: 0 !important; /* Xóa margin để icon căn giữa hoàn hảo */
   }

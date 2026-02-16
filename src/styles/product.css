@@ -64,9 +64,12 @@ body {
   gap: 6px;
 }
 
-.mobile-filter-dropdown {
-  display: none; /* Mặc định ẩn dropdown trên desktop */
+@media (min-width: 992px) {
+    .mobile-filter-dropdown {
+    display: none !important;
+  }
 }
+
 
 /* ---------- Filter Chip (Nút bấm) ---------- */
 .filter-chip {
@@ -87,7 +90,7 @@ body {
   flex-shrink: 0;
 }
 
-.filter-chip.with-icon i {
+.filter-chip.with-icon svg {
   font-size: 14px;
   color: var(--ph-navy);
 }
@@ -99,7 +102,7 @@ body {
 }
 
 .filter-chip:hover i,
-.filter-chip.active i {
+.filter-chip.active svg {
   color: var(--ph-text-light);
 }
 
@@ -127,21 +130,24 @@ body {
 
 .sort-dropdown {
   position: relative;
+  display: inline;
 }
 
 /* Mũi tên custom cho select */
-.sort-dropdown::after {
-  content: "\f107"; /* FontAwesome chevron-down */
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
+.dropdown-icon {
   position: absolute;
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none;
-  font-size: 13px;
+  pointer-events: none; /* QUAN TRỌNG: Để click vào icon vẫn mở được select */
+  
+  /* Thay thế font-size bằng width/height */
+  width: 13px; 
+  height: 13px;
+  
   color: #1C4278;
   opacity: 0.8;
+  z-index: 1; /* Đảm bảo nó nổi lên trên */
 }
 
 .sort-select {
@@ -283,8 +289,8 @@ body {
   margin-bottom: 12px;
 }
 
-.meta-info .location i { color: var(--ph-primary); margin-right: 4px; }
-.meta-info .rating i { color: #FFC107; margin-right: 4px; }
+.meta-info .location svg { color: var(--ph-primary); margin-right: 4px; }
+.meta-info .rating svg { color: #FFC107; margin-right: 4px; }
 
 .card-title {
   margin: 0 0 15px;

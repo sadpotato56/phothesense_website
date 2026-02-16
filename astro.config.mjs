@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
+import icon from 'astro-icon';
 // https://astro.build/config
 export default defineConfig({
   // 1. URL của trang web (Ví dụ: https://username.github.io)
@@ -8,4 +8,8 @@ export default defineConfig({
   
   // 2. Tên repository (Ví dụ: /ten-repo). Bắt buộc nếu không phải repo chính.
   base: '/', 
+
+  integrations: [
+    icon(),
+  ],
 });

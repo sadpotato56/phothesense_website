@@ -1,3 +1,7 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
 <footer class="pts-footer">
   <div class="container">
     <div class="footer-inner">
@@ -15,9 +19,9 @@
       <div class="footer-col links-col">
         <h4>Experiences</h4>
         <nav class="footer-nav">
-          <a href="product.html?type=workshop">Local Workshops</a>
-          <a href="product.html?type=village">Village Journeys</a>
-          <a href="product.html?type=photography">Private Photography</a>
+          <a href="/experience?type=workshop">Local Workshops</a>
+          <a href="/experience?type=city-tour">Village Journeys</a>
+          <a href="/experience?type=walking-tour">Private Photography</a>
         </nav>
       </div>
 
@@ -41,10 +45,18 @@
         </a>
 
         <div class="footer-social">
-          <a href="https://wa.me/message/EWEIMPDVGCL7I1" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          <a href="https://www.instagram.com/phothesense/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/@PhotheSense" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-          <a href="https://www.facebook.com/profile.php?id=100066745162486" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://wa.me/message/EWEIMPDVGCL7I1" aria-label="WhatsApp">
+            <Icon name="fa6-brands:whatsapp" />
+          </a>
+          <a href="https://www.instagram.com/phothesense/" aria-label="Instagram">
+            <Icon name="fa6-brands:instagram" />
+          </a>
+          <a href="https://www.youtube.com/@PhotheSense" aria-label="YouTube">
+            <Icon name="fa6-brands:youtube" />
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100066745162486" aria-label="Facebook">
+            <Icon name="fa6-brands:facebook-f" />
+          </a>
         </div>
         
       </div>

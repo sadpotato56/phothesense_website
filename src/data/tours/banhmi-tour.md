@@ -17,31 +17,31 @@ reviewId: "banhmi-reviews"
 
 # Danh sách thông tin (slot="about-list")
 meta_list:
-  - icon: "fa-solid fa-clock"
+  - icon: "fa6-solid:clock"
     text: "Duration: 3 – 3.5 hours"
-  - icon: "fa-solid fa-location-dot"
+  - icon: "fa6-solid:location-dot"
     text: "Location: Hanoi Old Quarter & Dong Xuan Market"
-  - icon: "fa-solid fa-people-group"
+  - icon: "fa6-solid:people-group"
     text: "Group Size: Small group (Max 8 people) for the best street food experience"
-  - icon: "fa-solid fa-language"
+  - icon: "fa6-solid:language"
     text: "Language: English, Vietnamese"
-  - icon: "fa-solid fa-leaf"
+  - icon: "fa6-solid:leaf"
     text: "Dietary: Banh Mi Lover"
-  - icon: "fa-solid fa-utensils"
+  - icon: "fa6-solid:utensils"
     text: "Includes: 5 Banh Mi tastings, 1 Signature Drink, Local Guide"
-  - icon: "fa-solid fa-rotate-left"
+  - icon: "fa6-solid:rotate-left"
     text: "Free cancellation up to 24 hours in advance"
 
 # Danh sách nổi bật (slot="highlights")
 highlights:
   - title: "The 'Ghost Cart' Chase"
-    icon: "fa-solid fa-hourglass-half"
+    icon: "fa6-solid:hourglass-half"
     desc: "Taste the legendary Banh Mi from a mobile cart that vanishes after 3 hours. It’s the 'Hanoi flavor' in a single, urgent bite."
   - title: "Past, Present & Future"
-    icon: "fa-solid fa-utensils"
+    icon: "fa6-solid:utensils"
     desc: "Experience the evolution of Banh Mi: from the classic French baguette to modern fusions and a surprising sweet dessert version."
   - title: "The Rooftop Finale"
-    icon: "fa-solid fa-cloud-sun"
+    icon: "fa6-solid:cloud-sun"
     desc: "Escape the street noise. End your journey at a hidden rooftop cafe with a stunning view of Hoan Kiem Lake and a signature drink."
 
 # Lịch trình (slot="itinerary")

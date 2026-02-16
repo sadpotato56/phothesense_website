@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import Layout from '../layouts/Layout.astro';
 import '../styles/product.css';
 
@@ -26,7 +27,7 @@ function getSlug(file: string) {
   <body data-header="subpage">
     
     <section class="filter-bar">
-      <button class="filter-arrow filter-arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="filter-arrow filter-arrow-left" aria-label="Scroll left"><Icon name="fa6-solid:chevron-left" class="arrow-icon" /></button>
 
       <div class="filter-scroll-container">
         <div class="filter-group">
@@ -44,6 +45,7 @@ function getSlug(file: string) {
                   <option value="ninh-binh">Ninh Binh</option>
                   <option value="sapa">Sapa</option>
               </select>
+              <Icon name="fa6-solid:chevron-down" class="dropdown-icon" />
           </div>
         </div>
 
@@ -62,6 +64,7 @@ function getSlug(file: string) {
                   <option value="city-tour">City Tour</option>
                   <option value="walking-tour">Walking Tour</option>
               </select>
+              <Icon name="fa6-solid:chevron-down" class="dropdown-icon" />
           </div>
         </div>
 
@@ -73,14 +76,15 @@ function getSlug(file: string) {
             <option value="price-desc">Price: High to Low</option>
             <option value="rating">Top Rated</option>
           </select>
+          <Icon name="fa6-solid:chevron-down" class="dropdown-icon" />
         </div>
 
         <button class="filter-chip with-icon" data-cal-link="phothesense/quick-chat" data-cal-namespace="quick-chat" data-cal-config='{"layout":"month_view"}'>
-          <i class="fas fa-calendar-alt"></i><span>Dates</span>
+          <Icon name="fa6-solid:calendar-days" /><span>Dates</span>
         </button>
       </div>
 
-      <button class="filter-arrow filter-arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+      <button class="filter-arrow filter-arrow-right" aria-label="Scroll right"><Icon name="fa6-solid:chevron-right" class="arrow-icon" /></button>
     </section>
 
     <main class="product-archive">
@@ -124,10 +128,10 @@ function getSlug(file: string) {
                       <div class="card-body">
                         <div class="meta-info">
                           <span class="location">
-                            <i class="fa-solid fa-location-dot"></i> 
+                            <Icon name="fa6-solid:location-dot" class="location-icon" />
                             {fm.meta_list ? fm.meta_list.find((i:any) => i.icon.includes('location'))?.text.replace('Location: ', '') : 'Vietnam'}
                           </span>
-                          <span class="rating"><i class="fa-solid fa-star"></i> 5.0 (New)</span>
+                          <span class="rating"><Icon name="fa6-solid:star" class="star-icon" /> 5.0 (New)</span>
                         </div>
 
                         <h3 class="card-title">
@@ -143,7 +147,7 @@ function getSlug(file: string) {
 
                         <div class="card-footer-info">
                           <span class="duration">
-                            <i class="fa-regular fa-clock"></i> 
+                            <Icon name="fa6-solid:clock" />
                             {fm.meta_list ? fm.meta_list.find((i:any) => i.icon.includes('clock'))?.text.replace('Duration: ', '') : ''}
                           </span>
                           <div class="price-block">

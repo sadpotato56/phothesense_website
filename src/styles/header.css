@@ -33,12 +33,23 @@
 
 /* Hamburger */
 .navbar-toggler {
-  border: none;
-  background: none;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 5000 !important;
 }
 
+@media (min-width: 992px) {
+  .navbar-toggler {
+    display: none !important;
+  }
+}
 
 .navbar-toggler-icon {
   background-image: none !important;
@@ -46,7 +57,7 @@
   height: 2px;
   background-color: #ffffff;
   position: relative;
-  display: inline-block;
+  display: block;
   transition: all 0.3s ease-in-out;
 }
 
@@ -70,7 +81,7 @@
 }
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-  background: none;
+  background-color: transparent !important;
 }
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
@@ -180,21 +191,7 @@
 
 /* ====================== HAMBURGER CHO SUBPAGE ====================== */
 
-.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-  background: none !important;
-}
 
-.subpage-header .navbar-toggler-icon,
-.subpage-header .navbar-toggler-icon::before,
-.subpage-header .navbar-toggler-icon::after {
-  background-color: #1C4278 !important; /* xanh đậm */
-}
-
-/* Khi mở menu trên subpage (chuyển sang X) */
-.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
-.subpage-header .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
-  background-color: #1C4278 !important;
-}
 
 }
 
