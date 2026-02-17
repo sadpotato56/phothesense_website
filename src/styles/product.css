@@ -275,7 +275,7 @@ body {
 
 /* Content Body */
 .card-body {
-  padding: 20px 24px;
+  padding: 20px 24px !important;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
