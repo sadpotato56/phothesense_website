@@ -442,8 +442,16 @@ body {
   /* Ẩn ảnh nếu muốn gọn, hoặc giữ lại tùy ý. 
      Ở đây ta giữ lại nhưng cho thấp hơn */
   .our-people__media {
-    height: 300px;
-    margin-bottom: 10px;
+    display: none !important;/* Ẩn ảnh lớn trên mobile */
+  }
+
+  .our-people__img-mobile {
+    width: 100%;
+    height: 240px; /* Chiều cao cố định giúp các ảnh đều nhau */
+    object-fit: cover; /* Tránh méo hình */
+    border-radius: 12px; /* Bo góc mềm mại */
+    margin-bottom: 16px; /* Cách chữ bên dưới một khoảng nhỏ */
+    display: block;
   }
 
   /* Ẩn Panel Desktop cũ */
@@ -510,6 +518,10 @@ body {
 */
 @media (min-width: 992px) {
   /* Layout chia cột: Ảnh | Danh sách */
+  .our-people__img-mobile {
+    display: none !important;
+  }
+
   .our-people__split {
     grid-template-columns: 1fr 1fr; /* 50% - 50% */
     align-items: start;

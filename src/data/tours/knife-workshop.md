@@ -20,7 +20,7 @@ reviewId: "knife-reviews"
 meta_list:
   - { icon: "fa6-solid:clock", text: "Duration: 2–3 hours" }
   - { icon: "fa6-solid:location-dot", text: "Location: Da Sy blacksmith village in Hanoi" }
-  - { icon: "fa6-solid:user-tie", text: "Master Artisan: Vietnam only female knife-making artisan" }
+  - { icon: "fa6-solid:user-tie", text: "Master Artisan: Vietnam knife-making artisan" }
   - { icon: "fa6-solid:users", text: "Private or small group workshop" }
   - { icon: "fa6-solid:language", text: "Guide & host: English, Vietnamese" }
   - { icon: "fa6-solid:clock-rotate-left", text: "Free cancellation up to 24 hours in advance" }
