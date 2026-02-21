@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
+import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   // 1. URL của trang web (Ví dụ: https://username.github.io)
@@ -9,9 +10,7 @@ export default defineConfig({
   // 2. Tên repository (Ví dụ: /ten-repo). Bắt buộc nếu không phải repo chính.
   base: '/', 
 
-  integrations: [
-    icon(),
-  ],
+  integrations: [icon(), mdx()],
   build: {
     inlineStylesheets: 'always', // Tùy chọn: 'always', 'auto', hoặc 'never' | Đặt thành 'always' để luôn nhúng CSS vào HTML, giúp giảm số lượng yêu cầu HTTP và cải thiện hiệu suất tải trang.
   },

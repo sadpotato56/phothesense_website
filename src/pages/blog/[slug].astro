@@ -1,0 +1,26 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/Post_Layout.astro'; // Đảm bảo đường dẫn đúng
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  
+  // Khai báo rõ entry thuộc kiểu CollectionEntry<'blog'>
+  return blogEntries.map((entry: CollectionEntry<'blog'>) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// Khai báo Props nhận vào để TypeScript không báo lỗi "any" hay "never"
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await entry.render();
+---
+
+<PostLayout frontmatter={entry.data} headings={headings}>
+  <Content />
+</PostLayout>
