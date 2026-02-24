@@ -19,6 +19,7 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  ogImage?: string;
   headerType?: 'hero' | 'subpage';
 }
 
@@ -26,6 +27,7 @@ const {
   title = "PHOTHESENSE | Local Travel Experiences & Workshops in Vietnam",
   description = "Discover authentic local experiences in Hanoi, Ninh Binh, and Sapa. Join hands-on workshops, city tours, and walking tours.",
   image = "/picture/PTS_logo/logo.png",
+  ogImage = "/picture/PTS_logo/Logo_orangeColor.webp",
   
   headerType 
 } = Astro.props;
@@ -58,7 +60,7 @@ const finalHeaderType = headerType ? headerType : (isHomePage ? 'hero' : 'subpag
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={ogImage} />
 
     
     <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
