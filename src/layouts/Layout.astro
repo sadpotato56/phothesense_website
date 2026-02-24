@@ -18,7 +18,7 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
-  image?: string;
+  // image?: string;
   ogImage?: string;
   headerType?: 'hero' | 'subpage';
 }
@@ -26,8 +26,8 @@ interface Props {
 const { 
   title = "PHOTHESENSE | Local Travel Experiences & Workshops in Vietnam",
   description = "Discover authentic local experiences in Hanoi, Ninh Binh, and Sapa. Join hands-on workshops, city tours, and walking tours.",
-  image = "/picture/PTS_logo/logo.png",
-  ogImage = "/picture/PTS_logo/Logo_orangeColor.webp",
+  // image = "/picture/PTS_logo/logo.png",
+  ogImage = "/picture/PTS_logo/Logo_orangeColor.png",
   
   headerType 
 } = Astro.props;
@@ -37,7 +37,7 @@ const currentPath = Astro.url.pathname;
 const isHomePage = currentPath === base || currentPath === base.slice(0, -1) || currentPath === '/';
 const autoHeader = isHomePage ? 'hero' : 'subpage';
 const finalHeaderType = headerType ? headerType : (isHomePage ? 'hero' : 'subpage');
-
+const absoluteOgImage = new URL(ogImage, Astro.site ?? Astro.url.origin).href;
 
 ---
 
@@ -60,7 +60,7 @@ const finalHeaderType = headerType ? headerType : (isHomePage ? 'hero' : 'subpag
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={absoluteOgImage} />
 
     
     <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
