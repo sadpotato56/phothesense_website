@@ -61,6 +61,7 @@ const absoluteOgImage = new URL(ogImage, Astro.site ?? Astro.url.origin).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:url" content={Astro.url.href} />
 
     
     <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
