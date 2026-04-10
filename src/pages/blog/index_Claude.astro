@@ -1,12 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import Layout from "../../layouts/Layout.astro";
+import { getCollection } from 'astro:content';
+import BlogCard from '../../components/Blog_post_card.astro';
 
-// 1. Lấy toàn bộ bài viết từ collection 'blog'
+// 1. Lấy toàn bộ bài viết
 const allPosts = await getCollection('blog');
 
-// 2. Hàm hỗ trợ xử lý ngày tháng DD/MM/YYYY
+// 2. Hàm parse date "DD/MM/YYYY" → Date object
 const parseDate = (dateStr: string) => {
   if (dateStr.includes('/')) {
     const [day, month, year] = dateStr.split('/');
@@ -15,16 +16,15 @@ const parseDate = (dateStr: string) => {
   return new Date(dateStr);
 };
 
-// 3. Hàm tính thời gian đọc (giữ logic giống trang all.astro)
+// 3. Hàm tính thời gian đọc (200 từ/phút)
 const calculateReadTime = (text: string) => {
   const words = text.trim().split(/\s+/).length;
-  const time = Math.ceil(words / 200);
-  return `${time} Min Read`;
+  return `${Math.ceil(words / 200)} Min Read`;
 };
 
-// 4. Sắp xếp mới nhất lên đầu và lấy đúng 8 bài
-const sortedPosts = allPosts
-  .sort((a, b) => parseDate(b.data.date).valueOf() - parseDate(a.data.date).valueOf())
+// 4. Sort mới nhất → cũ nhất, lấy 8 bài
+const latestPosts = allPosts
+//   .sort((a, b) => parseDate(b.data.date).valueOf() - parseDate(a.data.date).valueOf())
   .slice(0, 8);
 ---
 
@@ -46,7 +46,7 @@ const sortedPosts = allPosts
             --color-text-main: #1a1a1a;
             --color-text-sub: #555;
             --color-bg-light: #f4f4f4;
-            --color-accent-pink: #ffcce6; /* Màu hồng nhạt giống mẫu */
+            --color-accent-pink: #ffcce6;
             --color-border: #e0e0e0;
             --spacing-container: 20px;
             --max-width: 1540px;
@@ -141,7 +141,6 @@ const sortedPosts = allPosts
             gap: 8px;
         }
 
-        /* Màu mặc định cho nút (Đen) */
         .nav-btn {
             width: 44px;
             height: 44px;
@@ -167,218 +166,48 @@ const sortedPosts = allPosts
             color: white;
         }
 
-/* --- 3. ATTRACTIONS GRID (Image Cards) --- */
-.attractions-grid {
-    display: flex;
-    gap: 24px;                 /* Khoảng cách giữa các thẻ */
-    overflow-x: auto;          /* Cho phép cuộn ngang */
-    scroll-snap-type: x mandatory; 
-    scroll-behavior: smooth;    /* Cuộn mượt khi bấm nút */
-    padding: 20px 2px;         /* Khoảng trống cho bóng đổ (shadow) */
-    
-    /* Ẩn thanh cuộn */
-    scrollbar-width: none;     /* Firefox */
-    -ms-overflow-style: none;  /* IE/Edge */
-}
-
-.attractions-grid::-webkit-scrollbar {
-    display: none;             /* Chrome/Safari */
-}
-
-        /* --- Khung thẻ bao ngoài --- */
-.attraction-card {
-    background: #FFFCEE;
-    border-radius: 12px;
-    overflow: hidden; /* Để ảnh không bị lòi ra khỏi góc bo */
-    
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%; /* Để các thẻ cao bằng nhau */
-    display: flex;
-    flex-direction: column;
-}
-
-/* --- Ảnh --- */
-.card-image-wrapper {
-    position: relative;
-    padding-top: 80%; 
-    overflow: hidden;
-}
-
-.card-image-wrapper img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.attraction-card:hover .card-image-wrapper img {
-    transform: scale(1.05); /* Zoom nhẹ khi hover */
-}
-
-/* --- Phần nội dung bên dưới --- */
-/* --- Phần nội dung bên dưới --- */
-.card-body {
-    /* Tăng padding: 20px -> 28px (trên dưới) và 24px (trái phải) */
-    padding: 10px 4px; 
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-/* 1. Dòng Meta (Ngày & Giờ) */
-.card-meta {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    color: #888;
-    font-weight: 600; /* Đậm hơn chút cho dễ đọc */
-    text-transform: uppercase;
-    letter-spacing: 1px; /* Tăng khoảng cách chữ cho thoáng */
-    
-    /* Tăng khoảng cách xuống tiêu đề: 10px -> 16px */
-    margin-bottom: 16px; 
-}
-
-.meta-read-time {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* Đẩy sang phải */
-}
-.meta-read-time svg {
-    margin-right: 6px; /* Cách icon xa chữ hơn chút */
-    align-items: center;
-}
-
-/* 2. Tiêu đề */
-.attraction-title {
-    /* Reset margin */
-    margin: 0; 
-    font-size: 20px; /* Tăng cỡ chữ lên chút: 18px -> 20px */
-    font-weight: 700;
-    line-height: 1.5; /* Tăng chiều cao dòng cho dễ đọc */
-    
-    /* Tăng khoảng cách xuống Location: 10px -> 16px */
-    margin-bottom: 16px; 
-}
-
-/* 3. Địa điểm (Phụ) */
-.meta-location {
-    font-size: 13px;
-    color: #666;
-    margin-top: auto;
-    
- 
-    padding-top: 16px; 
-}
-
-
-        .meta-location {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--color-text-sub);
-            margin-bottom: 8px;
+        /* --- 3. ATTRACTIONS GRID (Carousel) --- */
+        .attractions-grid {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 20px 2px;
+            scrollbar-width: none;     /* Firefox */
+            -ms-overflow-style: none;  /* IE/Edge */
         }
 
-        .attraction-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            padding-top: 10px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid #000000;
+        .attractions-grid::-webkit-scrollbar {
+            display: none;             /* Chrome/Safari */
         }
 
-        /* --- TEst --- */
+        /* Mỗi item trong carousel — thay thế .attraction-card-link cũ */
+        .carousel-item {
+            /* Desktop: hiện 3.5 thẻ */
+            flex: 0 0 calc((100% - (24px * 3)) / 3.5);
+            min-width: calc((100% - (24px * 3)) / 3.5);
+            scroll-snap-align: start;
+        }
 
-        /* --- Link bao ngoài cùng (để bỏ gạch chân mặc định) --- */
-/* Định dạng từng thẻ Link */
-.attraction-card-link {
-    /* Desktop: Hiển thị đúng 3.5 thẻ */
-    flex: 0 0 calc((100% - (24px * 3)) / 3.5); 
-    min-width: calc((100% - (24px * 3)) / 3.5);
-    
-    scroll-snap-align: start;  /* Hít vào lề khi cuộn */
-    text-decoration: none;
-    display: block;
-}
+        @media (max-width: 992px) {
+            /* Tablet: hiện 2.5 thẻ */
+            .carousel-item {
+                flex: 0 0 calc((100% - (24px * 2)) / 2.5);
+                min-width: calc((100% - (24px * 2)) / 2.5);
+            }
+        }
 
-@media (max-width: 992px) {
-    /* Tablet: Hiển thị 2.5 thẻ */
-    .attraction-card-link {
-        flex: 0 0 calc((100% - (24px * 2)) / 2.5);
-        min-width: calc((100% - (24px * 2)) / 2.5);
-    }
-}
-
-@media (max-width: 576px) {
-    .attractions-grid {
-        gap: 16px; /* Giảm gap trên mobile */
-    }
-    
-    /* Mobile: Hiển thị 1.3 - 1.5 thẻ để thẻ sau "ló" ra rõ hơn */
-    .attraction-card-link {
-        flex: 0 0 75%; /* Tương đương khoảng 1.3 thẻ */
-        min-width: 75%;
-    }
-}
-
-/* --- Container của chữ chạy (Slide Up Text) --- */
-.slide-up-text {
-    position: relative;
-    overflow: hidden; /* Che phần chữ nằm ngoài khung */
-    display: block;   /* Hoặc inline-block */
-    margin-top: auto; /* Đẩy xuống đáy card */
-    
-    /* Typography cho chữ địa điểm */
-    font-size: 13px;
-    font-weight: 600;
-    color: #666;      /* Màu chữ mặc định */
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    height: 20px;     /* Cố định chiều cao để không bị nhảy layout */
-}
-
-/* 1. Xử lý chữ gốc (HO CHI MINH CITY) */
-.slide-up-text span {
-    display: block;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 2. Tạo chữ ảo từ data-hover-text (READ STORY ->) */
-.slide-up-text::after {
-    content: attr(data-hover-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    
-    /* Ban đầu đẩy nó xuống dưới để ẩn đi */
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Style cho chữ Read Story */
-    color: #1C4278; /* Màu xanh Navy hoặc màu bạn thích */
-    font-weight: 700;
-}
-
-/* --- KHI HOVER VÀO CARD (QUAN TRỌNG) --- */
-
-/* Đẩy chữ gốc lên trên */
-.attraction-card-link:hover .slide-up-text span {
-    transform: translateY(-100%);
-}
-
-/* Kéo chữ Read Story từ dưới lên */
-.attraction-card-link:hover .slide-up-text::after {
-    transform: translateY(0);
-}
-
-        /* --- END OF TEST --- */
+        @media (max-width: 576px) {
+            .attractions-grid {
+                gap: 16px;
+            }
+            /* Mobile: hiện 1.3 thẻ */
+            .carousel-item {
+                flex: 0 0 75%;
+                min-width: 75%;
+            }
+        }
 
         /* --- 4. PLANNING TOOLS SECTION (Info Cards) --- */
         .section-planning {
@@ -407,7 +236,7 @@ const sortedPosts = allPosts
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 cột */
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
 
@@ -416,7 +245,7 @@ const sortedPosts = allPosts
             padding: 40px 32px;
             display: flex;
             flex-direction: column;
-            min-height: 320px; /* Đảm bảo độ cao đồng đều */
+            min-height: 320px;
             transition: transform 0.3s;
         }
 
@@ -445,7 +274,7 @@ const sortedPosts = allPosts
             color: #333;
             line-height: 1.6;
             margin-bottom: 30px;
-            flex-grow: 1; /* Đẩy footer xuống dưới cùng */
+            flex-grow: 1;
         }
 
         .tool-footer {
@@ -463,13 +292,8 @@ const sortedPosts = allPosts
             gap: 8px;
         }
 
-        /* --- 5. RESPONSIVE MEDIA QUERIES --- */
-        
-        /* Tablet: Chuyển Attractions thành 2 cột, Tools thành 2 cột */
+        /* --- 5. RESPONSIVE --- */
         @media (max-width: 1024px) {
-            .attractions-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
             .tools-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -478,11 +302,7 @@ const sortedPosts = allPosts
             }
         }
 
-        /* Mobile: Chuyển tất cả về 1 cột */
         @media (max-width: 768px) {
-            .attractions-grid {
-                grid-template-columns: 1fr;
-            }
             .tools-grid {
                 grid-template-columns: 1fr;
             }
@@ -504,7 +324,7 @@ const sortedPosts = allPosts
 
     <main class="container">
         
-<section class="section-overview">
+        <section class="section-overview">
             <div class="intro-block">
                 <h1>Vietnam</h1>
                 <p>A land of staggering natural beauty and cultural complexities, of dynamic megacities and hill-tribe villages, Vietnam is unforgettably compelling.</p>
@@ -521,41 +341,23 @@ const sortedPosts = allPosts
                 </div>
             </div>
 
+            <!-- CAROUSEL: Tự động render từ các file .mdx trong src/content/blog/ -->
+            <div class="attractions-grid">
+                {latestPosts.map((post) => (
+                    <div class="carousel-item">
+                        <BlogCard
+                            title={post.data.title}
+                            date={post.data.date}
+                            readTime={calculateReadTime(post.body)}
+                            location={post.data.category}
+                            image={post.data.thumbnail}
+                            url={`/blog/${post.slug}`}
+                        />
+                    </div>
+                ))}
+            </div>
 
-        <div class="attractions-grid">
-            {sortedPosts.map((post) => (
-                <a href={`/blog/${post.slug}`} class="attraction-card-link">
-                    <article class="attraction-card">
-                        <div class="card-image-wrapper">
-                            <img 
-                                src={post.data.thumbnail} 
-                                alt={post.data.title} 
-                                loading="lazy" 
-                            />
-                        </div>
-
-                        <div class="card-body">
-                            <div class="card-meta">
-                                <span class="meta-date">{post.data.date}</span>
-                                <span class="meta-read-time">
-                                    <Icon name="fa6-solid:clock" /> {calculateReadTime(post.body)}
-                                </span>
-                            </div>
-
-                            <h3 class="font-label attraction-title">
-                                {post.data.title}
-                            </h3>
-
-                            <div class="slide-up-text" data-hover-text="READ STORY &rarr;">
-                                <span>{post.data.category}</span>
-                            </div>
-                        </div>
-                    </article>
-                </a>
-            ))}
-        </div>
-
-</section>
+        </section>
 
         <section class="section-planning">
             <div class="planning-header-center">
@@ -566,10 +368,8 @@ const sortedPosts = allPosts
             <div class="tools-grid">
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    
                     <h3 class="tool-title">Best Things to Do</h3>
                     <p class="tool-desc">Experience the best of Vietnam with our pick of the top things to do.</p>
-                    
                     <div class="tool-footer">
                         <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
@@ -577,10 +377,8 @@ const sortedPosts = allPosts
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    
                     <h3 class="tool-title">Best Places to Visit</h3>
                     <p class="tool-desc">Plan your travels in Vietnam with our pick of the best places to visit.</p>
-                    
                     <div class="tool-footer">
                         <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
@@ -588,21 +386,17 @@ const sortedPosts = allPosts
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                    
                     <h3 class="tool-title">Best Time to Visit</h3>
                     <p class="tool-desc">Whether you're lured to Vietnam by the beaches or the food, find the best time.</p>
-                    
                     <div class="tool-footer">
-                        <a href="/blog/best-time-to-visit-vietnam-2026" class="link-read-more">Read Full Article →</a>
+                        <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
                 </article>
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                    
                     <h3 class="tool-title">Things to Know</h3>
                     <p class="tool-desc">Here are our best tips for your visit to Vietnam, from handling the climate to etiquette.</p>
-                    
                     <div class="tool-footer">
                         <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
@@ -610,10 +404,8 @@ const sortedPosts = allPosts
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    
                     <h3 class="tool-title">Transportation</h3>
                     <p class="tool-desc">Plan your travels around Vietnam with this guide to transport options.</p>
-                    
                     <div class="tool-footer">
                         <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
@@ -621,10 +413,8 @@ const sortedPosts = allPosts
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M21 9H3"></path><path d="M12 14h.01"></path></svg>
-                    
                     <h3 class="tool-title">Visa Requirements</h3>
                     <p class="tool-desc">Vietnam's visa rules have been loosened. You might not even need a visa at all.</p>
-                    
                     <div class="tool-footer">
                         <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
@@ -632,10 +422,8 @@ const sortedPosts = allPosts
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M21 9H3"></path><path d="M12 14h.01"></path></svg>
-                    
                     <h3 class="tool-title">Money & Cost</h3>
                     <p class="tool-desc">Vietnam is a budget-friendly destination. Here's what you should know about costs and money matters.</p>
-                    
                     <div class="tool-footer">
                         <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
@@ -643,10 +431,8 @@ const sortedPosts = allPosts
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M21 9H3"></path><path d="M12 14h.01"></path></svg>
-                    
                     <h3 class="tool-title">Traveling with Kids</h3>
                     <p class="tool-desc">Vietnam is a great destination for families. Here's what you should know about traveling with children.</p>
-                    
                     <div class="tool-footer">
                         <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
@@ -654,81 +440,63 @@ const sortedPosts = allPosts
 
                 <article class="tool-card">
                     <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M21 9H3"></path><path d="M12 14h.01"></path></svg>
-                    
                     <h3 class="tool-title">eSims, WiFi & Connectivity</h3>
                     <p class="tool-desc">Learn about the best ways to stay connected in Vietnam, including eSims, local WiFi options, and mobile data plans. Which Service provider is best for you in Vietnam.</p>
-                    
                     <div class="tool-footer">
-                        <a href="/blog/ultimate-guide-to-staying-connected-in-vietnam-2026" class="link-read-more">Read Full Article →</a>
+                        <a href="/post/post-1" class="link-read-more">Read Full Article →</a>
                     </div>
                 </article>
             </div>
         </section>
     </main>
 
-     <div id="footer-placeholder"></div>
+    <div id="footer-placeholder"></div>
 </body>
-<script src="../../script/script.js">
-</script>
-<script>
 
+<script src="../../script/script.js"></script>
+<script>
 function initAttractionsCarousel() {
-    const grid = document.querySelector('.attractions-grid') 
-    const prevBtn = document.getElementById('prevStory') as HTMLButtonElement
+    const grid = document.querySelector('.attractions-grid') as HTMLElement;
+    const prevBtn = document.getElementById('prevStory') as HTMLButtonElement;
     const nextBtn = document.getElementById('nextStory') as HTMLButtonElement;
 
     if (!grid || !prevBtn || !nextBtn) return;
 
     function updateNavButtons() {
-        if (!grid || !prevBtn || !nextBtn) return;
         const scrollLeft = grid.scrollLeft;
         const scrollWidth = grid.scrollWidth;
         const clientWidth = grid.clientWidth;
 
-        // Kiểm tra nếu ở sát mép trái (Bắt đầu)
-        if (scrollLeft <= 5) { // 5px sai số để mượt hơn
+        if (scrollLeft <= 5) {
             prevBtn.disabled = true;
             nextBtn.disabled = false;
-        } 
-        // Kiểm tra nếu ở sát mép phải (Kết thúc)
-        else if (Math.ceil(scrollLeft + clientWidth) >= scrollWidth - 5) {
+        } else if (Math.ceil(scrollLeft + clientWidth) >= scrollWidth - 5) {
             nextBtn.disabled = true;
             prevBtn.disabled = false;
-        } 
-        // Ở giữa
-        else {
+        } else {
             prevBtn.disabled = false;
             nextBtn.disabled = false;
         }
     }
 
     function getScrollStep() {
-        // Lấy chiều rộng của một thẻ bài viết (bao gồm cả gap)
-        if (!grid) return 300;
-        const firstCard = grid.querySelector('.attraction-card-link');
+        // Đổi selector sang .carousel-item (class mới)
+        const firstCard = grid.querySelector('.carousel-item');
         return firstCard ? (firstCard as HTMLElement).offsetWidth + 24 : 300;
     }
 
     nextBtn.addEventListener('click', () => {
-        grid.scrollBy({
-            left: getScrollStep(),
-            behavior: 'smooth'
-        });
+        grid.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
     });
 
     prevBtn.addEventListener('click', () => {
-        grid.scrollBy({
-            left: -getScrollStep(),
-            behavior: 'smooth'
-        });
+        grid.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
     });
-    // --- 3. Lắng nghe sự kiện cuộn để đổi màu nút ---
-    grid.addEventListener('scroll', updateNavButtons);
 
-    // Chạy lần đầu tiên để thiết lập trạng thái nút khi vừa load trang
+    grid.addEventListener('scroll', updateNavButtons);
     updateNavButtons();
 }
-// Gọi hàm khi DOM đã sẵn sàng
+
 document.addEventListener('DOMContentLoaded', initAttractionsCarousel);
 </script>
 

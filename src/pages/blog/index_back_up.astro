@@ -1,31 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import Layout from "../../layouts/Layout.astro";
-
-// 1. Lấy toàn bộ bài viết từ collection 'blog'
-const allPosts = await getCollection('blog');
-
-// 2. Hàm hỗ trợ xử lý ngày tháng DD/MM/YYYY
-const parseDate = (dateStr: string) => {
-  if (dateStr.includes('/')) {
-    const [day, month, year] = dateStr.split('/');
-    return new Date(`${year}-${month}-${day}`);
-  }
-  return new Date(dateStr);
-};
-
-// 3. Hàm tính thời gian đọc (giữ logic giống trang all.astro)
-const calculateReadTime = (text: string) => {
-  const words = text.trim().split(/\s+/).length;
-  const time = Math.ceil(words / 200);
-  return `${time} Min Read`;
-};
-
-// 4. Sắp xếp mới nhất lên đầu và lấy đúng 8 bài
-const sortedPosts = allPosts
-  .sort((a, b) => parseDate(b.data.date).valueOf() - parseDate(a.data.date).valueOf())
-  .slice(0, 8);
 ---
 
 
@@ -523,38 +498,135 @@ const sortedPosts = allPosts
 
 
         <div class="attractions-grid">
-            {sortedPosts.map((post) => (
-                <a href={`/blog/${post.slug}`} class="attraction-card-link">
-                    <article class="attraction-card">
-                        <div class="card-image-wrapper">
-                            <img 
-                                src={post.data.thumbnail} 
-                                alt={post.data.title} 
-                                loading="lazy" 
-                            />
+
+            <a href="/post/post-1" class="attraction-card-link">
+                <article class="attraction-card">
+                    <div class="card-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=600" alt="Jade Emperor Pagoda" loading="lazy">
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="meta-date">October 12, 2025</span>
+                            <span class="meta-read-time">
+                                <Icon name="fa6-solid:clock" /> 5 min read
+                            </span>
                         </div>
 
-                        <div class="card-body">
-                            <div class="card-meta">
-                                <span class="meta-date">{post.data.date}</span>
-                                <span class="meta-read-time">
-                                    <Icon name="fa6-solid:clock" /> {calculateReadTime(post.body)}
-                                </span>
-                            </div>
+                        <h3 class="font-label attraction-title">
+                            Jade Emperor Pagoda
+                        </h3>
 
-                            <h3 class="font-label attraction-title">
-                                {post.data.title}
-                            </h3>
-
-                            <div class="slide-up-text" data-hover-text="READ STORY &rarr;">
-                                <span>{post.data.category}</span>
-                            </div>
+                        <div class="slide-up-text" data-hover-text="READ STORY &rarr;">
+                            <span>HO CHI MINH CITY</span>
                         </div>
-                    </article>
-                </a>
-            ))}
+                    </div>
+                </article>
+            </a>
+
+            <a href="/post/post-2" class="attraction-card-link">
+                <article class="attraction-card">
+                    <div class="card-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=600" alt="Jade Emperor Pagoda" loading="lazy">
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="meta-date">October 12, 2025</span>
+                            <span class="meta-read-time">
+                                <Icon name="fa6-solid:clock" /> 5 min read
+                            </span>
+                        </div>
+
+                        <h3 class="font-label attraction-title">
+                            Jade Emperor Pagoda
+                        </h3>
+
+                        <div class="slide-up-text" data-hover-text="READ STORY &rarr;">
+                            <span>HO CHI MINH CITY</span>
+                        </div>
+                    </div>
+                </article>
+            </a>
+
+            <a href="#" class="attraction-card-link">
+                <article class="attraction-card">
+                    <div class="card-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=600" alt="Jade Emperor Pagoda" loading="lazy">
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="meta-date">October 12, 2025</span>
+                            <span class="meta-read-time">
+                                <Icon name="fa6-solid:clock" /> 5 min read
+                            </span>
+                        </div>
+
+                        <h3 class="font-label attraction-title">
+                            Jade Emperor Pagoda
+                        </h3>
+
+                        <div class="slide-up-text" data-hover-text="READ STORY &rarr;">
+                            <span>HO CHI MINH CITY</span>
+                        </div>
+                    </div>
+                </article>
+            </a>
+
+            <a href="#" class="attraction-card-link">
+                <article class="attraction-card">
+                    <div class="card-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600" alt="Jade Emperor Pagoda" loading="lazy">
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="meta-date">January 21, 2026</span>
+                             
+                            <span class="meta-read-time">
+                                <Icon name="fa6-solid:clock" /> 10 min read
+                            </span>
+                        </div>
+
+                        <h3 class="font-label attraction-title">
+                            Ha Long Bay
+                        </h3>
+
+                        <div class="slide-up-text" data-hover-text="READ STORY &rarr;">
+                            <span>Quang Ninh Province </span>
+                        </div>
+                    </div>
+                </article>
+            </a>
+
+            <a href="#" class="attraction-card-link">
+                <article class="attraction-card">
+                    <div class="card-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600" alt="Jade Emperor Pagoda" loading="lazy">
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="meta-date">January 21, 2026</span>
+                             
+                            <span class="meta-read-time">
+                                <Icon name="fa6-solid:clock" /> 10 min read
+                            </span>
+                        </div>
+
+                        <h3 class="font-label attraction-title">
+                            Ha Long Bay
+                        </h3>
+
+                        <div class="slide-up-text" data-hover-text="READ STORY &rarr;">
+                            <span>Quang Ninh Province </span>
+                        </div>
+                    </div>
+                </article>
+            </a>
+
         </div>
-
 </section>
 
         <section class="section-planning">
@@ -593,7 +665,7 @@ const sortedPosts = allPosts
                     <p class="tool-desc">Whether you're lured to Vietnam by the beaches or the food, find the best time.</p>
                     
                     <div class="tool-footer">
-                        <a href="/blog/best-time-to-visit-vietnam-2026" class="link-read-more">Read Full Article →</a>
+                        <a href="#" class="link-read-more">Read Full Article →</a>
                     </div>
                 </article>
 
@@ -659,7 +731,7 @@ const sortedPosts = allPosts
                     <p class="tool-desc">Learn about the best ways to stay connected in Vietnam, including eSims, local WiFi options, and mobile data plans. Which Service provider is best for you in Vietnam.</p>
                     
                     <div class="tool-footer">
-                        <a href="/blog/ultimate-guide-to-staying-connected-in-vietnam-2026" class="link-read-more">Read Full Article →</a>
+                        <a href="/post/post-1" class="link-read-more">Read Full Article →</a>
                     </div>
                 </article>
             </div>
