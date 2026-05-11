@@ -57,6 +57,8 @@ itinerary:
 ---
 
 
-**The Space** You’ll arrive at our 100-year-old French colonial home, a calm and intimate space designed for slow discovery. The rooms are filled with Vietnamese cultural elements and traditional art pieces, collected and preserved by our family across generations. Guests often take time to wander, observe details, and enjoy the balcony during the experience. 
-**The Workshop** Guidance comes from locals who grew up with Hanoi’s coffee culture, using time-tested family recipes shaped by everyday practice. Alongside the techniques, you’ll hear the stories behind how these coffee styles came to life. Every step is explained clearly, and each cup is adjusted to your taste while keeping its traditional balance.
-**Coffee Beans** We share the knowledge and insights we’ve gathered and continue to refine over time. You’ll discover Vietnamese specialty coffee beans we’ve carefully collected, taste them along the way, and share your impressions.
+Guided by a passionate Coffee Master, you’ll brew six authentic Vietnamese coffee styles, from bold black and classic “brown” condensed milk coffee to Hanoi’s legendary egg coffee, tropical coconut coffee, smooth white coffee, and intriguingly complex salt coffee.
+
+Along the way, you’ll hear stories behind each recipe, uncover the culture of Vietnamese coffee, and pick up local insights to explore Hanoi like a seasoned insider.
+
+A seasonal Hanoi delicacy is thoughtfully paired to elevate this full sensory experience.
