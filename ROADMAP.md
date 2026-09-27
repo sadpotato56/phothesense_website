@@ -10,8 +10,8 @@ Xong và đã merge → `[x]`.
 - [ ] Thêm `CLAUDE.md` và `ROADMAP.md` vào repo
 
 ## Giai đoạn 1 — Tour Schema (safety net 2 tầng)
-- [ ] Bước 0: Đọc các trang dùng dữ liệu tour, báo field nào dùng ở đâu (không sửa gì)
-- [ ] Bước 1: Thêm `src/content.config.ts` (chưa trang nào dùng)
+- [x] Bước 0: Đọc các trang dùng dữ liệu tour, báo field nào dùng ở đâu (không sửa gì)
+- [x] Bước 1: Thêm `src/content.config.ts` (chưa trang nào dùng)
 - [ ] Bước 2: Chạy build, liệt kê cảnh báo / dữ liệu cần sửa
 - [ ] Bước 3: `[slug].astro` đọc dữ liệu từ collection (giao diện giữ nguyên)
 - [ ] Bước 4a: Ẩn section Highlights khi trống
