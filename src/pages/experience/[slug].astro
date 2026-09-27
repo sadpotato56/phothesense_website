@@ -2,23 +2,22 @@
 import ProductDetailLayout from '../../layouts/ProductDetailLayout.astro';
 // [BƯỚC 1] Import component Icon
 import { Icon } from 'astro-icon/components';
-// 1. Lấy tất cả các file markdown tours
+import { getCollection, render } from 'astro:content';
+// 1. Lấy tất cả tour từ collection 'tours' (khai báo trong src/content.config.ts)
+// Slug = id của entry = tên file (ví dụ: knife-workshop.md -> knife-workshop)
 export async function getStaticPaths() {
-  const allTours = Object.values(import.meta.glob('../../data/tours/*.md', { eager: true }));
-  
-  return allTours.map((tour: any) => {
-    // Lấy tên file làm slug (ví dụ: knife-workshop.md -> slug: knife-workshop)
-    const slug = tour.file.split('/').pop().replace('.md', '');
-    return {
-      params: { slug },
-      props: { tour }
-    };
-  });
+  const allTours = await getCollection('tours');
+
+  return allTours.map((tour) => ({
+    params: { slug: tour.id },
+    props: { tour }
+  }));
 }
 
 // 2. Nhận dữ liệu từ getStaticPaths
 const { tour } = Astro.props;
-const { Content, frontmatter } = tour;
+const frontmatter = tour.data;
+const { Content } = await render(tour);
 
 // 3. Tải file JSON Review tương ứng (Logic nâng cao)
 // Chúng ta load tất cả file JSON trong thư mục reviews
@@ -44,7 +43,7 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
 >
 
 <div slot="about-list">
-    {frontmatter.meta_list.map((item: any) => (
+    {(frontmatter.meta_list ?? []).map((item: any) => (
       <li class="d-flex align-items-center mb-2">
         <Icon name={item.icon} class="me-2 text-danger" width="20" height="20" />
         <span>{item.text}</span>
@@ -57,7 +56,7 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
   </div>
 
   <Fragment slot="highlights">
-    {frontmatter.highlights.map((highlight: any) => (
+    {(frontmatter.highlights ?? []).map((highlight: any) => (
       <div class="col-md-4">
         <div class="highlight-card text-center p-3">
           <div class="mb-3 d-flex justify-content-center">
@@ -119,7 +118,7 @@ if (frontmatter.reviewId && allReviews[reviewPath]) {
   </div>
 
   <div slot="itinerary">
-    {frontmatter.itinerary.map((item: any, index: number) => (
+    {(frontmatter.itinerary ?? []).map((item: any, index: number) => (
       <div class={`timeline-item ${index === 0 ? 'active' : ''}`}>
         <div class="timeline-dot"></div>
         <div class="timeline-header">

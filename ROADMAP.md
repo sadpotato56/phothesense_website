@@ -13,7 +13,7 @@ Xong và đã merge → `[x]`.
 - [x] Bước 0: Đọc các trang dùng dữ liệu tour, báo field nào dùng ở đâu (không sửa gì)
 - [x] Bước 1: Thêm `src/content.config.ts` (chưa trang nào dùng)
 - [x] Bước 2: Chạy build, liệt kê cảnh báo / dữ liệu cần sửa
-- [ ] Bước 3: `[slug].astro` đọc dữ liệu từ collection (giao diện giữ nguyên)
+- [x] Bước 3: `[slug].astro` đọc dữ liệu từ collection (giao diện giữ nguyên)
 - [ ] Bước 4a: Ẩn section Highlights khi trống
 - [ ] Bước 4b: Ẩn section Itinerary khi trống
 - [ ] Bước 4c: Ẩn section Reviews khi trống
