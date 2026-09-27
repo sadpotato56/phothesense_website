@@ -12,14 +12,22 @@ Xong và đã merge → `[x]`.
 ## Giai đoạn 1 — Tour Schema (safety net 2 tầng)
 - [x] Bước 0: Đọc các trang dùng dữ liệu tour, báo field nào dùng ở đâu (không sửa gì)
 - [x] Bước 1: Thêm `src/content.config.ts` (chưa trang nào dùng)
-- [ ] Bước 2: Chạy build, liệt kê cảnh báo / dữ liệu cần sửa
+- [x] Bước 2: Chạy build, liệt kê cảnh báo / dữ liệu cần sửa
 - [ ] Bước 3: `[slug].astro` đọc dữ liệu từ collection (giao diện giữ nguyên)
 - [ ] Bước 4a: Ẩn section Highlights khi trống
 - [ ] Bước 4b: Ẩn section Itinerary khi trống
 - [ ] Bước 4c: Ẩn section Reviews khi trống
 - [ ] Bước 4d: Ẩn gallery khi trống
-- [ ] Bước 5: Báo lỗi khi `reviewId` / `galleryJsonPath` điền sai
+- [x] Bước 5: Báo lỗi khi `reviewId` / `galleryJsonPath` điền sai (đã có trong schema ở Bước 1)
 - [ ] Bước 6: Xoá code tải dữ liệu cũ không còn dùng
+
+### Dữ liệu cần chuẩn hoá (chủ dự án tự làm, tìm thấy ở Bước 2)
+- [ ] `banhmi-reviews.json`, review "James H": 4 ảnh `/picture/review_pic/banhmi_rv2*.jpg` chưa có trong `public/` (một ảnh bị lặp)
+- [ ] `coffee-reviews.json`: cả 2 review để `date` trống
+- [ ] `sapa-easy-walking-for-kids-seniors.md`: `price` đang ghi "Giá giả định", cần giá thật
+- [ ] `coffee-workshop.md`: chú thích cũ ở `itinerary` ghi "lịch trình mẫu của Knife Workshop" (nội dung thật đã đúng)
+- [ ] `coffee-workshop.md`: dòng `meta_list` có icon địa điểm không có chữ "Location:", nên thẻ ở trang danh sách không hiện địa danh cụ thể
+- [ ] Trang danh sách có nút lọc "Ninh Binh" nhưng chưa có tour nào ở Ninh Bình
 
 ## Giai đoạn 2 — Tự động hoá nội dung
 - [ ] File mẫu cho sản phẩm mới (template tour `.md`)
