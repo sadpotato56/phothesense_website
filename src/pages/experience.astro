@@ -37,6 +37,7 @@ function getSlug(file: string) {
               <button class="filter-chip filter-location" data-location="hanoi">Hanoi</button>
               <button class="filter-chip filter-location" data-location="ninh-binh">Ninh Binh</button>
               <button class="filter-chip filter-location" data-location="sapa">Sapa</button>
+              <button class="filter-chip filter-location" data-location="ha-long">Ha Long</button>
           </div>
           <div class="sort-dropdown mobile-filter-dropdown">
               <select id="mobileLocationSelect" class="sort-select">
@@ -44,6 +45,7 @@ function getSlug(file: string) {
                   <option value="hanoi">Hanoi</option>
                   <option value="ninh-binh">Ninh Binh</option>
                   <option value="sapa">Sapa</option>
+                  <option value="ha-long">Ha Long</option>
               </select>
               <Icon name="fa6-solid:chevron-down" class="dropdown-icon" />
           </div>
@@ -284,6 +286,7 @@ function getSlug(file: string) {
         if (currentState.location === 'hanoi') locationTitle.textContent = 'Hanoi';
         else if (currentState.location === 'ninh-binh') locationTitle.textContent = 'Ninh Binh';
         else if (currentState.location === 'sapa') locationTitle.textContent = 'Sapa';
+        else if (currentState.location === 'ha-long') locationTitle.textContent = 'Ha Long';
         else locationTitle.textContent = originalTitle;
       }
 
