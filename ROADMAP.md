@@ -27,7 +27,23 @@ Xong và đã merge → `[x]`.
 - [ ] `sapa-easy-walking-for-kids-seniors.md`: `price` đang ghi "Giá giả định", cần giá thật
 - [ ] `coffee-workshop.md`: chú thích cũ ở `itinerary` ghi "lịch trình mẫu của Knife Workshop" (nội dung thật đã đúng)
 - [ ] `coffee-workshop.md`: dòng `meta_list` có icon địa điểm không có chữ "Location:", nên thẻ ở trang danh sách không hiện địa danh cụ thể
-- [ ] Trang danh sách có nút lọc "Ninh Binh" nhưng chưa có tour nào ở Ninh Bình
+- [x] Trang danh sách có nút lọc "Ninh Binh" nhưng chưa có tour nào ở Ninh Bình (đã thêm tour `ninh-binh-slow-escape`)
+
+### Tour mới: Ninh Binh Slow Escape & Ha Long Bay
+- [x] Thêm tour `ninh-binh-slow-escape` và `ha-long-bay-slow-day-cruise` vào collection
+- [x] Thêm "Ha Long" vào bộ lọc Location ở trang `/experience`
+- [x] Thẻ "NINH BINH SLOW ESCAPE" trên trang chủ trỏ tới `/experience/ninh-binh-slow-escape`
+
+### Dữ liệu còn thiếu của 2 tour mới (chủ dự án bàn rồi bổ sung)
+- [ ] Cả 2 tour: `calLink` / `calNamespace` đang tạm dùng `phothesense/quick-chat`, cần event Cal.com riêng
+- [ ] Cả 2 tour: `thumbnail` trống (thẻ ở trang danh sách hiện ảnh lỗi), `galleryJsonPath` trống, chưa có review
+- [ ] Ninh Binh: dòng "Duration" trong `meta_list` (thẻ ở trang danh sách chưa hiện thời lượng)
+- [ ] Ha Long: `itinerary` 2 ngày 1 đêm (phần "The Journey" đang trống)
+- [ ] Ha Long: `type` chưa chốt (nút lọc "Experience" không bắt được tour này)
+- [ ] Ha Long: tên đối tác cruise (licensed cruise partner), chính sách huỷ
+- [ ] Ha Long: giá ₫3,500,000 là giá/người hay giá/cabin?
+- [ ] Ha Long: slug `ha-long-bay-slow-day-cruise` còn chữ "day" dù tour là cruise 1 đêm — có đổi slug không? (đổi slug = đổi đường dẫn)
+- [ ] Trang chủ, thẻ Ninh Binh: chữ "1 day" và "From $49" viết cứng, chưa khớp giá ₫1,060,000
 
 ## Giai đoạn 2 — Tự động hoá nội dung
 - [ ] File mẫu cho sản phẩm mới (template tour `.md`)
