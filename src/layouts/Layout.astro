@@ -96,6 +96,9 @@ const absoluteOgImage = new URL(ogImage, Astro.site ?? Astro.url.origin).href;
     src="https://www.facebook.com/tr?id=1718793789205425&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
+
+    <!-- Google Preferred Source: thư viện cho nút "Add as preferred source" (nút nằm trong Footer) -->
+    <script is:inline async src="https://news.google.com/swg/js/v1/publisher.js"></script>
   </head>
   <body data-header={finalHeaderType}>
     {finalHeaderType === 'hero' ? <HeaderHero /> : <HeaderSubpage />}
