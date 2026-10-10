@@ -109,6 +109,11 @@
   color: var(--ph-navy);
 }
 
+/* Nút Google Preferred Source */
+.footer-preferred-source {
+  margin-top: 20px;
+}
+
 /* --- BOTTOM BAR --- */
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.1);
