@@ -67,6 +67,9 @@ Xong và đã merge → `[x]`.
 - [ ] Đổi `price` sang dạng số, định dạng ở layout
 - [ ] Thông tin cho Google (giá, rating, số review)
 - [ ] Ảnh và mô tả khi chia sẻ link (Open Graph)
+- [x] Nút to "Add PhotheSense on Google" (Preferred Source, deeplink) ở cuối mỗi bài blog, thay khung email chưa hoạt động
+- [x] Sửa URL trong schema (JSON-LD) từ `phothesense.github.io` thành `phothesense.com`
+- [ ] Theo dõi lượt "Preferred source selections" trong Search Console
 
 ## Giai đoạn 6 — Giao diện (bàn sau)
 - [ ] Brainstorm thay đổi giao diện
