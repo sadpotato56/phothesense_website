@@ -57,6 +57,7 @@ Xong và đã merge → `[x]`.
 - [ ] Sửa đường dẫn tương đối `../` (script.js, header/footer)
 - [ ] Sửa xung đột TripAdvisor link với lightbox ảnh review
 - [ ] Thêm `alt` và `loading="lazy"` cho ảnh
+- [x] Trang `/experience`: bấm tên tour mở trong cùng tab (bỏ `target="_blank"`)
 
 ## Giai đoạn 4 — Hosting & kiểm tra
 - [ ] Xác định web đang host ở đâu
