@@ -75,6 +75,19 @@ Xong và đã merge → `[x]`.
 ## Giai đoạn 6 — Giao diện (bàn sau)
 - [ ] Brainstorm thay đổi giao diện
 
+## Giai đoạn 7 — Blog cà phê + WhatsApp + AI search
+Thông tin đã chốt: Coffee Workshop 2.5 giờ, ₫585,000, open bar (khách pha món gì cũng được).
+Không có cà phê sữa chua (chỉ nhắc trong blog, ghi rõ "không có trong menu"). Không có ring workshop.
+- [x] Bước 1: Component `WhatsAppCTA` (link wa.me/84813301611 kèm tin nhắn soạn sẵn)
+- [ ] Bước 2: Sửa thời lượng trang Coffee Workshop thành 2.5 giờ
+- [ ] Bước 3: Bài "How to Make Hanoi Egg Coffee at Home" + PDF công thức
+- [ ] Bước 4: Bài "Commercial Cooking Class vs. Local Home Coffee Workshop"
+- [ ] Bước 5: Bài "Beyond Egg Coffee: 4 Vietnamese Brews"
+- [ ] Bước 6: Bài "Rainy Day in Hanoi" (Coffee + Knife workshop)
+- [ ] Bước 7: `public/robots.txt` cho phép bot AI
+- [ ] Bước 8: Sitemap (`@astrojs/sitemap`, add-on chính thức của Astro)
+- [ ] Bước 9: `public/llms.txt`
+
 ---
 
 ## Quyết định đã chốt

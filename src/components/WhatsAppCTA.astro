@@ -1,0 +1,37 @@
+---
+// Khung kêu gọi nhắn WhatsApp, dùng lại được trong bài blog (.mdx) và trang khác.
+// Ví dụ trong .mdx:
+//   import WhatsAppCTA from '../../components/WhatsAppCTA.astro';
+//   <WhatsAppCTA message="Hi! Please send me the Egg Coffee recipe PDF" />
+import { Icon } from 'astro-icon/components';
+import '../styles/whatsapp-cta.css';
+
+interface Props {
+  /** Tin nhắn soạn sẵn khi khách mở WhatsApp */
+  message: string;
+  title?: string;
+  text?: string;
+  buttonText?: string;
+}
+
+// Số WhatsApp của PhotheSense (+84 81 3301611), định dạng wa.me: bỏ dấu "+" và khoảng trắng
+const WHATSAPP_NUMBER = '84813301611';
+
+const {
+  message,
+  title = 'Chat with us on WhatsApp',
+  text = 'Send us a message and a local host will reply personally.',
+  buttonText = 'Message us on WhatsApp',
+} = Astro.props;
+
+const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+---
+
+<aside class="whatsapp-cta p-4 p-md-5 rounded-4 text-center my-5">
+  <p class="whatsapp-cta-title h3 mb-3">{title}</p>
+  <p class="whatsapp-cta-text mb-4">{text}</p>
+  <a href={href} class="whatsapp-cta-btn" target="_blank" rel="noopener">
+    <Icon name="fa6-brands:whatsapp" />
+    <span>{buttonText}</span>
+  </a>
+</aside>
