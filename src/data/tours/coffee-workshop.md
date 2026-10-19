@@ -17,7 +17,7 @@ reviewId: "coffee-reviews"
 
 # Danh sách thông tin (slot="about-list")
 meta_list:
-  - { icon: "fa6-solid:clock", text: "Duration: 1-2 relaxed hours" }
+  - { icon: "fa6-solid:clock", text: "Duration: 2.5 relaxed hours" }
   - { icon: "fa6-solid:language", text: "Instructor: English, Vietnamese" }
   - { icon: "fa6-solid:users-rectangle", text: "Intentionally small groups for close guidance" }
   - { icon: "fa6-solid:mug-hot", text: "Craft 6 iconic styles (Egg, Salt, Coconut & more)" }
@@ -51,7 +51,7 @@ itinerary:
   - title: "Bean Knowledge & Tasting"
     desc: "Discover Vietnamese specialty coffee beans. Share your impressions as we explore the aromas and profiles of locally sourced, hand-picked beans."
   - title: "Hand-Crafting the 6 Icons"
-    desc: "Over two relaxed hours, craft each coffee by hand (Egg, Coconut, Salt, and more). Adjust the sweetness and strength to your preference under local guidance."
+    desc: "Over two and a half relaxed hours, craft each coffee by hand (Egg, Coconut, Salt, and more). Adjust the sweetness and strength to your preference under local guidance."
 
 
 ---

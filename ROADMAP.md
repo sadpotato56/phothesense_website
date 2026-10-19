@@ -79,7 +79,7 @@ Xong và đã merge → `[x]`.
 Thông tin đã chốt: Coffee Workshop 2.5 giờ, ₫585,000, open bar (khách pha món gì cũng được).
 Không có cà phê sữa chua (chỉ nhắc trong blog, ghi rõ "không có trong menu"). Không có ring workshop.
 - [x] Bước 1: Component `WhatsAppCTA` (link wa.me/84813301611 kèm tin nhắn soạn sẵn)
-- [ ] Bước 2: Sửa thời lượng trang Coffee Workshop thành 2.5 giờ
+- [x] Bước 2: Sửa thời lượng trang Coffee Workshop thành 2.5 giờ
 - [ ] Bước 3: Bài "How to Make Hanoi Egg Coffee at Home" + PDF công thức
 - [ ] Bước 4: Bài "Commercial Cooking Class vs. Local Home Coffee Workshop"
 - [ ] Bước 5: Bài "Beyond Egg Coffee: 4 Vietnamese Brews"
